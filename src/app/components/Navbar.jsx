@@ -1,0 +1,136 @@
+'use client'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { FiMenu, FiX } from 'react-icons/fi'
+import { RiHome2Fill } from 'react-icons/ri'
+import { motion } from 'framer-motion'
+import '../globals.css'
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const handleOutsideClick = (e) => {
+    if (e.target.classList.contains('modal-overlay')) {
+      setIsOpen(false)
+    }
+  }
+
+  const menuItems = [
+    { name: 'Press Release', href: '/press-release' },
+    { name: 'Exclusive Article', href: '/exclusive-article' },
+    { name: 'Interview', href: '/interview' },
+    { name: 'Learn', href: '/learn' },
+    { name: 'Advertisement', href: '/advertisement' },
+    { name: 'Partners', href: '/partners' },
+  ]
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutsideClick)
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  }, [isOpen])
+
+  return (
+    <nav className='text-black font-semibold lg:mb-6 m-8 lg:ml-0 mt-0 mb-0'>
+      <div className='container flex flex-row lg:flex-col justify-between'>
+        <Link
+          href='/'
+          passHref
+          className='text-3xl font-bold text-center mb-4 mt-5'
+        >
+          Token Headline
+        </Link>
+
+        <div className='hidden lg:flex items-center text-base mx-14'>
+          <Link href='/' passHref>
+            <RiHome2Fill
+              size={24}
+              className='transition-transform duration-300 ease-in-out cursor-pointer'
+              style={{ color: '#002993' }}
+              aria-label='Home'
+            />
+          </Link>
+          <div className='border-l border-black border-2 h-12 mx-4'></div>
+          <div className='space-x-6 ml-0'>
+            {menuItems.slice(0, 4).map((item, index) => (
+              <div className='relative inline-block' key={index}>
+                <Link
+                  href={item.href}
+                  className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                  aria-label={item.name}
+                >
+                  {item.name}
+                </Link>
+              </div>
+            ))}
+          </div>
+          <div className='ml-20 space-x-6'>
+            {menuItems.slice(4).map((item, index) => (
+              <div className='relative inline-block' key={index}>
+                <Link
+                  href={item.href}
+                  className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                  aria-label={item.name}
+                >
+                  {item.name}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className='lg:hidden flex flex-col items-end mt-6'>
+          <button
+            onClick={toggleMenu}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            className='focus:outline-none'
+          >
+            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
+          {isOpen && (
+            <div className='modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
+              <div className='bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-md relative'>
+                <button
+                  onClick={toggleMenu}
+                  aria-label='Close menu'
+                  className='absolute top-2 right-2'
+                ></button>
+                <div className='flex flex-col space-y-4'>
+                  {menuItems.slice(0, 4).map((item, index) => (
+                    <Link
+                      href={item.href}
+                      key={index}
+                      className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                      aria-label={item.name}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                  <div className='mt-4 space-y-4'>
+                    {menuItems.slice(4).map((item, index) => (
+                      <Link
+                        href={item.href}
+                        key={index}
+                        className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                        aria-label={item.name}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  )
+}

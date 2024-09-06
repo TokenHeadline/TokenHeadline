@@ -1,0 +1,142 @@
+[
+  {
+    "id": "1",
+    "title": "Breaking: AI Revolutionizes Healthcare",
+    "subheading": "Patched Worldcoin bug could have made Orbs vulnerable to re.",
+    "category": "Technology",
+    "featuredImage": "https://img.freepik.com/free-vector/cryptocurrency-bitcoin-golden-coin-background_1017-31505.jpg?t=st=1725517388~exp=1725520988~hmac=b4c2081335f10fad3dd9162afc82b4828c0de488266242255158c6c1530797d3&w=996",
+    "author": {
+      "name": "Jane Doe",
+      "image": "https://example.com/images/jane-doe.jpg"
+    },
+    "date": "1 sept 2024",
+    "content": "lit. Phasellus aliquet nibh id iaculis pharetra. Maecenas eleifend sed ex. Donec quis magna sed felis elementum blandit nec quis sem. Maecen",
+    "carouselSubheading": true
+  },
+  {
+    "id": "2",
+    "title": "Global Stock Markets Rally",
+    "subheading": "Investors see positive growth as markets rebound.",
+    "category": "Finance",
+    "featuredImage": "https://example.com/images/stock-market.jpg",
+    "author": {
+      "name": "John Smith",
+      "image": "https://example.com/images/john-smith.jpg"
+    },
+    "date": "2024-09-01T08:30:00Z",
+    "content": "Global stock markets rallied today as investors regained confidence in economic recovery efforts.",
+    "carouselSubheading": false
+  },
+  {
+    "id": "3",
+    "title": "Climate Change: A Global Crisis",
+    "subheading": "New studies show alarming trends in global temperatures.",
+    "category": "Environment",
+    "featuredImage": "https://example.com/images/climate-change.jpg",
+    "author": {
+      "name": "Sarah Lee",
+      "image": "https://example.com/images/sarah-lee.jpg"
+    },
+    "date": "2024-09-01T07:00:00Z",
+    "content": "Recent studies show that climate change is accelerating faster than previously thought, with serious implications for global ecosystems.",
+    "carouselSubheading": true
+  },
+  {
+    "id": "4",
+    "title": "Crypto Market Reaches New Heights",
+    "subheading": "Bitcoin and Ethereum hit record-breaking values.",
+    "category": "Crypto",
+    "featuredImage": "https://example.com/images/crypto-market.jpg",
+    "author": {
+      "name": "Michael Chan",
+      "image": "https://example.com/images/michael-chan.jpg"
+    },
+    "date": "2024-09-01T11:45:00Z",
+    "content": "The cryptocurrency market continues to soar, with Bitcoin and Ethereum reaching new all-time highs.",
+    "carouselSubheading": false
+  },
+  {
+    "id": "5",
+    "title": "Advancements in Renewable Energy",
+    "subheading": "Solar and wind power technologies reach new efficiency levels.",
+    "category": "Technology",
+    "featuredImage": "https://example.com/images/renewable-energy.jpg",
+    "author": {
+      "name": "Lisa Wong",
+      "image": "https://example.com/images/lisa-wong.jpg"
+    },
+    "date": "2024-09-01T09:15:00Z",
+    "content": "New developments in solar and wind power are pushing renewable energy sources to new levels of efficiency.",
+    "carouselSubheading": true
+  },
+  {
+    "id": "6",
+    "title": "World Leaders Meet for Peace Talks",
+    "subheading": "Diplomatic efforts continue to prevent conflict in Eastern Europe.",
+    "category": "Politics",
+    "featuredImage": "https://example.com/images/peace-talks.jpg",
+    "author": {
+      "name": "David Kim",
+      "image": "https://example.com/images/david-kim.jpg"
+    },
+    "date": "2024-09-01T12:00:00Z",
+    "content": "World leaders are convening for peace talks aimed at de-escalating tensions in Eastern Europe.",
+    "carouselSubheading": false
+  },
+  {
+    "id": "7",
+    "title": "Tech Giants Unveil Next-Gen Devices",
+    "subheading": "Major tech companies launch the latest smartphones and gadgets.",
+    "category": "Technology",
+    "featuredImage": "https://example.com/images/tech-giants.jpg",
+    "author": {
+      "name": "Emma Johnson",
+      "image": "https://example.com/images/emma-johnson.jpg"
+    },
+    "date": "2024-09-01T13:30:00Z",
+    "content": "The latest innovations in smartphone technology were unveiled today at a major tech conference.",
+    "carouselSubheading": true
+  },
+  {
+    "id": "8",
+    "title": "Global Tourism Industry Rebounds",
+    "subheading": "Travel restrictions ease, and tourism picks up globally.",
+    "category": "Travel",
+    "featuredImage": "https://example.com/images/global-tourism.jpg",
+    "author": {
+      "name": "Olivia Brown",
+      "image": "https://example.com/images/olivia-brown.jpg"
+    },
+    "date": "2024-09-01T14:00:00Z",
+    "content": "The global tourism industry is seeing a resurgence as travel restrictions ease and international flights resume.",
+    "carouselSubheading": false
+  },
+  {
+    "id": "9",
+    "title": "Major Breakthrough in Cancer Research",
+    "subheading": "Scientists discover new treatment methods showing promise.",
+    "category": "Health",
+    "featuredImage": "https://example.com/images/cancer-research.jpg",
+    "author": {
+      "name": "Sophia Williams",
+      "image": "https://example.com/images/sophia-williams.jpg"
+    },
+    "date": "2024-09-01T15:30:00Z",
+    "content": "A major breakthrough in cancer research has opened new possibilities for treatment and recovery.",
+    "carouselSubheading": true
+  },
+  {
+    "id": "10",
+    "title": "New Conservation Efforts Save Endangered Species",
+    "subheading": "Collaborative efforts lead to positive outcomes for wildlife conservation.",
+    "category": "Environment",
+    "featuredImage": "https://example.com/images/conservation-efforts.jpg",
+    "author": {
+      "name": "James Patel",
+      "image": "https://example.com/images/james-patel.jpg"
+    },
+    "date": "2024-09-01T16:00:00Z",
+    "content": "Conservationists are celebrating a significant victory as new efforts to protect endangered species are showing positive results.",
+    "carouselSubheading": false
+  }
+]

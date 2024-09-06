@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    domains: ['img.freepik.com'], // Ensure only necessary domains are listed
+  },
+}
 
-export default nextConfig;
+export default nextConfig
