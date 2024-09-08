@@ -13,7 +13,7 @@ export default function Navbar() {
     setIsOpen(!isOpen)
   }
 
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = (e: any) => {
     if (e.target.classList.contains('modal-overlay')) {
       setIsOpen(false)
     }
@@ -38,12 +38,12 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <nav className='text-black font-semibold lg:mb-6 m-8 lg:ml-0 mt-0 mb-0'>
+    <nav className='text-black font-semibold lg:mb-6 m-8 lg:ml-12 mt-0 mb-0'>
       <div className='container flex flex-row lg:flex-col justify-between'>
         <Link
           href='/'
           passHref
-          className='text-3xl font-bold text-center mb-4 mt-5'
+          className='text-3xl font-bold text-center mb-4 mt-2'
         >
           Token Headline
         </Link>
