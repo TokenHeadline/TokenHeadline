@@ -7,6 +7,11 @@ const nextConfig = {
       'example.com',
       'academy-public.coinmarketcap.com',
       'w7.pngwing.com',
+      'bsmedia.business-standard.com',
+      'cloudinary.hbs.edu',
+      'www.reuters.com',
+      'www.fairobserver.com',
+      'static01.nyt.com',
     ], // Ensure only necessary domains are listed
   },
 }
