@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const ArticlesGrid = ({ News }) => {
   return (
@@ -37,6 +38,15 @@ const ArticlesGrid = ({ News }) => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className='text-center mt-8'>
+        <Link
+          href='/articles'
+          className='inline-block px-6 py-2 text-white bg-black rounded-md shadow-md hover:bg-blue-700 transition-colors mb-4'
+        >
+          Read More
+        </Link>
       </div>
     </div>
   )
