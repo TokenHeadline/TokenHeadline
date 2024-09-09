@@ -59,19 +59,16 @@ const Topics = () => {
                 View All
               </span>
             </div>
-
-            {/* Separator Line */}
             <hr className='my-4 border-black' />
-
-            {/* Topic Image */}
-
-            <Image
-              src={topic.imageUrl}
-              alt={topic.name}
-              height={400}
-              width={300}
-              className='border-2 border-black'
-            />
+            <div className='flex justify-center'>
+              <Image
+                src={topic.imageUrl}
+                alt={topic.name}
+                height={400}
+                width={300}
+                className='border-2 border-black '
+              />
+            </div>
           </div>
         ))}
       </div>

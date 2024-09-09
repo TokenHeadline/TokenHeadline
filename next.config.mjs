@@ -4,8 +4,9 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     domains: [
       'img.freepik.com',
-      'w7.pngwing.com',
+      'example.com',
       'academy-public.coinmarketcap.com',
+      'w7.pngwing.com',
     ], // Ensure only necessary domains are listed
   },
 }
