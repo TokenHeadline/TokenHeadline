@@ -19,20 +19,29 @@ const topicsData = [
 const Topics = () => {
   return (
     <div className='container mt-8'>
-      <h2 className='text-3xl sm:text-4xl lg:text-4xl font-bold mb-8'>
-        READ UP ON THE{' '}
-        <span
-          className='underline'
-          style={{
-            textDecorationThickness: '1.5px',
-            textDecorationColor: 'black',
-            textUnderlineOffset: '4px',
-          }}
-        >
-          LATEST
-        </span>
-        CRYPTO AND WEB3 WORLD NEWS & TIPS...
-      </h2>
+      <div className='flex flex-row justify-between mb-8'>
+        <h2 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
+          READ UP ON THE{' '}
+          <span
+            className='underline'
+            style={{
+              textDecorationThickness: '1.5px',
+              textDecorationColor: 'black',
+              textUnderlineOffset: '4px',
+            }}
+          >
+            LATEST
+          </span>{' '}
+          CRYPTO AND WEB3 WORLD NEWS & TIPS...
+        </h2>
+        <Image
+          src={'/GoDown.png'}
+          alt='Go Down'
+          width={100}
+          height={50}
+          className='items-center m-4 -mt-4 xl:mr-20 hidden md:block lg:block xl:block'
+        ></Image>
+      </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
         {topicsData.map((topic, index) => (
           <div

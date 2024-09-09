@@ -6,6 +6,7 @@ import './globals.css'
 import News from '../../public/News.json'
 import BreakinNewsTicker from './components/BreakingNewsTicker'
 import Topics from './components/Topics'
+import Latest from './components/Latest'
 export default function Home() {
   return (
     <div className='md:ml-10 sm:ml-8'>
@@ -17,6 +18,9 @@ export default function Home() {
       <BreakinNewsTicker News={News} />
       <section className='space-y-8 m-4 lg:flex-row lg:mb-14 lg:space-x-4 lg:space-y-0 lg:mt-4 ml-8 mr-8 '>
         <Topics />
+      </section>
+      <section className='space-y-8 m-4 lg:flex-row lg:mb-14 lg:space-x-4 lg:space-y-0 lg:mt-4 ml-8 mr-8 '>
+        <Latest News={News} />
       </section>
     </div>
   )

@@ -3,10 +3,10 @@ import Image from 'next/image'
 
 const Today = ({ News }) => {
   return (
-    <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-1/3'>
+    <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-5/12'>
       {News.slice(0, 1).map((article, index) => (
         <div key={index} className='space-y-4'>
-          <h1 className='text-3xl sm:text-4xl lg:text-4xl font-bold'>
+          <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
             TODAY RELEASE
           </h1>
           <h2 className='text-xl sm:text-2xl md:text-3xl font-bold'>
@@ -18,7 +18,9 @@ const Today = ({ News }) => {
             <p className='text-gray-500'>{article.date}</p>
           </div>
 
-          <p className='text-base sm:text-lg md:text-xl'>{article.content}</p>
+          <p className='text-base sm:text-lg md:text-xl'>
+            {article.content.split(' ').slice(0, 20).join(' ') + '...'}
+          </p>
 
           <div className='flex justify-center'>
             <div className='relative inline-block mt-3'>
@@ -38,10 +40,11 @@ const Today = ({ News }) => {
               </div>
 
               <Image
-                src='https://img.freepik.com/free-vector/cryptocurrency-bitcoin-golden-coin-background_1017-31505.jpg?t=st=1725602614~exp=1725606214~hmac=13ec76f72876eacafbd518f7eb20fd3f552dc2b52326884fce8c66a93a8e2888&w=996'
+                src={article.featuredImage}
                 alt={article.title}
                 width={400}
                 height={300}
+                priority={true}
               />
             </div>
           </div>

@@ -6,9 +6,9 @@ const Articles = ({ News }) => {
   return (
     <div
       className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6
-    lg:gap-0 lg:w-3/12'
+    lg:gap-0 lg:w-4/12'
     >
-      {News.slice(1, 5).map((article) => (
+      {News.slice(1, 6).map((article) => (
         <div key={article.id}>
           <h2 className='text-base sm:text-lg md:text-lg lg:text-xl font-bold leading-6'>
             {article.subheading}
