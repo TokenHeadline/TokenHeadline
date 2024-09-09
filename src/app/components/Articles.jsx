@@ -10,7 +10,7 @@ const Articles = ({ News }) => {
     >
       {News.slice(1, 5).map((article) => (
         <div key={article.id}>
-          <h2 className='text-sm sm:text-base md:text-lg lg:text-xl font-bold leading-6'>
+          <h2 className='text-base sm:text-lg md:text-lg lg:text-xl font-bold leading-6'>
             {article.subheading}
           </h2>
           <div className='flex items-center justify-between mt-2 lg:ml-5'>
