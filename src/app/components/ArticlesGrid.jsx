@@ -9,7 +9,10 @@ const ArticlesGrid = ({ News }) => {
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
         {News.slice(1, 7).map((news, index) => (
-          <div className='overflow-hidden shadow-md backdrop-blur-md bg-white/40 rounded-md'>
+          <div
+            className='overflow-hidden shadow-md backdrop-blur-md bg-white/40 rounded-md'
+            key={index}
+          >
             <div className='relative w-full h-48'>
               <Image
                 src={news.featuredImage}

@@ -35,7 +35,7 @@ const Latest = ({ News }) => {
           </div>
 
           {/* Featured Image */}
-          <div className='lg:col-span-2'>
+          <div className='md:col-span-2 '>
             <div className='w-full'>
               <Image
                 src='https://academy-public.coinmarketcap.com/srd-optimized-uploads/8c7120162f7b4284978cbf50108fe7b0.webp'
