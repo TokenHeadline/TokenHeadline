@@ -6,7 +6,7 @@ const Today = ({ News }) => {
     <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-1/3'>
       {News.slice(0, 1).map((article, index) => (
         <div key={index} className='space-y-4'>
-          <h1 className='text-xl sm:text-3xl md:text-5xl font-bold'>
+          <h1 className='text-3xl sm:text-4xl lg:text-4xl font-bold'>
             TODAY RELEASE
           </h1>
           <h2 className='text-xl sm:text-2xl md:text-3xl font-bold'>
