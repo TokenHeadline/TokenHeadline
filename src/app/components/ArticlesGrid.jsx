@@ -3,13 +3,13 @@ import Image from 'next/image'
 
 const ArticlesGrid = ({ News }) => {
   return (
-    <div className='m-4 pt-5'>
+    <div className='m-4 pt-5 md:pl-16 md:pr-16'>
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
         LATEST ARTICLES
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
         {News.slice(1, 7).map((news, index) => (
-          <div className='overflow-hidden shadow-md'>
+          <div className='overflow-hidden shadow-md backdrop-blur-md bg-white/40 rounded-md'>
             <div className='relative w-full h-48'>
               <Image
                 src={news.featuredImage}
