@@ -42,7 +42,8 @@ const Latest = ({ News }) => {
                 width={630}
                 height={452}
                 alt={newsItem.title}
-                className='object-contain lg:w-[630px] lg:h-[452px]' // For screens >=1024px, use specific dimensions
+                className='object-contain lg:w-[630px] lg:h-[452px]
+                ' // For screens >=1024px, use specific dimensions
                 priority={true}
               />
             </div>

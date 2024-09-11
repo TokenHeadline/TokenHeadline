@@ -38,14 +38,15 @@ const Today = ({ News }) => {
                   <div className='absolute -bottom-1 -right-1 w-2 h-2 bg-black rounded-tl-full'></div>
                 </div>
               </div>
-
-              <Image
-                src={'/today.png'}
-                alt={article.title}
-                width={400}
-                height={300}
-                priority={true}
-              />
+              <div className='grayscale'>
+                <Image
+                  src={'/today.png'}
+                  alt={article.title}
+                  width={400}
+                  height={300}
+                  priority={true}
+                />
+              </div>
             </div>
           </div>
         </div>
