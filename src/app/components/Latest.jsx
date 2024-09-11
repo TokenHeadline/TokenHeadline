@@ -9,11 +9,11 @@ const Latest = ({ News }) => {
       </h1>
       {News.slice(0, 1).map((newsItem, index) => (
         <div
-          className='grid grid-cols-1 lg:grid-cols-5 gap-6 items-center mb-6'
+          className='flex flex-col lg:flex-row gap-6 items-center mb-6'
           key={index}
         >
           {/* Content and Author Info */}
-          <div className='lg:col-span-3'>
+          <div className='flex-1'>
             <div className='flex items-center space-x-4 p-4'>
               <Image
                 src={newsItem.author.image}
@@ -29,20 +29,20 @@ const Latest = ({ News }) => {
                 {newsItem.title}
               </h1>
               <p className='text-base md:text-lg'>
-                {newsItem.content.split(' ').slice(0, 70).join(' ') + '...'}
+                {newsItem.content.split(' ').slice(0, 50).join(' ') + '...'}
               </p>
             </div>
           </div>
 
           {/* Featured Image */}
-          <div className='md:col-span-2 '>
+          <div className='flex-1'>
             <div className='w-full'>
               <Image
-                src='https://academy-public.coinmarketcap.com/srd-optimized-uploads/8c7120162f7b4284978cbf50108fe7b0.webp'
+                src='/image.png'
                 width={630}
-                height={500}
+                height={452}
                 alt={newsItem.title}
-                className='object-cover'
+                className='object-contain lg:w-[630px] lg:h-[452px]' // For screens >=1024px, use specific dimensions
                 priority={true}
               />
             </div>

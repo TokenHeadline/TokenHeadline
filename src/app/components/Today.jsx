@@ -40,7 +40,7 @@ const Today = ({ News }) => {
               </div>
 
               <Image
-                src={article.featuredImage}
+                src={'/today.png'}
                 alt={article.title}
                 width={400}
                 height={300}
