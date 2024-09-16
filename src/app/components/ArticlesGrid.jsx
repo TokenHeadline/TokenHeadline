@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const ArticlesGrid = ({ News }) => {
   return (
-    <div className='m-4 pt-5 md:pl-16 md:pr-16'>
+    <div className='m-4 pt-5 md:pl-16 md:pr-16 xl:pl-16'>
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
         LATEST ARTICLES
       </h1>

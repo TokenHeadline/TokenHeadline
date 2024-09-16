@@ -10,7 +10,7 @@ const topicsData = [
     imageUrl: '/technical.png',
   },
   { name: 'BITCOIN', newsCount: 18, imageUrl: '/bitcoin.png' },
-  { name: 'FUNDAMENTAL ANALYSIS', newsCount: 18, imageUrl: '/fundamental.png' },
+  { name: 'FUNDAMENTAL', newsCount: 18, imageUrl: '/fundamental.png' },
   { name: 'ETHEREUM', newsCount: 18, imageUrl: '/technology.png' },
 
   // Add more topics here...
@@ -18,8 +18,8 @@ const topicsData = [
 
 const Topics = () => {
   return (
-    <div className='container mt-8'>
-      <div className='flex flex-row justify-between mb-8'>
+    <div className=' mt-8 '>
+      <div className='flex flex-row justify-between mb-8 '>
         <h2 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
           READ UP ON THE{' '}
           <span
@@ -50,9 +50,8 @@ const Topics = () => {
             shadow-md'
             style={{ width: 'auto', maxWidth: '100%' }} // Adjust width based on image
           >
-            {/* Topic Name and News Count */}
             <div className='flex justify-between items-start'>
-              <h3 className='text-base sm:text-lg md:text-xl font-bold'>
+              <h3 className='text-base sm:text-lg md:text-lg font-bold'>
                 {topic.name} {topic.newsCount}
               </h3>
               <span className='text-xs sm:text-sm text-gray-500 font-bold'>

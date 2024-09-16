@@ -38,7 +38,7 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <nav className='text-black font-semibold lg:mb-6 m-8 lg:ml-12 mt-0 mb-0'>
+    <nav className='text-black font-semibold lg:mb-6 m-8 lg:ml-0 xl:pl-10 mt-0 mb-0'>
       <div className='container flex flex-row lg:flex-col justify-between'>
         <Link
           href='/'

@@ -24,7 +24,7 @@ export default function Home() {
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-8 lg:ml-16 lg:mr-16'>
         <Latest News={News} />
       </section>
-      <section className='bg-blue-300'>
+      <section className='bg-blue-300 '>
         <ArticlesGrid News={News} />
       </section>
     </div>

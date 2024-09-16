@@ -21,7 +21,7 @@ export default function RootLayout({
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <body
         className={inriaSans.className}
-        style={{ backgroundColor: '#e5e7eb' }}
+        style={{ backgroundColor: '#e9e9e9' }}
       >
         <Navbar />
         {children}

@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Today = ({ News }) => {
   return (
-    <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-5/12'>
+    <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-6/12 xl:basis-4/12'>
       {News.slice(0, 1).map((article, index) => (
         <div key={index} className='space-y-4'>
           <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>

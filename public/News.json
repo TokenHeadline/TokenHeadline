@@ -13,22 +13,9 @@
     "content": "The artificial intelligence (AI) revolution is dramatically transforming healthcare, reshaping the industry in ways previously deemed impossible. AI's integration into healthcare is a game-changer, offering unprecedented advancements in diagnostics, treatment, and patient care. This technological evolution is powered by sophisticated algorithms, machine learning, and vast amounts of data, enabling AI systems to analyze and interpret complex medical information with remarkable accuracy and speed.One of the most profound impacts of AI in healthcare is its ability to enhance diagnostic precision. Traditional diagnostic processes, often reliant on human expertise, are inherently limited by the subjectivity and variability of human interpretation. AI, however, leverages deep learning algorithms to process vast amounts of medical data, including images, genetic information, and patient records, to identify patterns and anomalies that might elude even the most experienced clinicians. For instance, AI-powered imaging systems are now capable of detecting early signs of diseases such as cancer.",
     "carouselSubheading": true
   },
+
   {
     "id": "2",
-    "title": "Global Stock Markets Rally",
-    "subheading": "Investors see positive growth as markets rebound.",
-    "category": "Finance",
-    "featuredImage": "https://bsmedia.business-standard.com/_media/bs/img/article/2024-05/03/full/1714707570-3254.jpg?im=FitAndFill=(826,465)",
-    "author": {
-      "name": "John Smith",
-      "image": "https://example.com/images/john-smith.jpg"
-    },
-    "date": "2nd May 2024",
-    "content": "Global stock markets rallied today as investors regained confidence in economic recovery efforts.",
-    "carouselSubheading": false
-  },
-  {
-    "id": "3",
     "title": "Climate Change: A Global Crisis",
     "subheading": "New studies show alarming trends in global temperatures.",
     "category": "Environment",
@@ -42,7 +29,7 @@
     "carouselSubheading": true
   },
   {
-    "id": "4",
+    "id": "3",
     "title": "Crypto Market Reaches New Heights",
     "subheading": "Bitcoin and Ethereum hit record-breaking values.",
     "category": "Crypto",
@@ -56,7 +43,7 @@
     "carouselSubheading": false
   },
   {
-    "id": "5",
+    "id": "4",
     "title": "Advancements in Renewable Energy",
     "subheading": "Solar and wind power technologies reach new efficiency levels.",
     "category": "Technology",
@@ -69,8 +56,9 @@
     "content": "New developments in solar and wind power are pushing renewable energy sources to new levels of efficiency.",
     "carouselSubheading": true
   },
+
   {
-    "id": "6",
+    "id": "5",
     "title": "World Leaders Meet for Peace Talks",
     "subheading": "Diplomatic efforts continue to prevent conflict in Eastern Europe.",
     "category": "Politics",
@@ -84,7 +72,7 @@
     "carouselSubheading": false
   },
   {
-    "id": "7",
+    "id": "6",
     "title": "Tech Giants Unveil Next-Gen Devices",
     "subheading": "Major tech companies launch the latest smartphones and gadgets.",
     "category": "Technology",
@@ -96,6 +84,20 @@
     "date": "2nd May 2024",
     "content": "The latest innovations in smartphone technology were unveiled today at a major tech conference.",
     "carouselSubheading": true
+  },
+  {
+    "id": "7",
+    "title": "Global Stock Markets Rally",
+    "subheading": "Investors see positive growth as markets rebound.",
+    "category": "Finance",
+    "featuredImage": "https://bsmedia.business-standard.com/_media/bs/img/article/2024-05/03/full/1714707570-3254.jpg?im=FitAndFill=(826,465)",
+    "author": {
+      "name": "John Smith",
+      "image": "https://example.com/images/john-smith.jpg"
+    },
+    "date": "2nd May 2024",
+    "content": "Global stock markets rallied today as investors regained confidence in economic recovery efforts.",
+    "carouselSubheading": false
   },
   {
     "id": "8",
