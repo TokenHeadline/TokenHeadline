@@ -58,7 +58,7 @@ export default function Navbar() {
             />
           </Link>
           <div className='border-l border-black border-2 h-12 mx-4'></div>
-          <div className='space-x-6 ml-0'>
+          <div className='space-x-4 ml-0'>
             {menuItems.slice(0, 4).map((item, index) => (
               <div className='relative inline-block' key={index}>
                 <Link
@@ -71,7 +71,7 @@ export default function Navbar() {
               </div>
             ))}
           </div>
-          <div className='ml-20 space-x-6'>
+          <div className='ml-12 space-x-6'>
             {menuItems.slice(4).map((item, index) => (
               <div className='relative inline-block' key={index}>
                 <Link
