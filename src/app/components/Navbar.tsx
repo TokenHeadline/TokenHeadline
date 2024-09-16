@@ -71,7 +71,7 @@ export default function Navbar() {
               </div>
             ))}
           </div>
-          <div className='ml-12 space-x-6'>
+          <div className='ml-12 xl:ml-16 space-x-6'>
             {menuItems.slice(4).map((item, index) => (
               <div className='relative inline-block' key={index}>
                 <Link
