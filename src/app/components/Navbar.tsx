@@ -48,7 +48,7 @@ export default function Navbar() {
           Token Headline
         </Link>
 
-        <div className='hidden lg:flex items-center text-base mx-14'>
+        <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6 '>
           <Link href='/' passHref>
             <RiHome2Fill
               size={24}
