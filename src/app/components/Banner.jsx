@@ -23,10 +23,12 @@ const Banner = ({ News }) => {
   }, [cards])
 
   return (
-    <div className='relative flex '>
+    <div className='relative flex justify-center items-center'>
       <ul
         className='relative xl:w-[400px] xl:h-[520px]
-      lg:h-[420px] lg:w-[250px] p-10 lg:mt-14'
+      lg:h-[420px] lg:w-[250px] lg:p-10 
+
+      mt-16 lg:mt-0 w-[650px] h-[300px]'
       >
         {cards.map((newsItem, index) => {
           const canDrag = index === 0
@@ -55,9 +57,9 @@ const Banner = ({ News }) => {
               }}
               onDragEnd={() => moveToEnd(index)}
             >
-              {/* <div className='absolute bottom-2 left-2 text-white p-2 lg:rounded-md b '>
+              <div className='absolute bottom-2 left-2 text-white p-2 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px]'>
                 <h3 className='text-lg font-semibold'>{newsItem.title}</h3>
-              </div> */}
+              </div>
             </motion.li>
           )
         })}
