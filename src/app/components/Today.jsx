@@ -43,8 +43,9 @@ const Today = ({ News }) => {
                   src={'/today.png'}
                   alt={article.title}
                   width={400}
-                  height={300}
+                  height={300} // Keeping both width and height in proportion
                   priority={true}
+                  style={{ width: '100%', height: 'auto' }} // Ensuring aspect ratio with CSS
                 />
               </div>
             </div>

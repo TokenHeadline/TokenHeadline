@@ -21,6 +21,7 @@ const Latest = ({ News }) => {
                 height={38}
                 alt={newsItem.author.name}
                 className='rounded-full'
+                style={{ width: '33px', height: '38px' }}
               />
               <p className='text-lg font-bold'>{newsItem.author.name}</p>
             </div>
@@ -34,7 +35,6 @@ const Latest = ({ News }) => {
             </div>
           </div>
 
-          {/* Featured Image */}
           <div className='flex-1'>
             <div className='w-full'>
               <Image
@@ -43,8 +43,7 @@ const Latest = ({ News }) => {
                 height={452}
                 alt={newsItem.title}
                 className='object-contain lg:w-[630px] lg:h-[452px]
-                ' // For screens >=1024px, use specific dimensions
-                priority={true}
+                '
               />
             </div>
           </div>

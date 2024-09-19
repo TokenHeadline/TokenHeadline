@@ -40,7 +40,8 @@ const Topics = () => {
           width={100}
           height={50}
           className='items-center m-4 -mt-4 xl:mr-20 hidden md:block lg:block xl:block'
-        ></Image>
+          style={{ width: '100px', height: '100px' }}
+        />
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
         {topicsData.map((topic, index) => (
@@ -54,7 +55,7 @@ const Topics = () => {
               <h3 className='text-base sm:text-lg md:text-lg font-bold'>
                 {topic.name} {topic.newsCount}
               </h3>
-              <span className='text-xs sm:text-sm text-gray-500 font-bold'>
+              <span className='text-xs sm:text-sm text-gray-600 font-bold'>
                 View All
               </span>
             </div>

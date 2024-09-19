@@ -4,98 +4,78 @@ import Image from 'next/image'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
-const Courses = ({ courses }) => {
-  console.log(courses)
-  // Responsive settings for the carousel
+const Courses = ({ Course }) => {
   const responsive = {
     superLargeDesktop: {
-      breakpoint: { max: 4000, min: 1441 },
-      items: 2,
-      partialVisibilityGutter: 40,
+      breakpoint: { max: 4000, min: 1301 },
+      items: 3,
     },
     desktop: {
-      breakpoint: { max: 1440, min: 1024 },
+      breakpoint: { max: 1300, min: 800 },
       items: 2,
-      partialVisibilityGutter: 30,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 800, min: 677 },
       items: 1,
-      partialVisibilityGutter: 30,
     },
     mobile: {
-      breakpoint: { max: 464, min: 0 },
+      breakpoint: { max: 676, min: 0 },
       items: 1,
-      partialVisibilityGutter: 30,
     },
   }
 
-  // Function to determine the level dot color
   const getLevelColor = (level) => {
     if (level === 'beginner') return 'bg-green-500'
     if (level === 'intermediate') return 'bg-orange-500'
     if (level === 'expert') return 'bg-red-500'
-    return 'bg-gray-500' // fallback color
+    return 'bg-gray-500'
   }
 
   return (
-    <div>
-      <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
+    <div className=' py-10'>
+      <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold  mb-10'>
         LEARN
       </h1>
-      {/* <Carousel
+      <Carousel
         responsive={responsive}
         infinite={true}
         keyBoardControl={true}
-        showDots={true}
-        autoPlay={false}
+        autoPlay={true}
         containerClass='carousel-container'
-        itemClass='carousel-item-padding-40-px'
+        itemClass='px-4'
       >
-        {courses.map((course, index) => (
+        {Course.courses.map((course, index) => (
           <div
             key={index}
-            className='course-card'
-            style={{
-              width: '540px',
-              height: '490px',
-              backgroundColor: '#f5f5f5',
-              margin: '10px',
-              borderRadius: '8px',
-              overflow: 'hidden',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              position: 'relative',
-            }}
+            className='relative bg-white rounded-xl overflow-hidden shadow- '
           >
             <Image
               src={course.featuredImage}
               alt={course.name}
-              width={481}
-              height={227}
-              objectFit='cover'
+              width={500}
+              height={250}
+              // fill
+              style={{ objectFit: 'cover' }}
+              className='w-full h-56'
             />
-
-            <div style={{ padding: '20px' }}>
-              <h2 className='text-xl font-bold'>{course.name}</h2>
-            </div>
-
-            {/* Level and Dot */}
-      {/* <div
-              className='absolute bottom-4 left-4 flex items-center'
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <div
-                className={`w-3 h-3 rounded-full mr-2 ${getLevelColor(
-                  course.level
-                )}`}
-              ></div>
-              <span className='font-semibold text-sm capitalize'>
-                {course.level}
-              </span>
+            <div className='p-5'>
+              <h2 className='text-3xl font-semibold text-gray-800 mb-2'>
+                {course.name}
+              </h2>
+              <div className='flex items-center mt-5'>
+                <div
+                  className={`w-3 h-3 rounded-full mr-2 ${getLevelColor(
+                    course.level
+                  )}`}
+                ></div>
+                <span className='font-medium text-sm capitalize text-gray-700'>
+                  {course.level}
+                </span>
+              </div>
             </div>
           </div>
         ))}
-      </Carousel> */}
+      </Carousel>
     </div>
   )
 }

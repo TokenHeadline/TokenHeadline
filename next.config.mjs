@@ -12,6 +12,7 @@ const nextConfig = {
       'www.reuters.com',
       'www.fairobserver.com',
       'static01.nyt.com',
+      'www.xrtoday.com',
     ], // Ensure only necessary domains are listed
   },
 }

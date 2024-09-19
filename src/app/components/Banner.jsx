@@ -23,7 +23,7 @@ const Banner = ({ News }) => {
   }, [cards])
 
   return (
-    <div className='relative flex justify-center items-center'>
+    <div className='realtive  flex justify-center items-center'>
       <ul
         className='relative xl:w-[400px] xl:h-[520px]
       lg:h-[420px] lg:w-[250px] lg:p-10 

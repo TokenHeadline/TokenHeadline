@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { RiHome2Fill } from 'react-icons/ri'
 import { motion } from 'framer-motion'
-import '../globals.css'
-
+import Image from 'next/image'
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -40,14 +39,23 @@ export default function Navbar() {
   return (
     <nav className='text-black font-semibold lg:mb-6 m-8 mt-0 mb-0'>
       <div className='container flex flex-row lg:flex-col justify-between'>
-        <Link
-          href='/'
-          passHref
-          className='text-3xl font-bold text-center mb-4 mt-2'
-        >
-          Token Headline
-        </Link>
-
+        <div className='flex items-center justify-center'>
+          <Link
+            href='/'
+            passHref
+            className='text-3xl font-bold text-center  mt-2 '
+          >
+            <Image
+              src={'/logo.png'}
+              height={35}
+              width={150}
+              alt='logo
+              
+          '
+              priority={true}
+            />
+          </Link>
+        </div>
         <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6 '>
           <Link href='/' passHref>
             <RiHome2Fill

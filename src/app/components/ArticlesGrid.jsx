@@ -11,27 +11,33 @@ const ArticlesGrid = ({ News }) => {
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
         {News.slice(1, 7).map((news, index) => (
           <div
-            className='overflow-hidden shadow-md backdrop-blur-md bg-white/40'
+            className='flex flex-col justify-between overflow-hidden shadow-md backdrop-blur-md bg-white/40 h-full'
             key={index}
           >
+            {/* Image Section */}
             <div className='relative w-full h-48'>
               <Image
                 src={news.featuredImage}
                 alt={news.title}
-                layout='fill'
-                objectFit='cover'
+                fill
+                sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
+                style={{ objectFit: 'cover' }}
               />
             </div>
 
-            <div className='p-4'>
+            {/* Content Section */}
+            <div className='p-4 flex-grow'>
               <h2 className='text-lg sm:text-xl font-semibold mb-2'>
                 {news.title}
               </h2>
               <p className='text-sm text-gray-700 mb-4'>
                 {news.content.split(' ').slice(0, 30).join(' ') + '...'}
               </p>
+            </div>
 
-              <div className='flex flex-col sm:flex-row sm:justify-between text-sm text-black mt-10'>
+            {/* Author and Date Section */}
+            <div className='p-4 mt-auto'>
+              <div className='flex justify-between text-sm text-black'>
                 <p>By {news.author.name}</p>
                 <p>{news.date}</p>
               </div>

@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import Today from './components/Today'
 import Articles from './components/Articles'
 import Banner from './components/Banner'
@@ -29,7 +30,7 @@ export default function Home() {
         <ArticlesGrid News={News} />
       </section>
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-8 lg:ml-16 lg:mr-16'>
-        {/* <Courses Courses={Course} /> */}
+        <Courses Course={Course} />
       </section>
     </div>
   )
