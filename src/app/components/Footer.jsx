@@ -18,7 +18,6 @@ const Footer = () => {
               alt='logo'
               priority={true}
               className='mb-4'
-              optimized
             />
           </Link>
           <div className='flex space-x-4 mb-6'>

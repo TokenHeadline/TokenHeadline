@@ -52,6 +52,7 @@ export default function Navbar() {
               alt='logo
               
           '
+              // style={{ width: '150px', height: '35px' }}
               priority={true}
             />
           </Link>
