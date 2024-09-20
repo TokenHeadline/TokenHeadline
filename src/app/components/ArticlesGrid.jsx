@@ -51,7 +51,7 @@ const ArticlesGrid = ({ News }) => {
           href='/articles'
           className='inline-block px-6 py-2 text-white bg-black rounded-md shadow-md hover:bg-blue-700 transition-colors mb-4'
         >
-          Read More
+          More Articles
         </Link>
       </div>
     </div>
