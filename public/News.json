@@ -11,9 +11,9 @@
     },
     "date": "2nd May 2024",
     "content": "The artificial intelligence (AI) revolution is dramatically transforming healthcare, reshaping the industry in ways previously deemed impossible. AI's integration into healthcare is a game-changer, offering unprecedented advancements in diagnostics, treatment, and patient care. This technological evolution is powered by sophisticated algorithms, machine learning, and vast amounts of data, enabling AI systems to analyze and interpret complex medical information with remarkable accuracy and speed.One of the most profound impacts of AI in healthcare is its ability to enhance diagnostic precision. Traditional diagnostic processes, often reliant on human expertise, are inherently limited by the subjectivity and variability of human interpretation. AI, however, leverages deep learning algorithms to process vast amounts of medical data, including images, genetic information, and patient records, to identify patterns and anomalies that might elude even the most experienced clinicians. For instance, AI-powered imaging systems are now capable of detecting early signs of diseases such as cancer.",
-    "carouselSubheading": true
+    "carouselSubheading": true,
+    "slug": "hedonism-is-overrated-to-make-the-life-differences"
   },
-
   {
     "id": "2",
     "title": "Climate Change: A Global Crisis",
@@ -26,7 +26,8 @@
     },
     "date": "2nd May 2024",
     "content": "Recent studies show that climate change is accelerating faster than previously thought, with serious implications for global ecosystems.",
-    "carouselSubheading": true
+    "carouselSubheading": true,
+    "slug": "climate-change-a-global-crisis"
   },
   {
     "id": "3",
@@ -40,7 +41,8 @@
     },
     "date": "2nd May 2024",
     "content": "The cryptocurrency market continues to soar, with Bitcoin and Ethereum reaching new all-time highs.",
-    "carouselSubheading": false
+    "carouselSubheading": false,
+    "slug": "crypto-market-reaches-new-heights"
   },
   {
     "id": "4",
@@ -54,9 +56,9 @@
     },
     "date": "2nd May 2024",
     "content": "New developments in solar and wind power are pushing renewable energy sources to new levels of efficiency.",
-    "carouselSubheading": true
+    "carouselSubheading": true,
+    "slug": "advancements-in-renewable-energy"
   },
-
   {
     "id": "5",
     "title": "World Leaders Meet for Peace Talks",
@@ -69,7 +71,8 @@
     },
     "date": "2nd May 2024",
     "content": "World leaders are convening for peace talks aimed at de-escalating tensions in Eastern Europe.",
-    "carouselSubheading": false
+    "carouselSubheading": false,
+    "slug": "world-leaders-meet-for-peace-talks"
   },
   {
     "id": "6",
@@ -83,7 +86,8 @@
     },
     "date": "2nd May 2024",
     "content": "The latest innovations in smartphone technology were unveiled today at a major tech conference.",
-    "carouselSubheading": true
+    "carouselSubheading": true,
+    "slug": "tech-giants-unveil-next-gen-devices"
   },
   {
     "id": "7",
@@ -97,7 +101,8 @@
     },
     "date": "2nd May 2024",
     "content": "Global stock markets rallied today as investors regained confidence in economic recovery efforts.",
-    "carouselSubheading": false
+    "carouselSubheading": false,
+    "slug": "global-stock-markets-rally"
   },
   {
     "id": "8",
@@ -111,7 +116,8 @@
     },
     "date": "2nd May 2024",
     "content": "The global tourism industry is seeing a resurgence as travel restrictions ease and international flights resume.",
-    "carouselSubheading": false
+    "carouselSubheading": false,
+    "slug": "global-tourism-industry-rebounds"
   },
   {
     "id": "9",
@@ -125,7 +131,8 @@
     },
     "date": "2nd May 2024",
     "content": "A major breakthrough in cancer research has opened new possibilities for treatment and recovery.",
-    "carouselSubheading": true
+    "carouselSubheading": true,
+    "slug": "major-breakthrough-in-cancer-research"
   },
   {
     "id": "10",
@@ -139,6 +146,7 @@
     },
     "date": "2nd May 2024",
     "content": "Conservationists are celebrating a significant victory as new efforts to protect endangered species are showing positive results.",
-    "carouselSubheading": false
+    "carouselSubheading": false,
+    "slug": "new-conservation-efforts-save-endangered-species"
   }
 ]

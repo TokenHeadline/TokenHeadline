@@ -2,7 +2,7 @@ import React from 'react'
 
 const BannerSkeleton = () => {
   return (
-    <div className='relative flex justify-center items-center'>
+    <div className='relative flex justify-center '>
       <ul className='relative xl:w-[400px] xl:h-[520px] lg:h-[420px] lg:w-[250px] lg:p-10 mt-16 lg:mt-0 w-[650px] h-[300px]'>
         {Array(3)
           .fill()

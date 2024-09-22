@@ -62,47 +62,39 @@ const Footer = () => {
           <div className='mb-6'>
             <ul>
               <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
+                <Link href='/' className='hover:text-gray-400'>
                   Home
                 </Link>
               </li>
               <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
-                  News
+                <Link href='exclusive-article' className='hover:text-gray-400'>
+                  Exclusive Article
                 </Link>
               </li>
               <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
+                <Link href='press-release' className='hover:text-gray-400'>
                   Press Release
                 </Link>
               </li>
+
               <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
-                  Articles
-                </Link>
-              </li>
-              <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
+                <Link href='interview' className='hover:text-gray-400'>
                   Interview
                 </Link>
               </li>
               <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
-                  Courses
-                </Link>
-              </li>
-              <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
+                <Link href='learn' className='hover:text-gray-400'>
                   Learn
                 </Link>
               </li>
+
               <li className='mb-2'>
-                <Link href='#' className='hover:text-gray-400'>
+                <Link href='advertisement' className='hover:text-gray-400'>
                   Advertisement
                 </Link>
               </li>
               <li>
-                <Link href='#' className='hover:text-gray-400'>
+                <Link href='partners' className='hover:text-gray-400'>
                   Partners
                 </Link>
               </li>

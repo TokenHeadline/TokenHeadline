@@ -29,7 +29,6 @@ export default function Home() {
       </section>
     )
   if (error) return <p>Error: {error.message}</p>
-  console.log(data)
   return (
     <div>
       <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16 '>
