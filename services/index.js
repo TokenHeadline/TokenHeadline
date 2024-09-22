@@ -4,21 +4,16 @@ import { gql } from '@apollo/client'
 
 export const GET_NEWS = gql`
   query MyQuery {
-    articles {
-      slug
-      subheading
-      title
-      breakingNews
+    articles(orderBy: publishedAt_ASC) {
+      excerpt
+      featuredImage {
+        url
+      }
       author {
         name
-        image {
-          url
-        }
       }
-      content {
-        html
-        raw
-      }
+      title
+      slug
       category {
         category
       }

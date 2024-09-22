@@ -24,7 +24,7 @@ const Articles = ({ News }) => {
                 By {article.author.name}
               </p>
             </div>
-            <Link href={`#`}>
+            <Link href={`/article/${article.title}`}>
               <HiArrowSmallRight className='w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8' />
             </Link>
           </div>
