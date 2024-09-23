@@ -13,6 +13,7 @@ const nextConfig = {
       'www.fairobserver.com',
       'static01.nyt.com',
       'www.xrtoday.com',
+      'ap-south-1.graphassets.com',
     ], // Ensure only necessary domains are listed
   },
 }

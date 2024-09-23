@@ -1,10 +1,8 @@
-// queries/getNews.js
-
 import { gql } from '@apollo/client'
 
-export const GET_NEWS = gql`
+export const GET_TODAY = gql`
   query MyQuery {
-    articles(orderBy: publishedAt_ASC) {
+    articles(first: 1) {
       excerpt
       featuredImage {
         url
@@ -12,11 +10,12 @@ export const GET_NEWS = gql`
       author {
         name
       }
-      title
       slug
       category {
         category
       }
+      date
+      subheading
     }
   }
 `

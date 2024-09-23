@@ -1,5 +1,4 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Today from './components/Today'
 import Articles from './components/Articles'
 import Banner from './components/Banner'
@@ -19,16 +18,6 @@ import TodaySkeleton from './components/Skeleton/TodaySkeleton'
 import ArticlesSkeleton from './components/Skeleton/ArticlesSkeleton'
 import BannerSkeleton from './components/Skeleton/BannerSkeleton'
 export default function Home() {
-  const { loading, error, data } = useQuery(GET_NEWS, { client })
-  if (loading)
-    return (
-      <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16 h-screen'>
-        <TodaySkeleton />
-        <ArticlesSkeleton />
-        <BannerSkeleton />
-      </section>
-    )
-  if (error) return <p>Error: {error.message}</p>
   return (
     <div>
       <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16 '>
