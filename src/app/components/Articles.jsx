@@ -1,8 +1,20 @@
-import React from 'react'
+'use client'
+import React, { useState, useEffect } from 'react'
 import { HiArrowSmallRight } from 'react-icons/hi2'
 import Link from 'next/link'
-
-const Articles = ({ News }) => {
+import { GET_ARTICLES } from '../../../services/index'
+import { useQuery } from '@apollo/client'
+import client from '../../lib/apolloClient'
+import ArticlesSkeleton from './Skeleton/ArticlesSkeleton'
+const Articles = () => {
+  const [News, setNews] = useState([])
+  const { loading, error, data } = useQuery(GET_ARTICLES, { client: client })
+  useEffect(() => {
+    if (data && data.articles) {
+      setNews(data.articles)
+    }
+  }, [data])
+  if (loading) return <ArticlesSkeleton />
   return (
     <div
       className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6
@@ -17,7 +29,7 @@ const Articles = ({ News }) => {
             <div className='flex flex-col lg:flex-row'>
               <div className='mr-4'>
                 <p className='text-sm sm:text-sm font-bold'>
-                  {article.category}
+                  {article.category.category}
                 </p>
               </div>
               <p className='text-sm sm:text-sm text-black lg:ml-2'>

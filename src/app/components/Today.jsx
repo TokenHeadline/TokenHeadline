@@ -59,7 +59,7 @@ const Today = () => {
   }, [data])
 
   if (loading) return <TodaySkeleton />
-
+  // console.log(News[0].category.category)
   return (
     <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-6/12 xl:basis-4/12'>
       {News.map((article, index) => (

@@ -19,3 +19,18 @@ export const GET_TODAY = gql`
     }
   }
 `
+export const GET_ARTICLES = gql`
+  query MyQuery {
+    articles(first: 7) {
+      author {
+        name
+      }
+      slug
+      category {
+        category
+      }
+      subheading
+      id
+    }
+  }
+`
