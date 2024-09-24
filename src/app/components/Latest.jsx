@@ -16,7 +16,7 @@ const Latest = ({ News }) => {
           <div className='flex-1'>
             <div className='flex items-center space-x-4 p-4'>
               <Image
-                src={newsItem.author.image}
+                src={'https://media.licdn.com/dms/image/v2/D4D03AQFpI2pUVXS7ew/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1686243239728?e=1732752000&v=beta&t=VgLtWR1vlpg_f4kZAMAJ5PMnBcjrfBY9n9DKOMC-a5k}
                 width={33}
                 height={38}
                 alt={newsItem.author.name}
