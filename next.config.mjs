@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
+    domains: [
       'img.freepik.com',
       'example.com',
       'academy-public.coinmarketcap.com',
