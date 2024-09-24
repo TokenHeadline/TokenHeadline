@@ -6,21 +6,29 @@ import { GET_ARTICLES } from '../../../services/index'
 import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
 import ArticlesSkeleton from './Skeleton/ArticlesSkeleton'
+
 const Articles = () => {
   const [News, setNews] = useState([])
   const { loading, error, data } = useQuery(GET_ARTICLES, { client: client })
+
   useEffect(() => {
     if (data && data.articles) {
       setNews(data.articles)
     }
   }, [data])
+
   if (loading) return <ArticlesSkeleton />
+
+  // Slice differently based on screen size
+  const articlesToShow =
+    window.innerWidth < 640 ? News.slice(1, 4) : News.slice(1, 6)
+
   return (
     <div
       className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6
     lg:gap-0 lg:w-4/12'
     >
-      {News.slice(1, 6).map((article) => (
+      {articlesToShow.map((article) => (
         <div key={article.id}>
           <h2 className='text-base sm:text-lg md:text-lg lg:text-xl font-bold leading-6'>
             {article.subheading}

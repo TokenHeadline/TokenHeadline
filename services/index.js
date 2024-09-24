@@ -34,3 +34,23 @@ export const GET_ARTICLES = gql`
     }
   }
 `
+export const GET_ARTICLE = gql`
+  query MyQuery($slug: String!) {
+    articles(where: { slug: $slug }) {
+      category {
+        category
+      }
+      title
+      author {
+        name
+        image {
+          url
+        }
+      }
+      content {
+        raw
+      }
+      date
+    }
+  }
+`

@@ -5,7 +5,7 @@ import TodaySkeleton from './Skeleton/TodaySkeleton'
 import { GET_TODAY } from '../../../services/index'
 import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
-
+import Link from 'next/link'
 const Today = () => {
   function formatDateWithOrdinalAndAbbreviatedMonth(dateStr) {
     const date = new Date(dateStr)
@@ -67,9 +67,13 @@ const Today = () => {
           <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
             TODAY RELEASE
           </h1>
-          <h2 className='text-xl sm:text-2xl md:text-3xl font-bold'>
+
+          <Link
+            href={`/article/${article.slug}`}
+            className='text-xl sm:text-2xl md:text-3xl font-bold'
+          >
             {article.subheading}
-          </h2>
+          </Link>
           <div className='flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 text-sm sm:text-base'>
             <p className='font-bold'>{article.category.category}</p>
             <p className='text-gray-500'>By {article.author.name}</p>
