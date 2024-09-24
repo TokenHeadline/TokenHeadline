@@ -4,7 +4,7 @@ import Image from 'next/image'
 const Latest = ({ News }) => {
   return (
     <div className='p-4'>
-      <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mb-6'>
+      <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold '>
         LATEST NEWS
       </h1>
       {News.slice(0, 1).map((newsItem, index) => (
@@ -16,7 +16,7 @@ const Latest = ({ News }) => {
           <div className='flex-1'>
             <div className='flex items-center space-x-4 p-4'>
               <Image
-                src={newsItem.author.image}
+                src='https://media.licdn.com/dms/image/v2/D4D03AQFpI2pUVXS7ew/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1686243239728?e=1732752000&v=beta&t=VgLtWR1vlpg_f4kZAMAJ5PMnBcjrfBY9n9DKOMC-a5k'
                 width={33}
                 height={38}
                 alt={newsItem.author.name}
@@ -30,7 +30,7 @@ const Latest = ({ News }) => {
                 {newsItem.title}
               </h1>
               <p className='text-base md:text-lg'>
-                {newsItem.content.split(' ').slice(0, 50).join(' ') + '...'}
+                {newsItem.content.split(' ').slice(0, 70).join(' ') + '...'}
               </p>
             </div>
           </div>

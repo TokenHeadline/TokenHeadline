@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: [
+    remotePatterns: [
       'img.freepik.com',
       'example.com',
       'academy-public.coinmarketcap.com',
@@ -14,6 +14,7 @@ const nextConfig = {
       'static01.nyt.com',
       'www.xrtoday.com',
       'ap-south-1.graphassets.com',
+      'media.licdn.com',
     ], // Ensure only necessary domains are listed
   },
 }
