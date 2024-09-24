@@ -44,7 +44,10 @@ const Articles = () => {
                 By {article.author.name}
               </p>
             </div>
-            <Link href={`/article/${article.slug}`}>
+            <Link
+              href={`/article/${article.slug}`}
+              aria-label={`/article/${article.slug}`}
+            >
               <HiArrowSmallRight className='w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8' />
             </Link>
           </div>

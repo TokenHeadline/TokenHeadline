@@ -70,6 +70,7 @@ const Today = () => {
 
           <Link
             href={`/article/${article.slug}`}
+            aria-label={`/article/${article.slug}`}
             className='text-xl sm:text-2xl md:text-3xl font-bold'
           >
             {article.subheading}
