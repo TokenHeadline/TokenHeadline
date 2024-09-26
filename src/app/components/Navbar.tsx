@@ -20,7 +20,7 @@ export default function Navbar() {
 
   const menuItems = [
     { name: 'Press Release', href: '/press-release' },
-    { name: 'Exclusive Article', href: '/exclusive-article' },
+    { name: 'Exclusive Article', href: '/articles' },
     { name: 'Interview', href: '/interview' },
     { name: 'Learn', href: '/learn' },
     { name: 'Advertisement', href: '/advertisement' },
@@ -37,7 +37,7 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <nav className='text-black font-semibold lg:mb-6 m-8 mt-0 mb-0'>
+    <nav className='text-black font-semibold lg:mb-6 m-8 mt-0 mb-3'>
       <div className='container flex flex-row lg:flex-col justify-between'>
         <div className='flex items-center justify-center'>
           <Link

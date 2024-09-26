@@ -55,3 +55,40 @@ export const GET_ARTICLE = gql`
     }
   }
 `
+export const GET_BANNER = gql`
+  query MyQuery {
+    articles(orderBy: publishedAt_ASC, first: 6) {
+      id
+      title
+      featuredImage {
+        url
+      }
+      slug
+    }
+  }
+`
+export const GET_ALL_ARTICLES = gql`
+  query GetAllArticles($limit: Int, $offset: Int) {
+    articles(orderBy: publishedAt_ASC, first: $limit, skip: $offset) {
+      id
+      title
+      featuredImage {
+        url
+      }
+      slug
+      author {
+        name
+      }
+      date
+      excerpt
+      category {
+        category
+      }
+    }
+    totalCount: articlesConnection {
+      aggregate {
+        count
+      }
+    }
+  }
+`
