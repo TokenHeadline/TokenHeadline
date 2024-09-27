@@ -89,7 +89,7 @@ const ArticlesPage = () => {
                   className='bg-orange-500 text-black font-semibold px-2 absolute h-8 w-40
                 top-0 font-2xl items-center text-center'
                 >
-                  {news.category.category.toUpperCase()}
+                  {news.category.name.toUpperCase()}
                 </div>
                 <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
                   {news.title}
