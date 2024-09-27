@@ -76,7 +76,7 @@ const Today = () => {
             {article.subheading}
           </Link>
           <div className='flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 text-sm sm:text-base'>
-            <p className='font-bold'>{article.category.category}</p>
+            <p className='font-bold'>{article.category.name}</p>
             <p className='text-gray-500'>By {article.author.name}</p>
             <p className='text-gray-500'>
               {formatDateWithOrdinalAndAbbreviatedMonth(article.date)}

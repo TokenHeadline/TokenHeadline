@@ -13,7 +13,7 @@ export const GET_TODAY = gql`
       }
       slug
       category {
-        category
+        name
       }
       date
       subheading
@@ -28,7 +28,7 @@ export const GET_ARTICLES = gql`
       }
       slug
       category {
-        category
+        name
       }
       subheading
       id
@@ -39,7 +39,7 @@ export const GET_ARTICLE = gql`
   query MyQuery($slug: String!) {
     articles(where: { slug: $slug }) {
       category {
-        category
+        name
       }
       title
       author {
@@ -82,7 +82,7 @@ export const GET_ALL_ARTICLES = gql`
       date
       excerpt
       category {
-        category
+        name
       }
     }
     totalCount: articlesConnection {
