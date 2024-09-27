@@ -37,7 +37,7 @@ const Articles = () => {
             <div className='flex flex-col lg:flex-row'>
               <div className='mr-4'>
                 <p className='text-sm sm:text-sm font-bold'>
-                  {article.category.name}
+                  {article.category.name.toUpperCase()}
                 </p>
               </div>
               <p className='text-sm sm:text-sm text-black lg:ml-2'>
