@@ -87,7 +87,7 @@ const ArticlesPage = () => {
               <div className='p-6 flex flex-col justify-between w-2/3 relative'>
                 <div
                   className='bg-orange-500 text-black font-semibold px-2 absolute h-8 w-40
-                top-0 font-2xl '
+                top-0 font-2xl items-center text-center'
                 >
                   {news.category.category.toUpperCase()}
                 </div>
