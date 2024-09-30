@@ -122,3 +122,65 @@ export const GET_CATEGORY_ARTICLE = gql`
     }
   }
 `
+export const GET_CATEGORY_COUNT = gql`
+  query GetAllArticles($slug: String) {
+    totalCount: articlesConnection(where: { category: { slug: $slug } }) {
+      aggregate {
+        count
+      }
+    }
+  }
+`
+export const GET_CATEGORIES = gql`
+  query MyQuery {
+    categories {
+      name
+      slug
+      imageUrl {
+        url
+      }
+    }
+  }
+`
+export const BREAKING_NEWS = gql`
+  query MyQuery {
+    articles {
+      breakingNews
+      title
+    }
+  }
+`
+export const GET_LATEST = gql`
+  query MyQuery {
+    articles(first: 1) {
+      slug
+      title
+      excerpt
+      featuredImage {
+        url
+      }
+      author {
+        name
+        image {
+          url
+        }
+      }
+    }
+  }
+`
+export const GET_ARTICLE_FOR_GRID = gql`
+  query MyQuery {
+    articles(first: 6) {
+      title
+      excerpt
+      featuredImage {
+        url
+      }
+      author {
+        name
+      }
+      slug
+      date
+    }
+  }
+`

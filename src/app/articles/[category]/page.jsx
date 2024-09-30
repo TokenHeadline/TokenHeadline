@@ -6,7 +6,6 @@ import { GET_CATEGORY_ARTICLE } from '../../../../services'
 import client from '../../../lib/apolloClient'
 import Link from 'next/link'
 const ArticlesPage = ({ params }) => {
-  console.log(params)
   const ARTICLES_PER_PAGE = 6
   const [currentPage, setCurrentPage] = useState(1)
   const { loading, error, data } = useQuery(GET_CATEGORY_ARTICLE, {

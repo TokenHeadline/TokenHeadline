@@ -1,22 +1,20 @@
-import React from 'react'
+'use client'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-
-const topicsData = [
-  { name: 'ALL', newsCount: 50, imageUrl: '/all.png' },
-  { name: 'BLOCKCHAIN', newsCount: 18, imageUrl: '/blockchain.png' },
-  {
-    name: 'TECHNICAL ANALYSIS',
-    newsCount: 18,
-    imageUrl: '/technical.png',
-  },
-  { name: 'BITCOIN', newsCount: 18, imageUrl: '/bitcoin.png' },
-  { name: 'FUNDAMENTAL', newsCount: 18, imageUrl: '/fundamental.png' },
-  { name: 'ETHEREUM', newsCount: 18, imageUrl: '/technology.png' },
-
-  // Add more topics here...
-]
-
+import { GET_CATEGORY_COUNT, GET_CATEGORIES } from '../../../services/index'
+import { useQuery } from '@apollo/client'
+import client from '../../lib/apolloClient'
+import Link from 'next/link'
 const Topics = () => {
+  const [categories, setCategories] = useState([])
+  const { loading, error, data } = useQuery(GET_CATEGORIES, { client: client })
+
+  useEffect(() => {
+    if (data && data.categories) {
+      setCategories(data.categories)
+    }
+  }, [data])
+  console.log(categories)
   return (
     <div className=' mt-8 '>
       <div className='flex flex-row justify-between mb-8 '>
@@ -44,8 +42,34 @@ const Topics = () => {
         />
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
-        {topicsData.map((topic, index) => (
-          <div
+        <Link
+          href={`articles/`}
+          aria-label={`articles/topic`}
+          className=' flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer 
+            shadow-md'
+          style={{ width: 'auto', maxWidth: '100%' }} // Adjust width based on image
+        >
+          <div className='flex justify-between items-start'>
+            <h3 className='text-base sm:text-lg md:text-lg font-bold'>ALL</h3>
+            <span className='text-xs sm:text-sm text-gray-600 font-bold'>
+              View All
+            </span>
+          </div>
+          <hr className='my-4 border-black' />
+          <div className='flex justify-center'>
+            <Image
+              src={'/all.png'}
+              alt={'all'}
+              height={400}
+              width={300}
+              className='border-2 border-black '
+            />
+          </div>
+        </Link>
+        {categories.map((topic, index) => (
+          <Link
+            href={`articles/${topic.slug}`}
+            aria-label={`articles/topic`}
             key={index}
             className=' flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer 
             shadow-md'
@@ -53,7 +77,7 @@ const Topics = () => {
           >
             <div className='flex justify-between items-start'>
               <h3 className='text-base sm:text-lg md:text-lg font-bold'>
-                {topic.name} {topic.newsCount}
+                {topic.name.toUpperCase()}
               </h3>
               <span className='text-xs sm:text-sm text-gray-600 font-bold'>
                 View All
@@ -62,14 +86,14 @@ const Topics = () => {
             <hr className='my-4 border-black' />
             <div className='flex justify-center'>
               <Image
-                src={topic.imageUrl}
+                src={topic.imageUrl.url}
                 alt={topic.name}
                 height={400}
                 width={300}
                 className='border-2 border-black '
               />
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

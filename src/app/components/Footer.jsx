@@ -51,7 +51,7 @@ const Footer = () => {
               <FaYoutube size={40} />
             </Link>
           </div>
-          <p className='text-gray-500 text-center md:text-left'>
+          <p className='text-black text-center md:text-left'>
             &copy; 2024 TokenHeadline
           </p>
         </div>

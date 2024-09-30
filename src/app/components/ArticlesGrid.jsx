@@ -1,23 +1,74 @@
-import React from 'react'
+'use client'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { GET_ARTICLE_FOR_GRID } from '../../../services/index'
+import { useQuery } from '@apollo/client'
+import client from '../../lib/apolloClient'
+function formatDateWithOrdinalAndAbbreviatedMonth(dateStr) {
+  const date = new Date(dateStr)
 
-const ArticlesGrid = ({ News }) => {
+  const day = date.getDate()
+  const year = date.getFullYear()
+
+  // Abbreviated month array
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+  const month = months[date.getMonth()] // Get the correct abbreviated month
+
+  // Function to add the correct ordinal suffix to the day
+  const getOrdinal = (day) => {
+    if (day > 3 && day < 21) return 'th' // covers 11th to 19th
+    switch (day % 10) {
+      case 1:
+        return 'st'
+      case 2:
+        return 'nd'
+      case 3:
+        return 'rd'
+      default:
+        return 'th'
+    }
+  }
+
+  return `${day}${getOrdinal(day)} ${month} ${year}`
+}
+const ArticlesGrid = () => {
+  const { loading, error, data } = useQuery(GET_ARTICLE_FOR_GRID, {
+    client: client,
+  })
+  const News = data?.articles || []
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error loading news</p>
+
   return (
     <div className='m-4 pt-5 md:pl-16 md:pr-16 xl:pl-16'>
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
         LATEST ARTICLES
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
-        {News.slice(1, 7).map((news, index) => (
-          <div
+        {News.map((news, index) => (
+          <Link
+            href={`/article/${news.slug}`}
+            aria-label={`/article/${news.slug}`}
             className='flex flex-col justify-between overflow-hidden shadow-md backdrop-blur-md bg-white/40 h-full'
             key={index}
           >
-            {/* Image Section */}
             <div className='relative w-full h-48'>
               <Image
-                src={news.featuredImage}
+                src={news.featuredImage.url}
                 alt={news.title}
                 fill
                 sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
@@ -25,13 +76,12 @@ const ArticlesGrid = ({ News }) => {
               />
             </div>
 
-            {/* Content Section */}
             <div className='p-4 flex-grow'>
               <h2 className='text-lg sm:text-xl font-semibold mb-2'>
                 {news.title}
               </h2>
               <p className='text-sm text-gray-700 mb-4'>
-                {news.content.split(' ').slice(0, 30).join(' ') + '...'}
+                {news.excerpt.split(' ').slice(0, 30).join(' ') + '...'}
               </p>
             </div>
 
@@ -39,10 +89,10 @@ const ArticlesGrid = ({ News }) => {
             <div className='p-4 mt-auto'>
               <div className='flex justify-between text-sm text-black'>
                 <p>By {news.author.name}</p>
-                <p>{news.date}</p>
+                <p>{formatDateWithOrdinalAndAbbreviatedMonth(news.date)}</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
