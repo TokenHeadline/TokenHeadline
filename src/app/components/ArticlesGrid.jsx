@@ -85,7 +85,6 @@ const ArticlesGrid = () => {
               </p>
             </div>
 
-            {/* Author and Date Section */}
             <div className='p-4 mt-auto'>
               <div className='flex justify-between text-sm text-black'>
                 <p>By {news.author.name}</p>

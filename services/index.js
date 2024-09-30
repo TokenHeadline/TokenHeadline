@@ -50,6 +50,7 @@ export const GET_ARTICLE = gql`
       }
       content {
         raw
+        html
       }
       date
     }

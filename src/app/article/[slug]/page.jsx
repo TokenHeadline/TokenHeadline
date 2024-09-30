@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client'
 import client from '../../../lib/apolloClient'
 import { RichText } from '@graphcms/rich-text-react-renderer'
 import Image from 'next/image'
+
 const Page = ({ params }) => {
   const { slug } = params
   const { loading, error, data } = useQuery(GET_ARTICLE, {
@@ -38,9 +39,9 @@ const Page = ({ params }) => {
   }
 
   return (
-    <div className='p-5 sm:p-2 md:p-4 lg:p-8 lg:pt-0  mx-auto'>
+    <div className='p-5 sm:m-2 md:m-4 lg:m-8 lg:mt-0 mx-auto bg-white shadow-lg border-2 border-black'>
       {News.map((article, index) => (
-        <div key={index} className=' p-6 mb-8 md:mb-12'>
+        <div key={index} className='p-6 mb-8 md:mb-12'>
           <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4'>
             {article.title}
           </h1>
@@ -55,13 +56,20 @@ const Page = ({ params }) => {
             <RichText
               content={article.content.raw}
               renderers={{
+                bold: ({ children }) => <strong>{children}</strong>,
+                underline: ({ children }) => (
+                  <span style={{ textDecoration: 'underline' }}>
+                    {children}
+                  </span>
+                ),
+                italic: ({ children }) => <em>{children}</em>,
                 img: ({ src, altText }) => (
                   <Image
                     src={src}
                     alt={altText}
                     width={800}
                     height={500}
-                    className='mx-auto rounded-md my-5 '
+                    className='mx-auto rounded-md my-5'
                   />
                 ),
                 ul: ({ children }) => (
@@ -73,6 +81,41 @@ const Page = ({ params }) => {
                   </ol>
                 ),
                 li: ({ children }) => <li className='mb-2'>{children}</li>,
+                h1: ({ children }) => (
+                  <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4'>
+                    {children}
+                  </h1>
+                ),
+                h2: ({ children }) => (
+                  <h2 className='text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-4'>
+                    {children}
+                  </h2>
+                ),
+                h3: ({ children }) => (
+                  <h3 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-4'>
+                    {children}
+                  </h3>
+                ),
+                h4: ({ children }) => (
+                  <h4 className='text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-4'>
+                    {children}
+                  </h4>
+                ),
+                h5: ({ children }) => (
+                  <h5 className='text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-4'>
+                    {children}
+                  </h5>
+                ),
+                h6: ({ children }) => (
+                  <h6 className='text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-4'>
+                    {children}
+                  </h6>
+                ),
+                blockquote: ({ children }) => (
+                  <blockquote className='border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4'>
+                    {children}
+                  </blockquote>
+                ),
               }}
             />
           </div>
