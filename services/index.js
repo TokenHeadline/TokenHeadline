@@ -92,3 +92,33 @@ export const GET_ALL_ARTICLES = gql`
     }
   }
 `
+export const GET_CATEGORY_ARTICLE = gql`
+  query GetAllArticles($limit: Int, $offset: Int, $category: String) {
+    articles(
+      orderBy: publishedAt_ASC
+      first: $limit
+      skip: $offset
+      where: { category: { slug: $category } }
+    ) {
+      id
+      title
+      featuredImage {
+        url
+      }
+      slug
+      author {
+        name
+      }
+      date
+      excerpt
+      category {
+        name
+      }
+    }
+    totalCount: articlesConnection {
+      aggregate {
+        count
+      }
+    }
+  }
+`

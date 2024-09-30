@@ -2,17 +2,19 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useQuery } from '@apollo/client'
-import { GET_ALL_ARTICLES } from '../../../services'
-import client from '../../lib/apolloClient'
+import { GET_CATEGORY_ARTICLE } from '../../../../services'
+import client from '../../../lib/apolloClient'
 import Link from 'next/link'
-const ArticlesPage = () => {
+const ArticlesPage = ({ params }) => {
+  console.log(params)
   const ARTICLES_PER_PAGE = 6
   const [currentPage, setCurrentPage] = useState(1)
-  const { loading, error, data } = useQuery(GET_ALL_ARTICLES, {
+  const { loading, error, data } = useQuery(GET_CATEGORY_ARTICLE, {
     client,
     variables: {
       limit: ARTICLES_PER_PAGE,
       offset: (currentPage - 1) * ARTICLES_PER_PAGE,
+      category: params.category,
     },
   })
 
