@@ -1,55 +1,68 @@
-'use client'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { GET_ARTICLE } from '../../../../services/index'
-import { useQuery } from '@apollo/client'
 import client from '../../../lib/apolloClient'
 import { RichText } from '@graphcms/rich-text-react-renderer'
 import Image from 'next/image'
 
-const Page = ({ params }) => {
+export async function generateMetadata({ params }) {
   const { slug } = params
-  const { loading, error, data } = useQuery(GET_ARTICLE, {
+
+  // Fetch data on the server side
+  const { data } = await client.query({
+    query: GET_ARTICLE,
     variables: { slug },
-    client: client,
   })
-  const [News, setNews] = useState([])
 
-  useEffect(() => {
-    if (data && data.articles) {
-      setNews(data.articles)
+  const article = data.articles[0]
+
+  if (!article) {
+    return {
+      title: 'Article not found',
+      description: 'The requested article does not exist.',
     }
-  }, [data])
-
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-gray-500'>Loading...</p>
-      </div>
-    )
   }
 
-  if (error) {
+  return {
+    title: article.seoTitle || article.title,
+    description:
+      article.metaDescription || 'Default description if none is provided',
+  }
+}
+
+const Page = async ({ params }) => {
+  const { slug } = params
+
+  const { data } = await client.query({
+    query: GET_ARTICLE,
+    variables: { slug },
+  })
+
+  const articles = data.articles
+
+  if (!articles || articles.length === 0) {
     return (
       <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-red-500'>
-          Error fetching data
-        </p>
+        <p className='text-xl font-semibold text-red-500'>Article not found</p>
       </div>
     )
   }
 
   return (
-    <div className='p-5 sm:m-2 md:m-4 lg:m-8 lg:mt-0 mx-auto bg-white shadow-lg border-2 border-black'>
-      {News.map((article, index) => (
+    <div className='p-5 sm:m-2 md:m-4 lg:m-8 lg:mt-0 mx-auto bg-gray-100 shadow-lg border-2 border-black '>
+      {articles.map((article, index) => (
         <div key={index} className='p-6 mb-8 md:mb-12'>
-          <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4'>
+          <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 text-center'>
             {article.title}
           </h1>
 
-          <div className='flex flex-col sm:flex-row text-gray-600 text-sm md:text-base mb-6'>
-            <span className='mb-1 sm:mb-0'>By {article.author.name}</span>
-            <span className='hidden sm:block mx-2'>|</span>
-            <span>{new Date(article.date).toLocaleDateString()}</span>
+          <div className='flex flex-col sm:flex-row text-gray-600 text-sm md:text-base mb-6 '>
+            <span className='mb-1 sm:mb-0 text-center'>
+              By {article.author.name}
+            </span>
+            <span className='hidden sm:block mx-2 text-center'>|</span>
+            <span className='text-center'>
+              {new Date(article.date).toLocaleDateString()}
+            </span>
           </div>
 
           <div className='prose prose-lg max-w-none text-gray-900'>

@@ -1,33 +1,31 @@
-'use client'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { HiArrowSmallRight } from 'react-icons/hi2'
 import Link from 'next/link'
 import { GET_ARTICLES } from '../../../services/index'
-import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
 import ArticlesSkeleton from './Skeleton/ArticlesSkeleton'
 
-const Articles = () => {
-  const [News, setNews] = useState([])
-  const { loading, error, data } = useQuery(GET_ARTICLES, { client: client })
+const Articles = async () => {
+  // Fetch data on the server side
+  const { data } = await client.query({
+    query: GET_ARTICLES,
+  })
 
-  useEffect(() => {
-    if (data && data.articles) {
-      setNews(data.articles)
-    }
-  }, [data])
+  const News = data.articles
 
-  if (loading) return <ArticlesSkeleton />
+  // Handle case when there are no articles
+  if (!News || News.length === 0) {
+    return <ArticlesSkeleton />
+  }
 
-  // Slice differently based on screen size
+  // Determine the number of articles to show based on viewport width
   const articlesToShow =
-    window.innerWidth < 640 ? News.slice(1, 4) : News.slice(1, 6)
+    typeof window !== 'undefined' && window.innerWidth < 640
+      ? News.slice(1, 4)
+      : News.slice(1, 6)
 
   return (
-    <div
-      className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6
-    lg:gap-0 lg:w-4/12'
-    >
+    <div className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 lg:gap-0 lg:w-4/12'>
       {articlesToShow.map((article) => (
         <div key={article.id}>
           <h2 className='text-base sm:text-lg md:text-lg lg:text-xl font-bold leading-6'>

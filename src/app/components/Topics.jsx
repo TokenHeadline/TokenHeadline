@@ -1,23 +1,21 @@
-'use client'
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { GET_CATEGORY_COUNT, GET_CATEGORIES } from '../../../services/index'
-import { useQuery } from '@apollo/client'
+// Topics.js
+import React from 'react'
+import { GET_CATEGORIES } from '../../../services/index'
 import client from '../../lib/apolloClient'
+import Image from 'next/image'
 import Link from 'next/link'
-const Topics = () => {
-  const [categories, setCategories] = useState([])
-  const { loading, error, data } = useQuery(GET_CATEGORIES, { client: client })
 
-  useEffect(() => {
-    if (data && data.categories) {
-      setCategories(data.categories)
-    }
-  }, [data])
-  console.log(categories)
+const Topics = async () => {
+  // Fetch data on the server side
+  const { data } = await client.query({
+    query: GET_CATEGORIES,
+  })
+
+  const categories = data.categories
+
   return (
-    <div className=' mt-8 '>
-      <div className='flex flex-row justify-between mb-8 '>
+    <div className='mt-8'>
+      <div className='flex flex-row justify-between mb-8'>
         <h2 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
           READ UP ON THE{' '}
           <span
@@ -45,9 +43,8 @@ const Topics = () => {
         <Link
           href={`articles/`}
           aria-label={`articles/topic`}
-          className=' flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer 
-            shadow-md'
-          style={{ width: 'auto', maxWidth: '100%' }} // Adjust width based on image
+          className='flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer shadow-md'
+          style={{ width: 'auto', maxWidth: '100%' }}
         >
           <div className='flex justify-between items-start'>
             <h3 className='text-base sm:text-lg md:text-lg font-bold'>ALL</h3>
@@ -62,7 +59,7 @@ const Topics = () => {
               alt={'all'}
               height={400}
               width={300}
-              className='border-2 border-black '
+              className='border-2 border-black'
             />
           </div>
         </Link>
@@ -71,9 +68,8 @@ const Topics = () => {
             href={`articles/${topic.slug}`}
             aria-label={`articles/topic`}
             key={index}
-            className=' flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer 
-            shadow-md'
-            style={{ width: 'auto', maxWidth: '100%' }} // Adjust width based on image
+            className='flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer shadow-md'
+            style={{ width: 'auto', maxWidth: '100%' }}
           >
             <div className='flex justify-between items-start'>
               <h3 className='text-base sm:text-lg md:text-lg font-bold'>
@@ -90,7 +86,7 @@ const Topics = () => {
                 alt={topic.name}
                 height={400}
                 width={300}
-                className='border-2 border-black '
+                className='border-2 border-black'
               />
             </div>
           </Link>

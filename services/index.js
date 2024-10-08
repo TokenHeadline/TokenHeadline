@@ -2,8 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GET_TODAY = gql`
   query MyQuery {
-    articles(first: 1) {
-      title
+    articles(last: 1) {
       excerpt
       featuredImage {
         url
@@ -22,7 +21,7 @@ export const GET_TODAY = gql`
 `
 export const GET_ARTICLES = gql`
   query MyQuery {
-    articles(first: 7) {
+    articles(last: 7) {
       author {
         name
       }
@@ -53,6 +52,8 @@ export const GET_ARTICLE = gql`
         html
       }
       date
+      seoTitle
+      metaDescription
     }
   }
 `
@@ -171,7 +172,7 @@ export const GET_LATEST = gql`
 `
 export const GET_ARTICLE_FOR_GRID = gql`
   query MyQuery {
-    articles(first: 6) {
+    articles(first: 3) {
       title
       excerpt
       featuredImage {

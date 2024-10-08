@@ -14,12 +14,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <title>Token Headline</title>
-      <meta
-        name='description'
-        content='Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.'
-      />
-      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <body
         className={inriaSans.className}
         style={{ backgroundColor: '#e9e9e9' }}

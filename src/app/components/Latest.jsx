@@ -1,27 +1,20 @@
-'use client'
 import React from 'react'
 import Image from 'next/image'
 import { GET_LATEST } from '../../../services/index'
-import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
-const Latest = () => {
-  const { loading, error, data } = useQuery(GET_LATEST, { client: client })
+
+const Latest = async () => {
+  // Fetch data on the server side
+  const { data } = await client.query({
+    query: GET_LATEST,
+  })
+
   const News = data?.articles || []
-
-  if (loading) {
-    return <p>Loading...</p> // Loading state
-  }
-
-  if (error) {
-    return <p>Error loading news</p> // Error state
-  }
 
   return (
     <div className='p-4'>
-      <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold '>
-        LATEST NEWS
-      </h1>
+      <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>Opinion</h1>
 
       {News.slice(0, 1).map((newsItem, index) => (
         <div
@@ -47,7 +40,7 @@ const Latest = () => {
             <div className='mr-0 lg:mr-20'>
               <Link
                 href={`article/${newsItem.slug}`}
-                className='font-bold text-2xl md:text-3xl lg:text-4xl mb-4 duration-300 ease-in-out transform hover:scale-105 '
+                className='font-bold text-2xl md:text-3xl lg:text-4xl mb-4 duration-300 ease-in-out transform hover:scale-105'
               >
                 {newsItem.title}
               </Link>
@@ -63,7 +56,7 @@ const Latest = () => {
           <div className='flex-1'>
             <div className='w-full'>
               <Image
-                src={newsItem?.featuredImage?.url || '/image.png'} // Use newsItem image if available
+                src={newsItem?.featuredImage?.url || '/image.png'}
                 width={630}
                 height={452}
                 alt={newsItem.title}
