@@ -4,8 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { GET_ARTICLE_FOR_GRID } from '../../../services/index'
 import client from '../../lib/apolloClient'
-import Carousel from 'react-multi-carousel'
-import 'react-multi-carousel/lib/styles.css'
+// import Carousel from 'react-multi-carousel'
+// import 'react-multi-carousel/lib/styles.css'
 
 const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
   const date = new Date(dateStr)
@@ -45,26 +45,7 @@ const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
   return `${day}${getOrdinal(day)} ${month} ${year}`
 }
 
-const ArticlesCarousel = async () => {
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 1301 },
-      items: 3,
-    },
-    desktop: {
-      breakpoint: { max: 1300, min: 800 },
-      items: 2,
-    },
-    tablet: {
-      breakpoint: { max: 800, min: 677 },
-      items: 1,
-    },
-    mobile: {
-      breakpoint: { max: 677, min: 0 },
-      items: 1,
-    },
-  }
-
+const ArticlesGrid = async () => {
   const { data } = await client.query({
     query: GET_ARTICLE_FOR_GRID,
   })
@@ -76,12 +57,13 @@ const ArticlesCarousel = async () => {
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
         LATEST ARTICLES
       </h1>
-      <Carousel responsive={responsive} className='py-4 mt-10'>
+      {/* <Carousel></Carousel> */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
         {News.map((news, index) => (
           <Link
             href={`/article/${news.slug}`}
             aria-label={`/article/${news.slug}`}
-            className='flex flex-col justify-between overflow-hidden shadow-md backdrop-blur-md bg-white/40 h-full p-4'
+            className='flex flex-col justify-between overflow-hidden shadow-md backdrop-blur-md bg-white/40 h-full'
             key={index}
           >
             <div className='relative w-full h-48'>
@@ -94,20 +76,24 @@ const ArticlesCarousel = async () => {
               />
             </div>
 
-            <h2 className='text-lg sm:text-xl font-semibold mb-2'>
-              {news.title}
-            </h2>
-            <p className='text-sm text-gray-700 mb-4'>
-              {news.excerpt.split(' ').slice(0, 30).join(' ') + '...'}
-            </p>
+            <div className='p-4 flex-grow'>
+              <h2 className='text-lg sm:text-xl font-semibold mb-2'>
+                {news.title}
+              </h2>
+              <p className='text-sm text-gray-700 mb-4'>
+                {news.excerpt.split(' ').slice(0, 30).join(' ') + '...'}
+              </p>
+            </div>
 
-            <div className='flex justify-between text-sm text-black'>
-              <p>By {news.author.name}</p>
-              <p>{formatDateWithOrdinalAndAbbreviatedMonth(news.date)}</p>
+            <div className='p-4 mt-auto'>
+              <div className='flex justify-between text-sm text-black'>
+                <p>By {news.author.name}</p>
+                <p>{formatDateWithOrdinalAndAbbreviatedMonth(news.date)}</p>
+              </div>
             </div>
           </Link>
         ))}
-      </Carousel>
+      </div>
 
       <div className='text-center mt-8'>
         <Link
@@ -121,4 +107,4 @@ const ArticlesCarousel = async () => {
   )
 }
 
-export default ArticlesCarousel
+export default ArticlesGrid
