@@ -80,7 +80,7 @@ const Page = async ({ params }) => {
                 img: ({ src, altText }) => (
                   <Image
                     src={src}
-                    alt={altText}
+                    alt={article.title}
                     width={800}
                     height={500}
                     className='mx-auto rounded-md my-5'
@@ -129,6 +129,16 @@ const Page = async ({ params }) => {
                   <blockquote className='border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4'>
                     {children}
                   </blockquote>
+                ),
+                table: ({ children }) => (
+                  <table className='table-auto w-full border-2 text-center'>
+                    {children}
+                  </table>
+                ),
+                td: ({ children }) => (
+                  <td className='border border-gray-300 p-2 text-center'>
+                    {children}
+                  </td>
                 ),
               }}
             />

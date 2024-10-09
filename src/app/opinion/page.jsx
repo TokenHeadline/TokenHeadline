@@ -80,6 +80,7 @@ const ArticlesPage = () => {
                 alt={news.title}
                 fill
                 className='object-cover'
+                priority
               />
             </div>
 

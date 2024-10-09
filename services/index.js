@@ -215,7 +215,7 @@ export const GET_OPINION = gql`
         name
       }
     }
-    totalCount: articlesConnection {
+    totalCount: articlesConnection(where: { opinion: true }) {
       aggregate {
         count
       }
