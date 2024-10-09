@@ -59,7 +59,7 @@ export const GET_ARTICLE = gql`
 `
 export const GET_BANNER = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, where: { opinion: false }, first: 6) {
+    articles(orderBy: date_DESC, first: 6) {
       id
       title
       featuredImage {
