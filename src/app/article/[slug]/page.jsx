@@ -7,7 +7,6 @@ import Image from 'next/image'
 export async function generateMetadata({ params }) {
   const { slug } = params
 
-  // Fetch data on the server side
   const { data } = await client.query({
     query: GET_ARTICLE,
     variables: { slug },
@@ -38,6 +37,8 @@ const Page = async ({ params }) => {
   })
 
   const articles = data.articles
+
+  console.log(articles)
 
   if (!articles || articles.length === 0) {
     return (

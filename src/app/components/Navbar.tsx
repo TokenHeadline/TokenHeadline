@@ -20,7 +20,8 @@ export default function Navbar() {
 
   const menuItems = [
     { name: 'Press Release', href: '/press-release' },
-    { name: 'Exclusive Article', href: '/articles' },
+    { name: 'Opinions', href: '/opinion' },
+    { name: 'Articles', href: '/articles' },
     { name: 'Interview', href: '/interview' },
     { name: 'Learn', href: '/learn' },
     { name: 'Advertisement', href: '/advertisement' },
@@ -52,7 +53,6 @@ export default function Navbar() {
               alt='logo
               
           '
-              // style={{ width: '150px', height: '35px' }}
               priority={true}
             />
           </Link>
@@ -68,7 +68,7 @@ export default function Navbar() {
           </Link>
           <div className='border-l border-black border-2 h-12 mx-4'></div>
           <div className='space-x-4 xl:space-x-6 ml-0'>
-            {menuItems.slice(0, 4).map((item, index) => (
+            {menuItems.slice(0, 5).map((item, index) => (
               <div className='relative inline-block' key={index}>
                 <Link
                   href={item.href}
@@ -81,7 +81,7 @@ export default function Navbar() {
             ))}
           </div>
           <div className='ml-12 xl:ml-16 space-x-6'>
-            {menuItems.slice(4).map((item, index) => (
+            {menuItems.slice(5).map((item, index) => (
               <div className='relative inline-block' key={index}>
                 <Link
                   href={item.href}

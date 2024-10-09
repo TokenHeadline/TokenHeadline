@@ -31,22 +31,22 @@ const Footer = () => {
               <FaFacebook size={40} />
             </Link>
             <Link
-              href='#'
+              href='https://www.instagram.com/tokenheadline/'
               aria-label='Instagram'
               className='hover:text-gray-400 rounded-full'
+              target='_blank'
             >
               <FaSquareInstagram size={40} />
             </Link>
-            <Link href='#' aria-label='Twitter' className='hover:text-gray-400'>
-              <AiFillTwitterCircle size={40} />
-            </Link>
             <Link
-              href='#'
-              aria-label='LinkedIn'
+              href='https://x.com/TokenHeadline/'
+              target='_blank'
+              aria-label='Twitter'
               className='hover:text-gray-400'
             >
-              <FaLinkedin size={40} />
+              <AiFillTwitterCircle size={40} />
             </Link>
+
             <Link href='#' aria-label='YouTube' className='hover:text-gray-400'>
               <FaYoutube size={40} />
             </Link>
@@ -56,9 +56,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Right Side - Links Columns */}
         <div className='flex flex-wrap justify-center md:justify-end space-x-12 text-lg'>
-          {/* Column 1 */}
           <div className='mb-6'>
             <ul>
               <li className='mb-2'>
@@ -67,8 +65,13 @@ const Footer = () => {
                 </Link>
               </li>
               <li className='mb-2'>
-                <Link href='exclusive-article' className='hover:text-gray-400'>
-                  Exclusive Article
+                <Link href='opinion' className='hover:text-gray-400'>
+                  Opinions
+                </Link>
+              </li>
+              <li className='mb-2'>
+                <Link href='articles' className='hover:text-gray-400'>
+                  Articles
                 </Link>
               </li>
               <li className='mb-2'>

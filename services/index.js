@@ -59,7 +59,7 @@ export const GET_ARTICLE = gql`
 `
 export const GET_BANNER = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, first: 6) {
+    articles(orderBy: date_DESC, first: 6, where: { opinion: false }) {
       id
       title
       featuredImage {
@@ -189,6 +189,36 @@ export const GET_ARTICLE_FOR_GRID = gql`
       }
       slug
       date
+    }
+  }
+`
+export const GET_OPINION = gql`
+  query GetAllOpinion($limit: Int, $offset: Int) {
+    articles(
+      orderBy: date_DESC
+      where: { opinion: true }
+      first: $limit
+      skip: $offset
+    ) {
+      id
+      title
+      featuredImage {
+        url
+      }
+      slug
+      author {
+        name
+      }
+      date
+      excerpt
+      category {
+        name
+      }
+    }
+    totalCount: articlesConnection {
+      aggregate {
+        count
+      }
     }
   }
 `
