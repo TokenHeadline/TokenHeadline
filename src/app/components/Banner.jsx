@@ -15,12 +15,12 @@ const Banner = () => {
   const [News, setNews] = useState([])
   const { loading, error, data } = useQuery(GET_BANNER, { client: client })
 
-  const [cards, setCards] = useState([]) // Initialize the `cards` state outside the conditional rendering
+  const [cards, setCards] = useState([])
 
   useEffect(() => {
     if (data && data.articles) {
       setNews(data.articles)
-      setCards(data.articles.slice(0, 6)) // Set `cards` when `News` is updated
+      setCards(data.articles.slice(0, 6))
     }
   }, [data])
 
