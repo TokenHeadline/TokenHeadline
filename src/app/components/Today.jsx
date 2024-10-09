@@ -105,11 +105,11 @@ const Today = async () => {
               <div className='grayscale'>
                 <Image
                   src={article.featuredImage.url}
-                  alt={article.title}
+                  alt={article.subheading}
                   width={400}
-                  height={300} // Keeping both width and height in proportion
+                  height={300}
                   priority={true}
-                  style={{ width: '100%', height: 'auto' }} // Ensuring aspect ratio with CSS
+                  style={{ width: '100%', height: 'auto' }}
                 />
               </div>
             </div>

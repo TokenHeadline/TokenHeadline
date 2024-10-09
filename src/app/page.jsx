@@ -1,7 +1,6 @@
 import React from 'react'
 import Today from './components/Today'
 import Articles from './components/Articles'
-import Banner from './components/Banner'
 import './globals.css'
 import Course from '../../public/Course.json'
 import BreakinNewsTicker from './components/BreakingNewsTicker'
@@ -9,14 +8,21 @@ import Topics from './components/Topics'
 import Latest from './components/Latest'
 import ArticlesGrid from './components/ArticlesGrid'
 import Courses from './components/Courses'
-import Head from 'next/head'
+import BannerServer from './components/BannerServer'
 export default function Home() {
   return (
     <div>
+      <head>
+        <title>Token Headline Home</title>
+        <meta
+          name='description'
+          content='Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.'
+        />
+      </head>
       <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16 '>
         <Today />
         <Articles />
-        <Banner />
+        <BannerServer />
       </section>
       <BreakinNewsTicker />
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16'>

@@ -7,5 +7,5 @@ export const fetchNews = async () => {
     query: GET_BANNER,
   })
 
-  return data.articles // Return articles directly
+  return data.articles
 }
