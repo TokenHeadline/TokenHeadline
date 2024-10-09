@@ -2,13 +2,13 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useQuery } from '@apollo/client'
-import { GET_OPINION } from '../../../services'
+import { GET_ALL_ARTICLES } from '../../../services'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
 const ArticlesPage = () => {
   const ARTICLES_PER_PAGE = 6
   const [currentPage, setCurrentPage] = useState(1)
-  const { loading, error, data } = useQuery(GET_OPINION, {
+  const { loading, error, data } = useQuery(GET_ALL_ARTICLES, {
     client,
     variables: {
       limit: ARTICLES_PER_PAGE,
@@ -80,7 +80,6 @@ const ArticlesPage = () => {
                 alt={news.title}
                 fill
                 className='object-cover'
-                priority
               />
             </div>
 
