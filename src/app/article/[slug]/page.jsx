@@ -96,49 +96,48 @@ const Page = async ({ params }) => {
                 ),
                 li: ({ children }) => <li className='mb-2'>{children}</li>,
                 h1: ({ children }) => (
-                  <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4'>
+                  <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-6'>
                     {children}
                   </h1>
                 ),
                 h2: ({ children }) => (
-                  <h2 className='text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-4'>
+                  <h2 className='text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-5'>
                     {children}
                   </h2>
                 ),
                 h3: ({ children }) => (
-                  <h3 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-4'>
+                  <h3 className='text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-4'>
                     {children}
                   </h3>
                 ),
                 h4: ({ children }) => (
-                  <h4 className='text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-4'>
+                  <h4 className='text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-4'>
                     {children}
                   </h4>
                 ),
                 h5: ({ children }) => (
-                  <h5 className='text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-4'>
+                  <h5 className='text-base md:text-lg lg:text-xl font-semibold text-gray-800 mb-3'>
                     {children}
                   </h5>
                 ),
                 h6: ({ children }) => (
-                  <h6 className='text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-4'>
+                  <h6 className='text-base md:text-lg lg:text-xl font-medium text-gray-800 mb-2'>
                     {children}
                   </h6>
                 ),
+
                 blockquote: ({ children }) => (
                   <blockquote className='border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4'>
                     {children}
                   </blockquote>
                 ),
                 table: ({ children }) => (
-                  <table className='table-auto w-full border-2 text-center'>
+                  <table className='table-auto  m-4 w-full border-2 text-center'>
                     {children}
                   </table>
                 ),
-                td: ({ children }) => (
-                  <td className='border border-gray-300 p-2 text-center'>
-                    {children}
-                  </td>
+                tr: ({ children }) => (
+                  <tr className='text-sm p-3 '>{children}</tr>
                 ),
               }}
             />
