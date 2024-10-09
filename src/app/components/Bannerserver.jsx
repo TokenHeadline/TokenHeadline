@@ -1,4 +1,4 @@
-import { fetchNews } from './fetchNews' // Adjust the path as necessary
+import { fetchNews } from './newsfetcher'
 import Banner from './Banner'
 
 const BannerServer = async () => {

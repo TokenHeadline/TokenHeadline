@@ -1,4 +1,3 @@
-// newsFetcher.js
 import { GET_BANNER } from '../../../services/index'
 import client from '../../lib/apolloClient'
 
