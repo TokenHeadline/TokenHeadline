@@ -50,7 +50,7 @@ const Today = async () => {
   const { data } = await client.query({
     query: GET_TODAY,
   })
-
+  // console.log(data)
   const News = data.articles
 
   // If loading, you can return a skeleton component or a loading state
