@@ -2,22 +2,22 @@ import { gql } from '@apollo/client'
 
 export const GET_TODAY = gql`
   query MyQuery {
-    articles(first: 1, orderBy: updatedAt_DESC, where: { opinion: false }) {
-      subheading
-      excerpt
-      featuredImage {
-        url
-      }
-      slug
-      category {
-        name
-      }
-      date
-      author {
-        name
-      }
+  articles(last: 1, orderBy: updatedAt_ASC, where: {opinion: false}) {
+    subheading
+    excerpt
+    featuredImage {
+      url
+    }
+    slug
+    category {
+      name
+    }
+    date
+    author {
+      name
     }
   }
+}
 `
 export const GET_ARTICLES = gql`
   query MyQuery {
