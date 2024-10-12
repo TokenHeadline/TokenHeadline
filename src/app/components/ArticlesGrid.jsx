@@ -49,6 +49,7 @@ const ArticlesGrid = async () => {
   const { data } = await client.query({
     query: GET_ARTICLE_FOR_GRID,
   })
+  // console.log(data)
   const News = data?.articles || []
 
   return (
@@ -56,7 +57,7 @@ const ArticlesGrid = async () => {
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
         LATEST ARTICLES
       </h1>
-      {/* <Carousel></Carousel> */}
+
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
         {News.map((news, index) => (
           <Link
