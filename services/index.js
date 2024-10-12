@@ -164,7 +164,7 @@ export const BREAKING_NEWS = gql`
 `
 export const GET_LATEST = gql`
   query MyQuery {
-    articles(last: 1, where: { opinion: true }) {
+    articles(where: { opinion: true }, last: 1, orderBy: date_ASC) {
       slug
       title
       excerpt
