@@ -1,3 +1,33 @@
+import React from 'react'
+import { GET_ARTICLE, GET_RECENT_ARTICLES } from '../../../../services/index'
+import client from '../../../lib/apolloClient'
+import { RichText } from '@graphcms/rich-text-react-renderer'
+import Image from 'next/image'
+import Link from 'next/link'
+export async function generateMetadata({ params }) {
+  const { slug } = params
+
+  const { data } = await client.query({
+    query: GET_ARTICLE,
+    variables: { slug },
+  })
+
+  const article = data.articles[0]
+
+  if (!article) {
+    return {
+      title: 'Article not found',
+      description: 'The requested article does not exist.',
+    }
+  }
+
+  return {
+    title: article.seoTitle || article.title,
+    description:
+      article.metaDescription || 'Default description if none is provided',
+  }
+}
+
 const Page = async ({ params }) => {
   const { slug } = params
 
@@ -26,7 +56,7 @@ const Page = async ({ params }) => {
   }
 
   return (
-    <div className='container mx-auto px-4 pb-6'>
+    <div className='container lg:mx-10 mx-3 md:mx-6 px-4 pb-6'>
       {/* Main Article Section */}
       <div className='bg-white shadow-lg rounded-lg border border-black p-6 mb-6'>
         {articles.map((article, index) => (
