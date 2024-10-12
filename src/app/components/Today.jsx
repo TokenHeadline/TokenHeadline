@@ -63,7 +63,7 @@ const Today = async () => {
       {News.map((article, index) => (
         <div key={index} className='space-y-4'>
           <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
-            TODAY RELEASE
+            RECENT RELEASE
           </h1>
 
           <Link
