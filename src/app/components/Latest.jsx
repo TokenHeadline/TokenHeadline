@@ -9,7 +9,7 @@ const Latest = async () => {
   const { data } = await client.query({
     query: GET_LATEST,
   })
-  console.log(data)
+  // console.log(data)
   const News = data?.articles || []
 
   return (
