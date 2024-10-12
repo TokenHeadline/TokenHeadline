@@ -51,9 +51,24 @@ export const GET_ARTICLE = gql`
         raw
         html
       }
+      featuredImage {
+        url
+      }
       date
       seoTitle
       metaDescription
+    }
+  }
+`
+export const GET_RECENT_ARTICLES = gql`
+  query MyQuery($slug: String!) {
+    articles(orderBy: updatedAt_DESC, where: { slug_not: $slug }, first: 8) {
+      title
+      featuredImage {
+        url
+      }
+      slug
+      date
     }
   }
 `
@@ -92,7 +107,7 @@ export const GET_ALL_ARTICLES = gql`
         name
       }
     }
-    totalCount: articlesConnection {
+    totalCount: articlesConnection(where: { opinion: false }) {
       aggregate {
         count
       }
@@ -100,13 +115,12 @@ export const GET_ALL_ARTICLES = gql`
   }
 `
 export const GET_CATEGORY_ARTICLE = gql`
-  query GetAllArticles($limit: Int, $offset: Int, $category: String) {
+  query GetAllArticles($category: String, $limit: Int, $offset: Int) {
     articles(
       orderBy: updatedAt_DESC
-      where: { opinion: false }
+      where: { category: { slug: $category }, opinion: false }
       first: $limit
       skip: $offset
-      where: { category: { slug: $category } }
     ) {
       id
       title
@@ -123,7 +137,7 @@ export const GET_CATEGORY_ARTICLE = gql`
         name
       }
     }
-    totalCount: articlesConnection {
+    totalCount: articlesConnection(where: { category: { slug: $category } }) {
       aggregate {
         count
       }

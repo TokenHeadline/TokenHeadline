@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client'
 import { GET_CATEGORY_ARTICLE } from '../../../../services'
 import client from '../../../lib/apolloClient'
 import Link from 'next/link'
+
 const ArticlesPage = ({ params }) => {
   const ARTICLES_PER_PAGE = 6
   const [currentPage, setCurrentPage] = useState(1)
@@ -44,7 +45,12 @@ const ArticlesPage = ({ params }) => {
   if (loading) return <p className='text-center text-lg h-screen'>Loading...</p>
   if (error)
     return (
-      <p className='text-center text-lg text-red-500'>Error loading articles</p>
+      console.log(error),
+      (
+        <p className='text-center text-lg text-red-500'>
+          Error loading articles
+        </p>
+      )
     )
 
   const articles = data?.articles || []
@@ -65,8 +71,15 @@ const ArticlesPage = ({ params }) => {
   }
 
   return (
-    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
-      <div className='grid grid-cols-1 gap-8 items-center'>
+    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 '>
+      <div className='grid grid-cols-1 gap-8 items-center mb-10'>
+        <head>
+          <title>Explore Articles from TokenHeadline</title>
+          <meta
+            name='description'
+            content='Discover a diverse collection of expert-written articles on various topics from TokenHeadline.'
+          />
+        </head>
         {articles.map((news, index) => (
           <Link
             href={`/article/${news.slug}`}

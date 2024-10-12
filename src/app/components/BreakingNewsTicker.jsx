@@ -1,15 +1,32 @@
-// BreakingNewsTickerServer.js
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { BREAKING_NEWS } from '../../../services/index'
 import client from '../../lib/apolloClient'
 
-const BreakingNewsTickerServer = async () => {
-  // Fetch data on the server side
-  const { data } = await client.query({
-    query: BREAKING_NEWS,
-  })
+const BreakingNewsTicker = () => {
+  const [news, setNews] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const news = data.articles
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await client.query({
+          query: BREAKING_NEWS,
+        })
+        setNews(data.articles || [])
+      } catch (error) {
+        console.error('Error fetching breaking news:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return <div className='py-6 text-black px-4'>Loading...</div> // You can replace this with a loading skeleton or spinner
+  }
 
   return (
     <div className='relative overflow-hidden whitespace-nowrap py-6 text-black px-4'>
@@ -25,4 +42,4 @@ const BreakingNewsTickerServer = async () => {
   )
 }
 
-export default BreakingNewsTickerServer
+export default BreakingNewsTicker

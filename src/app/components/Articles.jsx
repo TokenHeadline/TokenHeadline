@@ -1,28 +1,40 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { HiArrowSmallRight } from 'react-icons/hi2'
 import Link from 'next/link'
 import { GET_ARTICLES } from '../../../services/index'
 import client from '../../lib/apolloClient'
 import ArticlesSkeleton from './Skeleton/ArticlesSkeleton'
 
-const Articles = async () => {
-  // Fetch data on the server side
-  const { data } = await client.query({
-    query: GET_ARTICLES,
-  })
+const Articles = () => {
+  const [news, setNews] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const News = data.articles
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await client.query({
+          query: GET_ARTICLES,
+        })
+        setNews(data.articles || [])
+      } catch (error) {
+        console.error('Error fetching articles:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  // Handle case when there are no articles
-  if (!News || News.length === 0) {
+    fetchData()
+  }, [])
+
+  if (loading) {
     return <ArticlesSkeleton />
   }
 
-  // Determine the number of articles to show based on viewport width
   const articlesToShow =
     typeof window !== 'undefined' && window.innerWidth < 640
-      ? News.slice(1, 4)
-      : News.slice(1, 6)
+      ? news.slice(2, 7)
+      : news.slice(2, 7)
 
   return (
     <div className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 lg:gap-0 lg:w-4/12'>

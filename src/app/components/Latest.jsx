@@ -1,22 +1,40 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { GET_LATEST } from '../../../services/index'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
 
-const Latest = async () => {
-  // Fetch data on the server side
-  const { data } = await client.query({
-    query: GET_LATEST,
-  })
-  // console.log(data)
-  const News = data?.articles || []
+const Latest = () => {
+  const [news, setNews] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const fetchLatestNews = async () => {
+      try {
+        const { data } = await client.query({
+          query: GET_LATEST,
+        })
+        setNews(data?.articles || [])
+      } catch (err) {
+        setError(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchLatestNews()
+  }, [])
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error loading news: {error.message}</p>
 
   return (
     <div className='p-4'>
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>Opinion</h1>
 
-      {News.slice(0, 1).map((newsItem, index) => (
+      {news.slice(0, 1).map((newsItem, index) => (
         <div
           className='flex flex-col lg:flex-row gap-6 items-center mb-6'
           key={index}

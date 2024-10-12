@@ -44,7 +44,7 @@ const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
   return `${day}${getOrdinal(day)} ${month} ${year}`
 }
 
-const ArticlesGrid = () => {
+const PR = () => {
   const [articles, setArticles] = useState([])
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const ArticlesGrid = () => {
   return (
     <div className='m-4 pt-5 md:pl-16 md:pr-16 xl:pl-16'>
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
-        LATEST ARTICLES
+        PRESS RELEASES
       </h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
@@ -103,14 +103,15 @@ const ArticlesGrid = () => {
 
       <div className='text-center mt-8'>
         <Link
-          href='/articles'
+          href='/press-release'
           className='inline-block px-6 py-2 text-white bg-black rounded-md shadow-md hover:bg-blue-700 transition-colors mb-4'
+          aria-label='More Releases'
         >
-          More Articles
+          More Releases
         </Link>
       </div>
     </div>
   )
 }
 
-export default ArticlesGrid
+export default PR

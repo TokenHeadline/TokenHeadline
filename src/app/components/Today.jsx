@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import TodaySkeleton from './Skeleton/TodaySkeleton'
 import { GET_TODAY } from '../../../services/index'
@@ -45,22 +46,38 @@ const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
   return `${day}${getOrdinal(day)} ${month} ${year}`
 }
 
-const Today = async () => {
-  // Fetch data on the server side
-  const { data } = await client.query({
-    query: GET_TODAY,
-  })
-  // console.log(data)
-  const News = data.articles
+const Today = () => {
+  const [news, setNews] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  // If loading, you can return a skeleton component or a loading state
-  if (!News || News.length === 0) {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await client.query({
+          query: GET_TODAY,
+        })
+        setNews(data.articles)
+      } catch (error) {
+        console.error("Error fetching today's articles:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
     return <TodaySkeleton />
+  }
+
+  if (!news || news.length === 0) {
+    return <p>No articles available.</p>
   }
 
   return (
     <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-6/12 xl:basis-4/12'>
-      {News.slice(0, 1).map((article, index) => (
+      {news.slice(0, 1).map((article, index) => (
         <div key={index} className='space-y-4'>
           <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
             RECENT RELEASE
@@ -89,6 +106,7 @@ const Today = async () => {
           <div className='flex justify-center'>
             <div className='relative inline-block mt-3'>
               <div className='absolute inset-0 pointer-events-none'>
+                {/* Decorative border */}
                 <div className='absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-black'>
                   <div className='absolute -top-1 -left-1 w-2 h-2 bg-black rounded-br-full'></div>
                 </div>
@@ -102,7 +120,7 @@ const Today = async () => {
                   <div className='absolute -bottom-1 -right-1 w-2 h-2 bg-black rounded-tl-full'></div>
                 </div>
               </div>
-              <div className='grayscale'>
+              <div className=''>
                 <Image
                   src={article.featuredImage.url}
                   alt={article.subheading}

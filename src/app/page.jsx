@@ -9,6 +9,7 @@ import Latest from './components/Latest'
 import ArticlesGrid from './components/ArticlesGrid'
 import Courses from './components/Courses'
 import Banner from './components/Banner'
+import PR from './components/PR'
 export async function generateMetadata() {
   return {
     title: 'Token Headline',
@@ -30,6 +31,9 @@ export default function Home() {
       </section>
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-8 lg:ml-16 lg:mr-16'>
         <Latest />
+      </section>
+      <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-8 lg:ml-16 lg:mr-16'>
+        <PR />
       </section>
       <section className=''>
         <ArticlesGrid />
