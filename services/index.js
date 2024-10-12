@@ -6,7 +6,6 @@ export const GET_TODAY = gql`
       orderBy: updatedAt_DESC
       where: { opinion: false }
       first: 1
-     
     ) {
     subheading
     excerpt
@@ -26,7 +25,11 @@ export const GET_TODAY = gql`
 `
 export const GET_ARTICLES = gql`
   query MyQuery {
-    articles(first: 7, orderBy: updatedAt_DESC, where: { opinion: false }) {
+     articles(
+      orderBy: updatedAt_DESC
+      where: { opinion: false }
+      first: 7
+    )  {
       author {
         name
       }
