@@ -25,7 +25,7 @@ export const GET_TODAY = gql`
 `
 export const GET_ARTICLES = gql`
   query MyQuery {
-     articles(first: 7, orderBy: updatedAt_DESC, where: { opinion: false }) {
+     articles( orderBy: updatedAt_DESC, where: { opinion: false }) {
       author {
         name
       }
