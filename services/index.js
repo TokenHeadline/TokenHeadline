@@ -28,7 +28,7 @@ export const GET_ARTICLES = gql`
      articles(
       orderBy: updatedAt_DESC
       where: { opinion: false }
-      first: 7
+     
     )  {
       author {
         name
