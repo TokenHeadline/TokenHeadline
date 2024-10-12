@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GET_TODAY = gql`
   query MyQuery {
-    articles(first: 1, orderBy: updatedAt_DESC, where: { opinion: false }) {
+    articles(orderBy: updatedAt_DESC, where: { opinion: false }, first: 1) {
       subheading
       excerpt
       featuredImage {
@@ -21,7 +21,7 @@ export const GET_TODAY = gql`
 `
 export const GET_ARTICLES = gql`
   query MyQuery {
-    articles(first: 7, orderBy: updatedAt_DESC, where: { opinion: false }) {
+    articles(orderBy: updatedAt_DESC, where: { opinion: false }) {
       author {
         name
       }
