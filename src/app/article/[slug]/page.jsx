@@ -125,12 +125,6 @@ const Page = async ({ params }) => {
                     {children}
                   </h6>
                 ),
-
-                blockquote: ({ children }) => (
-                  <blockquote className='border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4'>
-                    {children}
-                  </blockquote>
-                ),
                 table: ({ children }) => (
                   <table className='table-auto  m-4 w-full border-2 text-center'>
                     {children}

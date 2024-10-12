@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GET_TODAY = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, where: { opinion: false }, first: 2) {
+    articles(first: 2, orderBy: date_DESC, where: { opinion: false }) {
       subheading
       excerpt
       featuredImage {
@@ -21,7 +21,7 @@ export const GET_TODAY = gql`
 `
 export const GET_ARTICLES = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, where: { opinion: false }, first: 8) {
+    articles(first: 8, orderBy: date_DESC, where: { opinion: false }) {
       author {
         name
       }
@@ -59,7 +59,7 @@ export const GET_ARTICLE = gql`
 `
 export const GET_BANNER = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, where: { opinion: false }, first: 6) {
+    articles(first: 6, orderBy: date_DESC, where: { opinion: false }) {
       id
       title
       featuredImage {
@@ -164,7 +164,7 @@ export const BREAKING_NEWS = gql`
 `
 export const GET_LATEST = gql`
   query MyQuery {
-    articles(where: { opinion: true }, last: 1) {
+    articles(last: 1, where: { opinion: true }) {
       slug
       title
       excerpt
@@ -182,7 +182,7 @@ export const GET_LATEST = gql`
 `
 export const GET_ARTICLE_FOR_GRID = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, where: { opinion: false }, first: 3) {
+    articles(orderBy: date_DESC, first: 3, where: { opinion: false }) {
       title
       excerpt
       featuredImage {
