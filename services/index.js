@@ -5,7 +5,7 @@ export const GET_TODAY = gql`
    articles(
       orderBy: updatedAt_DESC
       where: { opinion: false }
-    
+      first:1
     ) {
     subheading
     excerpt
