@@ -9,7 +9,7 @@ const BreakingNewsTickerServer = async () => {
     query: BREAKING_NEWS,
   })
 
-  const news = data.articles.filter((newsItem) => newsItem.breakingNews)
+  const news = data.articles
 
   return (
     <div className='relative overflow-hidden whitespace-nowrap py-6 text-black px-4'>

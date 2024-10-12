@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GET_TODAY = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, where: { opinion: false }, first: 1) {
+    articles(orderBy: date_DESC, where: { opinion: false }, first: 2) {
       subheading
       excerpt
       featuredImage {
@@ -21,7 +21,7 @@ export const GET_TODAY = gql`
 `
 export const GET_ARTICLES = gql`
   query MyQuery {
-    articles(orderBy: date_ASC, first: 7) {
+    articles(orderBy: date_DESC, where: { opinion: false }, first: 8) {
       author {
         name
       }
@@ -59,7 +59,7 @@ export const GET_ARTICLE = gql`
 `
 export const GET_BANNER = gql`
   query MyQuery {
-    articles(orderBy: date_DESC, first: 6, where: { opinion: false }) {
+    articles(orderBy: date_DESC, where: { opinion: false }, first: 6) {
       id
       title
       featuredImage {
@@ -152,7 +152,11 @@ export const GET_CATEGORIES = gql`
 `
 export const BREAKING_NEWS = gql`
   query MyQuery {
-    articles {
+    articles(
+      where: { breakingNews: true, opinion: false }
+      orderBy: date_DESC
+      first: 5
+    ) {
       breakingNews
       title
     }
@@ -160,7 +164,7 @@ export const BREAKING_NEWS = gql`
 `
 export const GET_LATEST = gql`
   query MyQuery {
-    articles(first: 1, orderBy: date_DESC, where: { opinion: true }) {
+    articles(where: { opinion: true }, last: 1) {
       slug
       title
       excerpt
@@ -178,7 +182,7 @@ export const GET_LATEST = gql`
 `
 export const GET_ARTICLE_FOR_GRID = gql`
   query MyQuery {
-    articles(first: 3, orderBy: date_DESC) {
+    articles(orderBy: date_DESC, where: { opinion: false }, first: 3) {
       title
       excerpt
       featuredImage {

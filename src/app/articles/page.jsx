@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client'
 import { GET_ALL_ARTICLES } from '../../../services'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
+
 const ArticlesPage = () => {
   const ARTICLES_PER_PAGE = 6
   const [currentPage, setCurrentPage] = useState(1)
@@ -66,6 +67,13 @@ const ArticlesPage = () => {
   return (
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
       <div className='grid grid-cols-1 gap-8 items-center'>
+        <head>
+          <title>Explore Articles from TokenHeadline</title>
+          <meta
+            name='description'
+            content='Discover a diverse collection of expert-written articles on various topics from TokenHeadline.'
+          />
+        </head>
         {articles.map((news, index) => (
           <Link
             href={`/article/${news.slug}`}

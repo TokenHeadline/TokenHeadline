@@ -49,7 +49,6 @@ const ArticlesGrid = async () => {
   const { data } = await client.query({
     query: GET_ARTICLE_FOR_GRID,
   })
-
   const News = data?.articles || []
 
   return (
