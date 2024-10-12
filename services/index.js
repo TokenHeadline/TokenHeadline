@@ -4,7 +4,9 @@ export const GET_TODAY = gql`
   query MyQuery {
    articles(
       orderBy: updatedAt_DESC
-      where: { opinion: false }) {
+      where: { opinion: false }
+     
+    ) {
     subheading
     excerpt
     featuredImage {
