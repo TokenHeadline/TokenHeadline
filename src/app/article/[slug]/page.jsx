@@ -61,7 +61,7 @@ const Page = async ({ params }) => {
         {articles.map((article, index) => (
           <div key={index} className='mb-10'>
             <div className='items-center text-center'>
-              <h1 className='text-5xl font-extrabold text-gray-900 mb-6'>
+              <h1 className='text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6'>
                 {article.title}
               </h1>
               <Image
@@ -71,7 +71,7 @@ const Page = async ({ params }) => {
                 height={450}
                 className='rounded-lg mb-6 mx-auto'
               />
-              <div className='flex justify-center text-gray-700 text-sm mb-4'>
+              <div className='flex justify-center text-gray-700 text-sm mb-4 flex-wrap'>
                 <span className='mr-4'>By {article.author.name}</span>
                 <span>{new Date(article.date).toLocaleDateString()}</span>
               </div>
@@ -143,8 +143,8 @@ const Page = async ({ params }) => {
         ))}
       </div>
 
-      <div>
-        <div className='max-w-2xl mx-5 bg-gray-50 shadow-lg rounded-lg border border-gray-200 p-6'>
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl flex flex-col md:flex-row'>
+        <div className='max-w-full md:max-w-2xl mx-5 bg-gray-50 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
           <h2 className='text-3xl font-semibold text-gray-800 mb-6'>
             Recent Articles
           </h2>
@@ -173,7 +173,9 @@ const Page = async ({ params }) => {
             ))}
           </ul>
         </div>
-        <Cryptowidget />
+        <div className='flex-none md:w-1/3'>
+          <Cryptowidget />
+        </div>
       </div>
     </div>
   )

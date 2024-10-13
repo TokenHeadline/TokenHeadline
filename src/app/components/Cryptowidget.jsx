@@ -18,7 +18,6 @@ const CryptoWidget = () => {
   return (
     <div
       id='crypto-widget-CoinList'
-      data-transparent='true'
       data-design='modern'
       data-coin-ids='1,166,136,382,1986,1120,20,29,418'
     ></div>
