@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { GET_ARTICLE_FOR_GRID } from '../../../services/index'
+import { GET_PRESS_RELEASES } from '../../../services/index'
 import client from '../../lib/apolloClient'
 
 const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
@@ -50,9 +50,10 @@ const PR = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       const { data } = await client.query({
-        query: GET_ARTICLE_FOR_GRID,
+        query: GET_PRESS_RELEASES,
       })
-      setArticles(data?.articles || [])
+      setArticles(data?.pressResleases || [])
+      console.log(data)
     }
 
     fetchArticles()

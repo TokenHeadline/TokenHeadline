@@ -240,3 +240,60 @@ export const GET_OPINION = gql`
     }
   }
 `
+export const GET_PRESS_RELEASES = gql`
+  query MyQuery {
+    pressResleases(orderBy: publishedAt_DESC, first: 3) {
+      title
+      excerpt
+      featuredImage {
+        url
+      }
+      author {
+        name
+      }
+      slug
+      date
+    }
+  }
+`
+export const GET_ALL_PRESS_RELEASES = gql`
+  query GetAllArticles($limit: Int, $offset: Int) {
+    pressResleases(orderBy: updatedAt_DESC, first: $limit, skip: $offset) {
+      id
+      title
+      featuredImage {
+        url
+      }
+      slug
+      author {
+        name
+      }
+      date
+      excerpt
+    }
+    pressResleasesConnection {
+      aggregate {
+        count
+      }
+    }
+  }
+`
+export const GET_PRESS_RELEASE = gql`
+  query MyQuery($slug: String!) {
+    pressResleases(where: { slug: $slug }) {
+      author {
+        name
+      }
+      title
+      content {
+        raw
+      }
+      featuredImage {
+        url
+      }
+      date
+      seoTitle
+      seoDescription
+    }
+  }
+`
