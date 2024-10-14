@@ -38,7 +38,7 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <nav className='text-black font-semibold lg:mb-6 m-8 mt-5 mb-3'>
+    <nav className='text-black font-semibold lg:mb-6 m-8 mt-5 mb-1'>
       <div className='container flex flex-row justify-between'>
         <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6 '>
           <Link href='/' passHref>
