@@ -25,7 +25,7 @@ export default function Home() {
         <Articles />
         <Banner />
       </section>
-      <BreakinNewsTicker />
+      {/* <BreakinNewsTicker />
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16'>
         <Topics />
       </section>
@@ -39,7 +39,7 @@ export default function Home() {
       </section>
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-8 lg:ml-16 lg:mr-16'>
         <Courses Course={Course} />
-      </section>
+      </section> */}
     </div>
   )
 }

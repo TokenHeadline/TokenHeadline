@@ -38,25 +38,8 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <nav className='text-black font-semibold lg:mb-6 m-8 mt-0 mb-3'>
-      <div className='container flex flex-row lg:flex-col justify-between'>
-        <div className='flex items-center justify-center'>
-          <Link
-            href='/'
-            passHref
-            className='text-3xl font-bold text-center  mt-2 '
-          >
-            <Image
-              src={'/logo.png'}
-              height={35}
-              width={150}
-              alt='logo
-              
-          '
-              priority={true}
-            />
-          </Link>
-        </div>
+    <nav className='text-black font-semibold lg:mb-6 m-8 mt-5 mb-3'>
+      <div className='container flex flex-row'>
         <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6 '>
           <Link href='/' passHref>
             <RiHome2Fill
@@ -94,7 +77,23 @@ export default function Navbar() {
             ))}
           </div>
         </div>
-
+        <div className='flex items-center justify-center lg:mx-auto '>
+          <Link
+            href='/'
+            passHref
+            className='text-3xl font-bold text-center  mt-2 lg:pl-3 '
+          >
+            <Image
+              src={'/logo.png'}
+              height={35}
+              width={150}
+              alt='logo
+              
+          '
+              priority={true}
+            />
+          </Link>
+        </div>
         <div className='lg:hidden flex flex-col items-end mt-6'>
           <button
             onClick={toggleMenu}
