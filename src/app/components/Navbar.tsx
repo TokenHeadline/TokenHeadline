@@ -85,7 +85,7 @@ export default function Navbar() {
           >
             <Image
               src={'/logo.png'}
-              height={40}
+              height={50}
               width={155}
               alt='logo
               

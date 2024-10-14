@@ -41,7 +41,7 @@ const Banner = () => {
 
   return (
     <div className='relative flex justify-center items-center'>
-      <ul className='relative xl:w-[400px] xl:h-[520px] lg:h-[420px] lg:w-[250px] lg:p-10 mt-16 lg:mt-0 w-[650px] h-[300px]'>
+      <ul className='relative xl:w-[400px] xl:h-[520px] lg:h-[520px] lg:w-[250px] lg:p-10 mt-16 lg:mt-0 w-[650px] h-[300px]'>
         {cards.map((newsItem, index) => {
           const canDrag = index === 0
           const isVisible = index < VISIBLE_CARDS
@@ -51,7 +51,7 @@ const Banner = () => {
           return (
             <motion.li
               key={newsItem.id}
-              className={`absolute w-full h-full bg-cover bg-center ${
+              className={`absolute w-full h-full bg-cover bg-center lg:rounded-br-[50px] ${
                 canDrag ? 'cursor-grab' : 'cursor-auto'
               } ${hoveredIndex === index ? '' : 'grayscale'}`}
               style={{
@@ -71,7 +71,7 @@ const Banner = () => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <div className='absolute bottom-2 left-2 text-white p-2 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px]'>
+              <div className='absolute bottom-2 left-2 text-white p-2 mb-0 pb-0 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px] '>
                 <Link
                   href={`/article/${newsItem.slug}`}
                   aria-label={`/article/${newsItem.slug}`}
