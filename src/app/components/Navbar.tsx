@@ -39,7 +39,7 @@ export default function Navbar() {
 
   return (
     <nav className='text-black font-semibold lg:mb-6 m-8 mt-5 mb-3'>
-      <div className='container flex flex-row'>
+      <div className='container flex flex-row justify-between'>
         <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6 '>
           <Link href='/' passHref>
             <RiHome2Fill
@@ -81,12 +81,12 @@ export default function Navbar() {
           <Link
             href='/'
             passHref
-            className='text-3xl font-bold text-center  mt-2 lg:pl-3 '
+            className='text-3xl font-bold text-center mt-2 lg:pl-3 '
           >
             <Image
               src={'/logo.png'}
-              height={35}
-              width={150}
+              height={40}
+              width={155}
               alt='logo
               
           '
