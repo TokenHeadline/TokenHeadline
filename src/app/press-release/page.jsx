@@ -48,7 +48,7 @@ const ArticlesPage = () => {
     )
 
   const articles = data?.pressResleases || []
-  console.log(data)
+  // console.log(data)
 
   const totalArticles = data?.totalCount?.aggregate?.count || 0
   const totalPages = Math.ceil(totalArticles / ARTICLES_PER_PAGE)

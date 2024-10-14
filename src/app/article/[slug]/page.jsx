@@ -95,7 +95,7 @@ const Page = async ({ params }) => {
                       alt={altText}
                       width={800}
                       height={500}
-                      className='rounded-lg my-5'
+                      className='rounded-lg my-5 mx-auto'
                     />
                   ),
                   ul: ({ children }) => (
