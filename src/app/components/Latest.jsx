@@ -9,7 +9,7 @@ const Latest = () => {
   const [news, setNews] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
+  const [hovered, setHovered] = useState(false)
   useEffect(() => {
     const fetchLatestNews = async () => {
       try {
@@ -79,6 +79,12 @@ const Latest = () => {
                 height={452}
                 alt={newsItem.title}
                 className='object-contain lg:w-[630px] lg:h-[452px]'
+                style={{
+                  filter: hovered ? 'none' : 'grayscale(100%)',
+                  transition: 'filter 0.3s ease',
+                }}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
               />
             </div>
           </div>

@@ -16,6 +16,7 @@ const Banner = () => {
   const { loading, error, data } = useQuery(GET_BANNER, { client: client })
 
   const [cards, setCards] = useState([])
+  const [hoveredIndex, setHoveredIndex] = useState(null)
 
   useEffect(() => {
     if (data && data.articles) {
@@ -39,7 +40,7 @@ const Banner = () => {
   if (loading) return <BannerSkeleton />
 
   return (
-    <div className='realtive flex justify-center items-center'>
+    <div className='relative flex justify-center items-center'>
       <ul className='relative xl:w-[400px] xl:h-[520px] lg:h-[420px] lg:w-[250px] lg:p-10 mt-16 lg:mt-0 w-[650px] h-[300px]'>
         {cards.map((newsItem, index) => {
           const canDrag = index === 0
@@ -50,9 +51,9 @@ const Banner = () => {
           return (
             <motion.li
               key={newsItem.id}
-              className={`absolute w-full h-full bg-cover bg-center grayscale lg:rounded-br-[60px] ${
+              className={`absolute w-full h-full bg-cover bg-center ${
                 canDrag ? 'cursor-grab' : 'cursor-auto'
-              }`}
+              } ${hoveredIndex === index ? '' : 'grayscale'}`}
               style={{
                 backgroundImage: `url(${newsItem.featuredImage.url})`,
               }}
@@ -67,6 +68,8 @@ const Banner = () => {
                 bottom: 0,
               }}
               onDragEnd={() => moveToEnd(index)}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className='absolute bottom-2 left-2 text-white p-2 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px]'>
                 <Link
@@ -76,7 +79,6 @@ const Banner = () => {
                 >
                   {newsItem.title}
                 </Link>
-                     
               </div>
             </motion.li>
           )

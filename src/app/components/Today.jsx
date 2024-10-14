@@ -49,6 +49,7 @@ const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
 const Today = () => {
   const [news, setNews] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [hovered, setHovered] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -127,7 +128,14 @@ const Today = () => {
                   width={400}
                   height={300}
                   priority={true}
-                  style={{ width: '100%', height: 'auto' }}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    filter: hovered ? 'none' : 'grayscale(100%)',
+                    transition: 'filter 0.3s ease',
+                  }}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
                 />
               </div>
             </div>

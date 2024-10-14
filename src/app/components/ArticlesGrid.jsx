@@ -45,6 +45,7 @@ const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
 }
 
 const ArticlesGrid = () => {
+  const [hovered, setHovered] = useState(false)
   const [articles, setArticles] = useState([])
 
   useEffect(() => {
@@ -78,7 +79,14 @@ const ArticlesGrid = () => {
                 alt={news.title}
                 fill
                 sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
-                style={{ objectFit: 'cover' }}
+                style={{
+                  objectFit: 'cover',
+
+                  filter: hovered ? 'none' : 'grayscale(100%)',
+                  transition: 'filter 0.3s ease',
+                }}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
               />
             </div>
 
