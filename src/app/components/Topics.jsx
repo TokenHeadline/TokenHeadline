@@ -68,7 +68,9 @@ const Topics = async () => {
             href={`articles/${topic.slug}`}
             aria-label={`articles/topic`}
             key={index}
-            className='flex flex-col p-4 hover:bg-green-300 transition duration-300 cursor-pointer shadow-md'
+            className={`flex flex-col p-4 transition duration-300 cursor-pointer shadow-md ${
+              index % 2 === 0 ? 'bg-red-400' : 'bg-green-300'
+            } hover:${index % 2 === 0 ? 'bg-red-500' : 'bg-green-400'}`}
             style={{ width: 'auto', maxWidth: '100%' }}
           >
             <div className='flex justify-between items-start'>

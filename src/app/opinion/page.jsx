@@ -76,7 +76,7 @@ const ArticlesPage = () => {
         </head>
         {articles.map((news, index) => (
           <Link
-            href={`/article/${news.slug}`}
+            href={`/opinion/${news.slug}`}
             aria-label={`${news.slug}`}
             passHref
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'

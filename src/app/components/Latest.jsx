@@ -57,7 +57,7 @@ const Latest = () => {
             </div>
             <div className='mr-0 lg:mr-20'>
               <Link
-                href={`article/${newsItem.slug}`}
+                href={`opinion/${newsItem.slug}`}
                 className='font-bold text-2xl md:text-3xl lg:text-4xl mb-4 duration-300 ease-in-out transform hover:scale-105'
               >
                 {newsItem.title}
