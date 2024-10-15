@@ -68,8 +68,8 @@ const Topics = async () => {
             href={`articles/${topic.slug}`}
             aria-label={`articles/topic`}
             key={index}
-            className={`flex flex-col p-4 transition duration-300 cursor-pointer shadow-md  hover:${
-              index % 2 === 0 ? 'bg-red-500' : 'bg-green-400'
+            className={`flex flex-col p-4 transition duration-300 cursor-pointer shadow-md ${
+              index % 2 === 0 ? ' hover:bg-red-400' : ' hover:bg-green-300'
             }`}
             style={{ width: 'auto', maxWidth: '100%' }}
           >
