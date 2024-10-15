@@ -53,7 +53,6 @@ const PR = () => {
         query: GET_PRESS_RELEASES,
       })
       setArticles(data?.pressResleases || [])
-      console.log(data)
     }
 
     fetchArticles()
