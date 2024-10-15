@@ -43,7 +43,7 @@ const Topics = async () => {
         <Link
           href={`articles/`}
           aria-label={`articles/topic`}
-          className='flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer shadow-md'
+          className='flex flex-col p-4 hover:bg-green-300 transition duration-300 cursor-pointer shadow-md'
           style={{ width: 'auto', maxWidth: '100%' }}
         >
           <div className='flex justify-between items-start'>
@@ -68,7 +68,7 @@ const Topics = async () => {
             href={`articles/${topic.slug}`}
             aria-label={`articles/topic`}
             key={index}
-            className='flex flex-col p-4 hover:bg-blue-300 transition duration-300 cursor-pointer shadow-md'
+            className='flex flex-col p-4 hover:bg-green-300 transition duration-300 cursor-pointer shadow-md'
             style={{ width: 'auto', maxWidth: '100%' }}
           >
             <div className='flex justify-between items-start'>

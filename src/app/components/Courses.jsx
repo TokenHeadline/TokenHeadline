@@ -47,7 +47,7 @@ const Courses = ({ Course }) => {
         {Course.courses.map((course, index) => (
           <div
             key={index}
-            className='relative bg-white rounded-xl overflow-hidden shadow- '
+            className='relative bg-white rounded-xl overflow-hidden hover:bg-red-400'
           >
             <Image
               src={course.featuredImage}
