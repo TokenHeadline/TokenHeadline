@@ -344,6 +344,21 @@ export const GET_COURSE = gql`
         raw
         html
       }
+      seoTitle
+      metaDescription
+    }
+  }
+`
+export const GET_RECENT_COURSES = gql`
+  query MyQuery($slug: String) {
+    courses(where: { slug_not: $slug }, first: 4) {
+      id
+      title
+      slug
+      featuredImage {
+        url
+      }
+      courselevel
     }
   }
 `

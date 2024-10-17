@@ -2,26 +2,32 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import client from '../../../lib/apolloClient'
-import { GET_COURSE } from '../../../../services/index'
+import { GET_COURSE, GET_RECENT_COURSES } from '../../../../services/index'
 import Image from 'next/image'
 import { RichText } from '@graphcms/rich-text-react-renderer'
+import Link from 'next/link'
 
 const CoursePage = ({ params }) => {
   const { slug } = params
 
-  const { loading, error, data } = useQuery(GET_COURSE, {
+  const {
+    loading: loadingCourse,
+    error: errorCourse,
+    data: courseData,
+  } = useQuery(GET_COURSE, {
     client,
     variables: { slug },
     skip: !slug,
   })
 
-  if (loading) return <p className='text-center text-lg h-screen'>Loading...</p>
-  if (error)
+  if (loadingCourse)
+    return <p className='text-center text-lg h-screen'>Loading...</p>
+  if (errorCourse)
     return (
       <p className='text-center text-lg text-red-500'>Error loading course</p>
     )
 
-  const course = data?.courses[0]
+  const course = courseData?.courses[0]
 
   if (!course) {
     return (
@@ -32,66 +38,93 @@ const CoursePage = ({ params }) => {
   }
 
   const richTextRenderers = {
+    h1: ({ children }) => (
+      <h1 className='text-3xl font-extrabold text-gray-900 my-4 text-center'>
+        {children}
+      </h1>
+    ),
     h2: ({ children }) => (
-      <h2 className='text-2xl font-bold text-gray-800 my-3 mx-auto'>
+      <h2 className='text-2xl font-bold text-gray-800 my-3 text-center'>
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className='text-xl font-semibold text-gray-800 my-2 mx-auto'>
+      <h3 className='text-xl font-semibold text-gray-800 my-2 text-center'>
         {children}
       </h3>
     ),
+    h4: ({ children }) => (
+      <h4 className='text-lg font-semibold text-gray-800 my-2 text-center'>
+        {children}
+      </h4>
+    ),
+    h5: ({ children }) => (
+      <h5 className='text-md font-semibold text-gray-800 my-2 text-center'>
+        {children}
+      </h5>
+    ),
+    h6: ({ children }) => (
+      <h6 className='text-sm font-semibold text-gray-800 my-2 text-center'>
+        {children}
+      </h6>
+    ),
     p: ({ children }) => (
-      <p className='text-base text-gray-600 my-2 mx-auto'>{children}</p>
+      <p className='text-base text-gray-600 my-2 text-center'>{children}</p>
     ),
-    ul: ({ children }) => (
-      <ul className='list-disc pl-6 my-4 mx-auto'>{children}</ul>
-    ),
+    ul: ({ children }) => <ul className='list-disc pl-6 my-4'>{children}</ul>,
     ol: ({ children }) => (
-      <ol className='list-decimal pl-6 my-4 mx-auto'>{children}</ol>
+      <ol className='list-decimal pl-6 my-4'>{children}</ol>
     ),
-    li: ({ children }) => <li className='my-1 mx-auto'>{children}</li>,
+    li: ({ children }) => <li className='my-1'>{children}</li>,
     img: ({ src, alt }) => (
       <Image
         src={src}
         alt={alt}
         width={800}
         height={500}
-        className='rounded-lg my-5 mx-auto'
+        className='rounded-lg my-5 w-full h-auto text-center'
       />
     ),
   }
 
   return (
-    <div className='container mx-auto px-8 lg:px-14 md:px-12 py-2'>
-      <div className='bg-white shadow-lg rounded-lg p-6'>
-        <h1 className='text-4xl font-bold text-center mb-4'>{course.title}</h1>
-        <div className='relative h-60 w-full md:w-2/3 mx-auto mt-4 mb-6 rounded-lg overflow-hidden'>
-          <Image
-            src={course.featuredImage.url}
-            alt={course.title}
-            className='rounded-lg mb-6 mx-auto'
-            width={800}
-            height={500}
-          />
-        </div>
-        <p
-          className={`text-sm font-medium text-center ${getLevelColor(
-            course.courselevel
-          )}`}
-        >
-          Level: {course.courselevel}
-        </p>
-        <p className='text-base text-gray-700 mt-4 text-center'>
-          {course.courseDescription}
-        </p>
+    <div className='container mx-auto max-w-7xl px-4 lg:px-8 py-2 pb-6'>
+      <head>
+        <title>{course.seoTitle}</title>
+        <meta name='description' content={course.metaDescription} />
+      </head>
 
-        <div className='mt-6 justify-center'>
-          <RichText
-            content={course.content.raw}
-            renderers={richTextRenderers}
-          />
+      <div className='flex flex-col lg:flex-row gap-10'>
+        <div className='bg-white shadow-lg rounded-lg p-6 flex-1'>
+          <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
+            {course.title}
+          </h1>
+          <div className='relative h-60 w-full rounded-lg overflow-hidden mb-6'>
+            <Image
+              src={course.featuredImage.url}
+              alt={course.title}
+              layout='fill'
+              objectFit='cover'
+              className='rounded-lg'
+            />
+          </div>
+          <p
+            className={`text-sm font-medium text-center ${getLevelColor(
+              course.courselevel
+            )}`}
+          >
+            Level: {course.courselevel}
+          </p>
+          <p className='text-base text-gray-700 mt-4 text-center'>
+            {course.courseDescription}
+          </p>
+
+          <div className='mt-6'>
+            <RichText
+              content={course.content.raw}
+              renderers={richTextRenderers}
+            />
+          </div>
         </div>
       </div>
     </div>
