@@ -64,7 +64,7 @@ const CoursePage = ({ params }) => {
   }
 
   return (
-    <div className='container mx-auto px-8 lg:px-14 md:px-12 py-8'>
+    <div className='container mx-auto px-8 lg:px-14 md:px-12 py-2'>
       <div className='bg-white shadow-lg rounded-lg p-6'>
         <h1 className='text-4xl font-bold text-center mb-4'>{course.title}</h1>
         <div className='relative h-60 w-full md:w-2/3 mx-auto mt-4 mb-6 rounded-lg overflow-hidden'>
