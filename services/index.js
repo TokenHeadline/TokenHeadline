@@ -329,3 +329,21 @@ export const GET_ALL_COURSES = gql`
     }
   }
 `
+export const GET_COURSE = gql`
+  query MyQuery($slug: String) {
+    courses(where: { slug: $slug }) {
+      id
+      title
+      slug
+      featuredImage {
+        url
+      }
+      courselevel
+      courseDescription
+      content {
+        raw
+        html
+      }
+    }
+  }
+`

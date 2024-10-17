@@ -5,26 +5,7 @@ import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
 import { gql } from '@apollo/client'
-
-const GET_ALL_COURSES = gql`
-  query GetAllCourses($limit: Int, $offset: Int) {
-    courses(orderBy: updatedAt_DESC, first: $limit, skip: $offset) {
-      id
-      title
-      slug
-      featuredImage {
-        url
-      }
-      courselevel
-      courseDescription
-    }
-    coursesConnection {
-      aggregate {
-        count
-      }
-    }
-  }
-`
+import { GET_ALL_COURSES } from '../../../services'
 
 const CoursesPage = () => {
   const COURSES_PER_PAGE = 6
@@ -67,7 +48,7 @@ const CoursesPage = () => {
   }
 
   return (
-    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
+    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 mt-5'>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
           <title>Explore Courses from CloudlearnN</title>
@@ -78,7 +59,6 @@ const CoursesPage = () => {
         </head>
         {courses.map((course, index) => (
           <div
-            passHref
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
             key={index}
           >
