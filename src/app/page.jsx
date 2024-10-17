@@ -2,7 +2,6 @@ import React from 'react'
 import Today from './components/Today'
 import Articles from './components/Articles'
 import './globals.css'
-import Course from '../../public/Course.json'
 import BreakinNewsTicker from './components/BreakingNewsTicker'
 import Topics from './components/Topics'
 import Latest from './components/Latest'
@@ -38,7 +37,7 @@ export default function Home() {
         <PR />
       </section>
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-8 lg:ml-16 lg:mr-16'>
-        <Courses Course={Course} />
+        <Courses />
       </section>
     </div>
   )

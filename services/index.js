@@ -297,3 +297,35 @@ export const GET_PRESS_RELEASE = gql`
     }
   }
 `
+export const GET_COURSES = gql`
+  query MyQuery {
+    courses {
+      id
+      title
+      slug
+      featuredImage {
+        url
+      }
+      courselevel
+    }
+  }
+`
+export const GET_ALL_COURSES = gql`
+  query GetAllCourses($limit: Int, $offset: Int) {
+    courses(first: $limit, skip: $offset) {
+      id
+      title
+      slug
+      featuredImage {
+        url
+      }
+      courselevel
+      courseDescription
+    }
+    coursesConnection {
+      aggregate {
+        count
+      }
+    }
+  }
+`
