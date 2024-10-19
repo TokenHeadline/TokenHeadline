@@ -19,9 +19,9 @@ export default function Navbar() {
   }
 
   const menuItems = [
-    { name: 'Press Release', href: '/press-release' },
-    { name: 'Opinions', href: '/opinion' },
     { name: 'Articles', href: '/articles' },
+    { name: 'Opinions', href: '/opinion' },
+    { name: 'Press Release', href: '/press-release' },
     { name: 'Interview', href: '/interview' },
     { name: 'Learn', href: '/learn' },
     { name: 'Advertisement', href: '/advertisement' },
