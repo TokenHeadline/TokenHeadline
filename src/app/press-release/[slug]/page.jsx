@@ -76,10 +76,10 @@ const Page = ({ params }) => {
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name='description' content={description} />
-        <meta property='og:title' content={title} />
-        <meta property='og:description' content={description} />
+        <title>{article.seoTitle}</title>
+        <meta name='description' content={article.seoDescription} />
+        <meta property='og:title' content={article.seoTitle} />
+        <meta property='og:description' content={article.seoDescription} />
         <meta property='og:image' content={article.featuredImage.url} />
       </Head>
       <head>
