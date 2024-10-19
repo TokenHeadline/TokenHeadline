@@ -10,7 +10,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import TwitterEmbed from '../../components/TwitterEmbed'
-
+import Head from 'next/head'
 const Page = ({ params }) => {
   const { slug } = params
 
