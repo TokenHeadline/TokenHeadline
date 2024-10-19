@@ -69,13 +69,11 @@ const Page = ({ params }) => {
   return (
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
       <Head>
-        <title>{article.seoTitle}</title>
-        <meta
-          name='description'
-          content={
-            article.metaDescription || 'Read this article for more information.'
-          }
-        />
+        <title>{title}</title>
+        <meta name='description' content={description} />
+        <meta property='og:title' content={title} />
+        <meta property='og:description' content={description} />
+        <meta property='og:image' content={article.featuredImage.url} />
       </Head>
       <head>
         <title>{article.title}</title>

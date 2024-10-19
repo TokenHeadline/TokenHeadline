@@ -113,6 +113,10 @@ const CoursePage = ({ params }) => {
 
   return (
     <div className='container mx-auto max-w-7xl px-4 lg:px-8 py-2 pb-6'>
+      <Head>
+        <title>{course.seoTitle || course.title}</title>
+        <meta name='description' content={course.metaDescription} />
+      </Head>
       <head>
         <title>{course.seoTitle || course.title}</title>
         <meta name='description' content={course.metaDescription} />
