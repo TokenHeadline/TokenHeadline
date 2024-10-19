@@ -69,10 +69,10 @@ const ArticlesPage = () => {
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>Explore Articles from TokenHeadline</title>
+          <title>Explore Press-Releases from TokenHeadline</title>
           <meta
             name='description'
-            content='Discover a diverse collection of expert-written articles on various topics from TokenHeadline.'
+            content='Discover a diverse collection of press-releases on various topics from TokenHeadline.'
           />
         </head>
         {articles.map((news, index) => (

@@ -242,7 +242,11 @@ export const GET_OPINION = gql`
 `
 export const GET_PRESS_RELEASES = gql`
   query MyQuery {
-    pressResleases(orderBy: publishedAt_DESC, first: 3) {
+    pressResleases(
+      orderBy: publishedAt_DESC
+      first: 3
+      where: { interview: false }
+    ) {
       title
       excerpt
       featuredImage {
@@ -258,7 +262,12 @@ export const GET_PRESS_RELEASES = gql`
 `
 export const GET_ALL_PRESS_RELEASES = gql`
   query GetAllArticles($limit: Int, $offset: Int) {
-    pressResleases(orderBy: updatedAt_DESC, first: $limit, skip: $offset) {
+    pressResleases(
+      orderBy: updatedAt_DESC
+      first: $limit
+      skip: $offset
+      where: { interview: false }
+    ) {
       id
       title
       featuredImage {
@@ -359,6 +368,33 @@ export const GET_RECENT_COURSES = gql`
         url
       }
       courselevel
+    }
+  }
+`
+export const GET_INTERVIEWS = gql`
+  query GetAllArticles($limit: Int, $offset: Int) {
+    pressResleases(
+      orderBy: updatedAt_DESC
+      first: $limit
+      skip: $offset
+      where: { interview: true }
+    ) {
+      id
+      title
+      featuredImage {
+        url
+      }
+      slug
+      author {
+        name
+      }
+      date
+      excerpt
+    }
+    pressResleasesConnection(where: { interview: true }) {
+      aggregate {
+        count
+      }
     }
   }
 `
