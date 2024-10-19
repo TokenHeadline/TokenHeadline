@@ -1,48 +1,54 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import {
-  GET_PRESS_RELEASE,
-  GET_RECENT_ARTICLES,
-} from '../../../../services/index'
+import { GET_INTERVIEW, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 import { RichText } from '@graphcms/rich-text-react-renderer'
 import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import TwitterEmbed from '../../components/TwitterEmbed'
-import Head from 'next/head'
+
 const Page = ({ params }) => {
   const { slug } = params
-
-  const [article, setArticle] = useState(null)
+  const [articles, setArticles] = useState([])
   const [recentArticles, setRecentArticles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [meta, setMeta] = useState({ title: '', description: '' })
+  const [loading, setLoading] = useState(true) // Adding loading state
+  const [error, setError] = useState(null) // Adding error state
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
       try {
         const { data } = await client.query({
-          query: GET_PRESS_RELEASE,
+          query: GET_INTERVIEW,
           variables: { slug },
         })
 
-        const articles = data.pressResleases
-        if (!articles || articles.length === 0) {
-          throw new Error('Article not found')
-        }
-        setArticle(articles[0])
+        const fetchedArticles = data.pressResleases
 
+        if (fetchedArticles.length > 0) {
+          setArticles(fetchedArticles)
+          const article = fetchedArticles[0]
+
+          // Set meta tags for SEO
+          setMeta({
+            title: article.seoTitle || article.title,
+            description:
+              article.seoDescription ||
+              'Default description if none is provided',
+          })
+        }
+
+        // Fetch recent articles
         const { data: recentData } = await client.query({
           query: GET_RECENT_ARTICLES,
           variables: { slug },
         })
         setRecentArticles(recentData.articles)
       } catch (err) {
-        setError(err.message)
+        setError(err.message) // Handle errors
       } finally {
-        setLoading(false)
+        setLoading(false) // Set loading to false after fetch
       }
     }
 
@@ -52,7 +58,7 @@ const Page = ({ params }) => {
   if (loading) {
     return (
       <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold'>Loading...</p>
+        <p className='text-xl font-semibold text-green-500'>Loading</p>
       </div>
     )
   }
@@ -65,29 +71,15 @@ const Page = ({ params }) => {
     )
   }
 
-  if (!article) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-red-500'>Article not found</p>
-      </div>
-    )
-  }
-
   return (
-    <>
-      <Head>
-        <title>{article.seoTitle}</title>
-        <meta name='description' content={article.seoDescription} />
-        <meta property='og:title' content={article.seoTitle} />
-        <meta property='og:description' content={article.seoDescription} />
-        <meta property='og:image' content={article.featuredImage.url} />
-      </Head>
+    <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
       <head>
-        <title>{article.title}</title>
+        <title>{meta.title || 'Default'}</title>
+        <meta name='description' content={meta.description} />
       </head>
-      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-        <div className='mx-auto p-6'>
-          <div className='mb-10'>
+      <div className='mx-auto p-6'>
+        {articles.map((article) => (
+          <div key={article.id} className='mb-10'>
             <div className='items-center text-center'>
               <h1 className='text-5xl font-extrabold text-gray-900 mb-6'>
                 {article.title}
@@ -117,15 +109,16 @@ const Page = ({ params }) => {
                   italic: ({ children }) => (
                     <em className='italic'>{children}</em>
                   ),
-                  img: ({ src, altText }) => (
-                    <Image
-                      src={src}
-                      alt={altText}
-                      width={800}
-                      height={500}
-                      className='rounded-lg my-5'
-                    />
-                  ),
+                  img: ({ src, altText }) =>
+                    src ? (
+                      <Image
+                        src={src}
+                        alt={altText}
+                        width={800}
+                        height={500}
+                        className='rounded-lg my-5'
+                      />
+                    ) : null,
                   ul: ({ children }) => (
                     <ul className='list-disc pl-6 my-4'>{children}</ul>
                   ),
@@ -175,44 +168,29 @@ const Page = ({ params }) => {
               />
             </div>
           </div>
-        </div>
-
-        <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl flex flex-col md:flex-row'>
-          <div className='max-w-full md:max-w-2xl mx-5 bg-gray-50 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
-            <h2 className='text-3xl font-semibold text-gray-800 mb-6'>
-              Recent Articles
-            </h2>
-            <ul>
-              {recentArticles.map((recentArticle, index) => (
-                <li key={index} className='flex items-center mb-4'>
-                  <Image
-                    src={recentArticle.featuredImage.url}
-                    alt={recentArticle.title}
-                    width={100}
-                    height={60}
-                    className='rounded-md mr-4'
-                  />
-                  <div>
-                    <Link
-                      href={`/article/${recentArticle.slug}`}
-                      className='text-gray-900 hover:text-blue-600 hover:underline'
-                    >
-                      {recentArticle.title}
-                    </Link>
-                    <span className='text-gray-500 text-xs block mt-1'>
-                      {new Date(recentArticle.date).toLocaleDateString()}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className='flex-none md:w-1/3'>
-            <Cryptowidget />
-          </div>
-        </div>
+        ))}
       </div>
-    </>
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl flex flex-col md:flex-row'>
+        <div className='max-w-full md:max-w-2xl mx-5 bg-gray-50 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
+          <h2 className='text-2xl font-bold mb-4'>Recent Articles</h2>
+          {recentArticles.length > 0 ? (
+            recentArticles.map((recentArticle) => (
+              <div key={recentArticle.id} className='mb-4'>
+                <h3 className='text-xl font-semibold'>
+                  <Link href={`/articles/${recentArticle.slug}`}>
+                    {recentArticle.title}
+                  </Link>
+                </h3>
+                <p className='text-gray-500'>{recentArticle.excerpt}</p>
+              </div>
+            ))
+          ) : (
+            <p>No recent articles available.</p>
+          )}
+        </div>
+        <Cryptowidget />
+      </div>
+    </div>
   )
 }
 
