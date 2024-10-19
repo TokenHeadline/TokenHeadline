@@ -113,25 +113,9 @@ const CoursePage = ({ params }) => {
 
   return (
     <div className='container mx-auto max-w-7xl px-4 lg:px-8 py-2 pb-6'>
-      <Head>
-        <title>{course.seoTitle || course.title}</title>
-        <meta
-          name='description'
-          content={
-            course.metaDescription || 'Default description if none is provided'
-          }
-        />
-        <meta property='og:title' content={course.seoTitle || course.title} />
-        <meta
-          property='og:description'
-          content={
-            course.metaDescription || 'Default description if none is provided'
-          }
-        />
-        <meta property='og:image' content={course.featuredImage.url} />
-      </Head>
       <head>
         <title>{course.seoTitle || course.title}</title>
+        <meta name='description' content={course.metaDescription} />
       </head>
       <div className='flex flex-col lg:flex-row gap-10'>
         <div className='bg-white shadow-lg rounded-lg p-6 flex-1'>

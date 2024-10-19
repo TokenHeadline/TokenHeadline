@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
 import {
   GET_PRESS_RELEASE,
   GET_RECENT_ARTICLES,
@@ -76,15 +75,9 @@ const Page = ({ params }) => {
 
   return (
     <>
-      <Head>
-        <title>{article.seoTitle || article.title}</title>
-        <meta
-          name='description'
-          content={article.seoDescription || 'Default description'}
-        />
-      </Head>
       <head>
         <title>{article.seoTitle || article.title}</title>
+        <meta name='description' content={article.seoDescription} />
       </head>
       <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
         <div className='mx-auto p-6'>
