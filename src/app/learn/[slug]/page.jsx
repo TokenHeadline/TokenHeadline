@@ -23,7 +23,7 @@ const CoursePage = ({ params }) => {
         const fetchedCourse = data.courses[0]
 
         if (!fetchedCourse) {
-          throw new Error('Course not found')
+          throw new Error('Courses not found')
         }
 
         setCourse(fetchedCourse)
