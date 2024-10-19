@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import { GET_INTERVIEW, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 import { RichText } from '@graphcms/rich-text-react-renderer'
@@ -6,49 +7,47 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import TwitterEmbed from '../../components/TwitterEmbed'
-export const revalidate = 10
-export async function generateMetadata({ params }) {
+import Head from 'next/head'
+
+const Page = ({ params }) => {
   const { slug } = params
+  const [articles, setArticles] = useState([])
+  const [recentArticles, setRecentArticles] = useState([])
+  const [meta, setMeta] = useState({ title: '', description: '' })
 
-  const { data } = await client.query({
-    query: GET_INTERVIEW,
-    variables: { slug },
-  })
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await client.query({
+        query: GET_INTERVIEW,
+        variables: { slug },
+      })
 
-  const article = data.pressResleases[0]
+      const fetchedArticles = data.pressResleases
 
-  if (!article) {
-    return {
-      title: 'Interview not found',
-      description: 'The requested interview does not exist.',
+      if (fetchedArticles.length > 0) {
+        setArticles(fetchedArticles)
+        const article = fetchedArticles[0]
+
+        // Set meta tags for SEO
+        setMeta({
+          title: article.seoTitle || article.title,
+          description:
+            article.seoDescription || 'Default description if none is provided',
+        })
+      }
+
+      // Fetch recent articles
+      const { data: recentData } = await client.query({
+        query: GET_RECENT_ARTICLES,
+        variables: { slug },
+      })
+      setRecentArticles(recentData.articles)
     }
-  }
 
-  return {
-    title: article.seoTitle || article.title,
-    description:
-      article.seoDescription || 'Default description if none is provided',
-  }
-}
+    fetchData()
+  }, [slug])
 
-const Page = async ({ params }) => {
-  const { slug } = params
-
-  const { data } = await client.query({
-    query: GET_INTERVIEW,
-    variables: { slug },
-  })
-
-  const articles = data.pressResleases
-
-  const { data: recentData } = await client.query({
-    query: GET_RECENT_ARTICLES,
-    variables: { slug },
-  })
-
-  const recentArticles = recentData.articles
-
-  if (!articles || articles.length === 0) {
+  if (!articles.length) {
     return (
       <div className='flex justify-center items-center h-screen'>
         <p className='text-xl font-semibold text-red-500'>Article not found</p>
@@ -58,6 +57,19 @@ const Page = async ({ params }) => {
 
   return (
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
+      {/* Head component for SEO */}
+      <Head>
+        <title>{meta.title}</title>
+        <meta name='description' content={meta.description} />
+        <meta property='og:title' content={meta.title} />
+        <meta property='og:description' content={meta.description} />
+        <meta property='og:image' content={articles[0].featuredImage.url} />
+        <meta
+          property='og:url'
+          content={`https://yourwebsite.com/article/${slug}`}
+        />
+      </Head>
+
       <div className='mx-auto p-6'>
         {articles.map((article, index) => (
           <div key={index} className='mb-10'>
