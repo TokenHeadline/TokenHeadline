@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import TwitterEmbed from '../../components/TwitterEmbed'
-export const dynamic = 'force-dynamic'
+export const revalidate = 10
 export async function generateMetadata({ params }) {
   const { slug } = params
 
