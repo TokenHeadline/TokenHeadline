@@ -51,10 +51,10 @@ const CoursesPage = () => {
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 mt-5'>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>Explore Courses from CloudlearnN</title>
+          <title>Courses</title>
           <meta
             name='description'
-            content='Discover a diverse collection of courses on various topics from CloudlearnN.'
+            content='Discover a diverse collection of courses on various topics from TokenHeadline.'
           />
         </head>
         {courses.map((course, index) => (

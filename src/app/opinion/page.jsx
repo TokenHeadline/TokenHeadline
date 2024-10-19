@@ -68,7 +68,7 @@ const ArticlesPage = () => {
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>Explore Opinions from TokenHeadline</title>
+          <title>Opinions</title>
           <meta
             name='description'
             content='Discover a diverse collection of expert-written opinions on various topics from TokenHeadline.'

@@ -8,7 +8,7 @@ import { RichText } from '@graphcms/rich-text-react-renderer'
 import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
-
+import TwitterEmbed from '../../components/TwitterEmbed'
 export async function generateMetadata({ params }) {
   const { slug } = params
 
@@ -123,11 +123,18 @@ const Page = async ({ params }) => {
                       {children}
                     </h3>
                   ),
-                  blockquote: ({ children }) => (
-                    <blockquote className='border-l-4 border-gray-400 pl-4 italic text-gray-600 my-4'>
-                      {children}
-                    </blockquote>
-                  ),
+                  blockquote: ({ children }) => {
+                    const twitterUrl =
+                      children.props?.children?.[0]?.props?.children
+                    if (twitterUrl && twitterUrl.includes('twitter.com')) {
+                      return <TwitterEmbed tweetUrl={twitterUrl} />
+                    }
+                    return (
+                      <blockquote className='border-l-4 border-gray-400 pl-4 italic text-gray-600 my-4'>
+                        {children}
+                      </blockquote>
+                    )
+                  },
                   table: ({ children }) => (
                     <table className='table-auto m-4 w-full border border-gray-300'>
                       {children}
