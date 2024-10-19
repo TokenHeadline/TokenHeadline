@@ -50,29 +50,28 @@ const Page = ({ params }) => {
   if (!articles.length) {
     return (
       <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-red-500'>Article not found</p>
+        <p className='text-xl font-semibold text-green-500'>Loading</p>
       </div>
     )
   }
 
   return (
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-      {/* Head component for SEO */}
       <Head>
         <title>{meta.title}</title>
         <meta name='description' content={meta.description} />
         <meta property='og:title' content={meta.title} />
         <meta property='og:description' content={meta.description} />
         <meta property='og:image' content={articles[0].featuredImage.url} />
-        <meta
-          property='og:url'
-          content={`https://yourwebsite.com/article/${slug}`}
-        />
       </Head>
 
       <div className='mx-auto p-6'>
         {articles.map((article, index) => (
           <div key={index} className='mb-10'>
+            <head>
+              <title>{article.title}</title>
+              <meta name='description' content={article.metaDescription} />
+            </head>
             <div className='items-center text-center'>
               <h1 className='text-5xl font-extrabold text-gray-900 mb-6'>
                 {article.title}

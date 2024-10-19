@@ -94,7 +94,7 @@ const ArticlesPage = () => {
 
             <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
               <div className='bg-gradient-to-tl from-blue-400 to-blue-900 text-white pt-1 font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center rounded-br-md rounded-bl-md'>
-                PRESS RELEASE
+                INTERVIEW
               </div>
               <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
                 {news.title}

@@ -1,41 +1,57 @@
-import React from 'react'
-import { GET_COURSE, GET_RECENT_COURSES } from '../../../../services/index'
+'use client'
+import React, { useEffect, useState } from 'react'
+import { GET_COURSE } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 import Image from 'next/image'
 import { RichText } from '@graphcms/rich-text-react-renderer'
+import Head from 'next/head' // Importing Head for setting metadata
 
-export async function generateMetadata({ params }) {
+const CoursePage = ({ params }) => {
   const { slug } = params
 
-  const { data } = await client.query({
-    query: GET_COURSE,
-    variables: { slug },
-  })
+  const [course, setCourse] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const course = data.courses[0]
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const { data } = await client.query({
+          query: GET_COURSE,
+          variables: { slug },
+        })
+        const fetchedCourse = data.courses[0]
 
-  if (!course) {
-    return {
-      title: 'Course not found',
-      description: 'The requested course does not exist.',
+        if (!fetchedCourse) {
+          throw new Error('Course not found')
+        }
+
+        setCourse(fetchedCourse)
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
     }
+
+    fetchCourse()
+  }, [slug])
+
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <p className='text-xl font-semibold text-green-500'>Loading....</p>
+      </div>
+    )
   }
 
-  return {
-    title: course.seoTitle || course.title,
-    description: course.metaDescription || 'Default description if none is provided',
+  if (error) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <p className='text-xl font-semibold text-red-500'>Error: {error}</p>
+      </div>
+    )
   }
-}
-
-const CoursePage = async ({ params }) => {
-  const { slug } = params
-
-  const { data } = await client.query({
-    query: GET_COURSE,
-    variables: { slug },
-  })
-
-  const course = data.courses[0]
 
   if (!course) {
     return (
@@ -80,7 +96,9 @@ const CoursePage = async ({ params }) => {
       <p className='text-base text-gray-600 my-2 text-center'>{children}</p>
     ),
     ul: ({ children }) => <ul className='list-disc pl-6 my-4'>{children}</ul>,
-    ol: ({ children }) => <ol className='list-decimal pl-6 my-4'>{children}</ol>,
+    ol: ({ children }) => (
+      <ol className='list-decimal pl-6 my-4'>{children}</ol>
+    ),
     li: ({ children }) => <li className='my-1'>{children}</li>,
     img: ({ src, alt }) => (
       <Image
@@ -95,8 +113,26 @@ const CoursePage = async ({ params }) => {
 
   return (
     <div className='container mx-auto max-w-7xl px-4 lg:px-8 py-2 pb-6'>
-    
-
+      <Head>
+        <title>{course.seoTitle || course.title}</title>
+        <meta
+          name='description'
+          content={
+            course.metaDescription || 'Default description if none is provided'
+          }
+        />
+        <meta property='og:title' content={course.seoTitle || course.title} />
+        <meta
+          property='og:description'
+          content={
+            course.metaDescription || 'Default description if none is provided'
+          }
+        />
+        <meta property='og:image' content={course.featuredImage.url} />
+      </Head>
+      <head>
+        <title>{course.seoTitle || course.title}</title>
+      </head>
       <div className='flex flex-col lg:flex-row gap-10'>
         <div className='bg-white shadow-lg rounded-lg p-6 flex-1'>
           <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
