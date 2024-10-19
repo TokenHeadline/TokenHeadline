@@ -172,23 +172,37 @@ const Page = ({ params }) => {
       </div>
       <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl flex flex-col md:flex-row'>
         <div className='max-w-full md:max-w-2xl mx-5 bg-gray-50 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
-          <h2 className='text-2xl font-bold mb-4'>Recent Articles</h2>
-          {recentArticles.length > 0 ? (
-            recentArticles.map((recentArticle) => (
-              <div key={recentArticle.id} className='mb-4'>
-                <h3 className='text-xl font-semibold'>
-                  <Link href={`/articles/${recentArticle.slug}`}>
+          <h2 className='text-3xl font-semibold text-gray-800 mb-6'>
+            Recent Articles
+          </h2>
+          <ul>
+            {recentArticles.map((recentArticle, index) => (
+              <li key={index} className='flex items-center mb-4'>
+                <Image
+                  src={recentArticle.featuredImage.url}
+                  alt={recentArticle.title}
+                  width={100}
+                  height={60}
+                  className='rounded-md mr-4'
+                />
+                <div>
+                  <Link
+                    href={`/article/${recentArticle.slug}`}
+                    className='text-gray-900 hover:text-blue-600 hover:underline'
+                  >
                     {recentArticle.title}
                   </Link>
-                </h3>
-                <p className='text-gray-500'>{recentArticle.excerpt}</p>
-              </div>
-            ))
-          ) : (
-            <p>No recent articles available.</p>
-          )}
+                  <span className='text-gray-500 text-xs block mt-1'>
+                    {new Date(recentArticle.date).toLocaleDateString()}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <Cryptowidget />
+        <div className='flex-none md:w-1/3'>
+          <Cryptowidget />
+        </div>
       </div>
     </div>
   )
