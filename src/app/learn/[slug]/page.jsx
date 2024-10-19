@@ -1,33 +1,41 @@
-'use client'
 import React from 'react'
-import { useQuery } from '@apollo/client'
-import client from '../../../lib/apolloClient'
 import { GET_COURSE, GET_RECENT_COURSES } from '../../../../services/index'
+import client from '../../../lib/apolloClient'
 import Image from 'next/image'
 import { RichText } from '@graphcms/rich-text-react-renderer'
-import Link from 'next/link'
 
-const CoursePage = ({ params }) => {
+export async function generateMetadata({ params }) {
   const { slug } = params
 
-  const {
-    loading: loadingCourse,
-    error: errorCourse,
-    data: courseData,
-  } = useQuery(GET_COURSE, {
-    client,
+  const { data } = await client.query({
+    query: GET_COURSE,
     variables: { slug },
-    skip: !slug,
   })
 
-  if (loadingCourse)
-    return <p className='text-center text-lg h-screen'>Loading...</p>
-  if (errorCourse)
-    return (
-      <p className='text-center text-lg text-red-500'>Error loading course</p>
-    )
+  const course = data.courses[0]
 
-  const course = courseData?.courses[0]
+  if (!course) {
+    return {
+      title: 'Course not found',
+      description: 'The requested course does not exist.',
+    }
+  }
+
+  return {
+    title: course.seoTitle || course.title,
+    description: course.metaDescription || 'Default description if none is provided',
+  }
+}
+
+const CoursePage = async ({ params }) => {
+  const { slug } = params
+
+  const { data } = await client.query({
+    query: GET_COURSE,
+    variables: { slug },
+  })
+
+  const course = data.courses[0]
 
   if (!course) {
     return (
@@ -72,9 +80,7 @@ const CoursePage = ({ params }) => {
       <p className='text-base text-gray-600 my-2 text-center'>{children}</p>
     ),
     ul: ({ children }) => <ul className='list-disc pl-6 my-4'>{children}</ul>,
-    ol: ({ children }) => (
-      <ol className='list-decimal pl-6 my-4'>{children}</ol>
-    ),
+    ol: ({ children }) => <ol className='list-decimal pl-6 my-4'>{children}</ol>,
     li: ({ children }) => <li className='my-1'>{children}</li>,
     img: ({ src, alt }) => (
       <Image
@@ -89,10 +95,7 @@ const CoursePage = ({ params }) => {
 
   return (
     <div className='container mx-auto max-w-7xl px-4 lg:px-8 py-2 pb-6'>
-      <head>
-        <title>{course.seoTitle}</title>
-        <meta name='description' content={course.metaDescription} />
-      </head>
+    
 
       <div className='flex flex-col lg:flex-row gap-10'>
         <div className='bg-white shadow-lg rounded-lg p-6 flex-1'>
