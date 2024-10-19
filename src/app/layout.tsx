@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={inriaSans.className}
+        className={inriaSans.className + ' h-screen'}
         style={{ backgroundColor: '#e9e9e9' }}
       >
         <Navbar />

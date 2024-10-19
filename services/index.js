@@ -289,7 +289,7 @@ export const GET_ALL_PRESS_RELEASES = gql`
 `
 export const GET_PRESS_RELEASE = gql`
   query MyQuery($slug: String!) {
-    pressResleases(where: { slug: $slug }) {
+    pressResleases(where: { slug: $slug, interview: false }) {
       author {
         name
       }
@@ -395,6 +395,25 @@ export const GET_INTERVIEWS = gql`
       aggregate {
         count
       }
+    }
+  }
+`
+export const GET_INTERVIEW = gql`
+  query MyQuery($slug: String!) {
+    pressResleases(where: { slug: $slug, interview: true }) {
+      author {
+        name
+      }
+      title
+      content {
+        raw
+      }
+      featuredImage {
+        url
+      }
+      date
+      seoTitle
+      seoDescription
     }
   }
 `
