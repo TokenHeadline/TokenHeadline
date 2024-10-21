@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <footer className='bg-stone-950 text-white pt-8 pb-4'>
+    <footer className='bg-stone-950 text-white pt-8 pb-4 mt-8'>
       <div className='container mx-auto px-4 md:px-12 lg:px-20 xl:px-36 flex flex-col lg:flex-row justify-between items-center md:items-start'>
         <div className='mb-10 md:mb-0'>
           <Link href='/'>
