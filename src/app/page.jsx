@@ -15,6 +15,10 @@ export async function generateMetadata() {
     description:
       'Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.',
     keywords: [
+      'Token Headline',
+      'TokenHeadline',
+      'tokenheadline',
+      'Tokenheadline',
       'Web3',
       'crypto news',
       'digital finance',
