@@ -3,11 +3,9 @@ import './globals.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-// Configure the Inria Sans font with the specific weights
 const inriaSans = Inria_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '700'], // Specify the weights you want to use
+  weight: ['300', '400', '700'],
 })
 export default function RootLayout({
   children,
@@ -24,7 +22,6 @@ export default function RootLayout({
         {children}
         <Footer />
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   )
