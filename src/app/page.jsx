@@ -36,7 +36,7 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <div className='h-screen'>
+    <div className='h-max'>
       <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:ml-16 lg:mr-16 '>
         <Today />
         <Articles />
