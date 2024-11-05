@@ -33,7 +33,8 @@
     "src/app/components/Banner.jsx",
     "src/app/components/Banner.jsx",
     "src/app/components/Banner.jsx",
-    "src/app/components/Banner.jsx"
+    "src/app/components/Banner.jsx",
+    "src/app/sitemap.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,86 +1,112 @@
 import { gql } from '@apollo/client'
 
 export const GET_TODAY = gql`
-  query MyQuery {
-    articles(first: 1, orderBy: publishedAt_DESC, where: { opinion: false }) {
-      subheading
-      excerpt
-      featuredImage {
-        url
-      }
-      slug
-      category {
-        name
-      }
-      date
-      author {
-        name
+  query GetToday {
+    posts(first: 1, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        title
+        excerpt
+        slug
+        date
+        author {
+          node {
+            name
+          }
+        }
+        categories {
+          nodes {
+            name
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
       }
     }
   }
 `
+
 export const GET_ARTICLES = gql`
-  query MyQuery {
-    articles(orderBy: publishedAt_DESC) {
-      author {
-        name
+  query NewQuery {
+    posts(where: { orderby: { field: DATE, order: DESC } }, first: 8) {
+      nodes {
+        id
+        slug
+        title
+        categories {
+          nodes {
+            name
+          }
+        }
+        author {
+          node {
+            name
+          }
+        }
       }
-      slug
-      category {
-        name
-      }
-      subheading
-      id
     }
   }
 `
+
 export const GET_ARTICLE = gql`
-  query MyQuery($slug: String!) {
-    articles(where: { slug: $slug }) {
-      category {
-        name
+  query MyQuery($slug: ID!) {
+    post(id: $slug, idType: SLUG) {
+      seo {
+        title
+        metaDesc
+      }
+      categories {
+        nodes {
+          name
+        }
       }
       title
       author {
-        name
-        image {
-          url
+        node {
+          name
         }
       }
-      content {
-        raw
-        html
-      }
+      content
       featuredImage {
-        url
+        node {
+          sourceUrl
+        }
       }
       date
-      seoTitle
-      metaDescription
     }
   }
 `
 export const GET_RECENT_ARTICLES = gql`
-  query MyQuery($slug: String!) {
-    articles(orderBy: updatedAt_DESC, where: { slug_not: $slug }, first: 8) {
-      title
-      featuredImage {
-        url
+  query GetRecentArticles {
+    posts(first: 9, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        title
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        slug
+        date
       }
-      slug
-      date
     }
   }
 `
 export const GET_BANNER = gql`
   query MyQuery {
-    articles(first: 6, orderBy: publishedAt_DESC, where: { opinion: false }) {
-      id
-      title
-      featuredImage {
-        url
+    posts(first: 6, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        id
+        title
+        slug
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
       }
-      slug
     }
   }
 `
@@ -166,29 +192,33 @@ export const GET_CATEGORIES = gql`
 `
 export const BREAKING_NEWS = gql`
   query MyQuery {
-    articles(
-      first: 6
-      orderBy: publishedAt_DESC
-      where: { breakingNews: true, opinion: false }
-    ) {
-      breakingNews
-      title
+    posts(first: 6, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        title
+      }
     }
   }
 `
 export const GET_LATEST = gql`
   query MyQuery {
-    articles(first: 1, orderBy: updatedAt_DESC, where: { opinion: true }) {
-      slug
-      title
-      excerpt
-      featuredImage {
-        url
-      }
-      author {
-        name
-        image {
-          url
+    opinions(first: 1, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        author {
+          node {
+            name
+            id
+            avatar {
+              url
+            }
+          }
+        }
+        slug
+        title
+        excerpt
+        featuredImage {
+          node {
+            sourceUrl
+          }
         }
       }
     }
@@ -196,21 +226,28 @@ export const GET_LATEST = gql`
 `
 export const GET_ARTICLE_FOR_GRID = gql`
   query MyQuery {
-    articles(orderBy: publishedAt_DESC, where: { opinion: false }, first: 3) {
-      title
-      excerpt
-      featuredImage {
-        url
+    posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        title
+        excerpt
+        date
+        author {
+          node {
+            name
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        slug
       }
-      author {
-        name
-      }
-      slug
-      date
     }
   }
 `
-export const GET_OPINION = gql`
+
+export const GET_OPINIONS = gql`
   query GetAllOpinion($limit: Int, $offset: Int) {
     articles(
       orderBy: updatedAt_DESC
@@ -242,21 +279,23 @@ export const GET_OPINION = gql`
 `
 export const GET_PRESS_RELEASES = gql`
   query MyQuery {
-    pressResleases(
-      orderBy: publishedAt_DESC
-      first: 3
-      where: { interview: false }
-    ) {
-      title
-      excerpt
-      featuredImage {
-        url
+    pressReleases(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        title
+        excerpt
+        date
+        author {
+          node {
+            name
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        slug
       }
-      author {
-        name
-      }
-      slug
-      date
     }
   }
 `
@@ -288,37 +327,94 @@ export const GET_ALL_PRESS_RELEASES = gql`
   }
 `
 export const GET_PRESS_RELEASE = gql`
-  query MyQuery($slug: String!) {
-    pressResleases(where: { slug: $slug, interview: false }) {
-      author {
-        name
+  query MyQuery($slug: ID!) {
+    pressRelease(id: $slug, idType: SLUG) {
+      seo {
+        title
+        metaDesc
       }
       title
-      content {
-        raw
+      author {
+        node {
+          name
+        }
       }
+      content
       featuredImage {
-        url
+        node {
+          sourceUrl
+        }
       }
       date
-      seoTitle
-      seoDescription
+    }
+  }
+`
+export const GET_OPINION = gql`
+  query MyQuery($slug: ID!) {
+    opinion(id: $slug, idType: SLUG) {
+      seo {
+        title
+        metaDesc
+      }
+      title
+      author {
+        node {
+          name
+        }
+      }
+      content
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+      date
+    }
+  }
+`
+export const GET_INTERVIEW = gql`
+  query MyQuery($slug: ID!) {
+    interview(id: $slug, idType: SLUG) {
+      seo {
+        title
+        metaDesc
+      }
+      title
+      author {
+        node {
+          name
+        }
+      }
+      content
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+      date
     }
   }
 `
 export const GET_COURSES = gql`
   query MyQuery {
-    courses {
-      id
-      title
-      slug
-      featuredImage {
-        url
+    courses(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        id
+        title
+        slug
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        level {
+          level
+        }
       }
-      courselevel
     }
   }
 `
+
 export const GET_ALL_COURSES = gql`
   query GetAllCourses($limit: Int, $offset: Int) {
     courses(first: $limit, skip: $offset) {
@@ -339,22 +435,24 @@ export const GET_ALL_COURSES = gql`
   }
 `
 export const GET_COURSE = gql`
-  query MyQuery($slug: String) {
-    courses(where: { slug: $slug }) {
+  query MyQuery($slug: ID!) {
+    course(id: $slug, idType: SLUG) {
+      seo {
+        title
+        metaDesc
+      }
       id
-      title
-      slug
       featuredImage {
-        url
+        node {
+          sourceUrl
+        }
       }
-      courselevel
-      courseDescription
-      content {
-        raw
-        html
+      level {
+        level
       }
-      seoTitle
-      metaDescription
+      slug
+      title
+      content
     }
   }
 `
@@ -395,25 +493,6 @@ export const GET_INTERVIEWS = gql`
       aggregate {
         count
       }
-    }
-  }
-`
-export const GET_INTERVIEW = gql`
-  query MyQuery($slug: String!) {
-    pressResleases(where: { slug: $slug, interview: true }) {
-      author {
-        name
-      }
-      title
-      content {
-        raw
-      }
-      featuredImage {
-        url
-      }
-      date
-      seoTitle
-      seoDescription
     }
   }
 `

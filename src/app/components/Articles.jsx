@@ -16,7 +16,7 @@ const Articles = () => {
         const { data } = await client.query({
           query: GET_ARTICLES,
         })
-        setNews(data.articles || [])
+        setNews(data.posts.nodes || [])
       } catch (error) {
         console.error('Error fetching articles:', error)
       } finally {
@@ -31,27 +31,29 @@ const Articles = () => {
     return <ArticlesSkeleton />
   }
 
+  // Show different articles based on screen width (optional)
   const articlesToShow =
     typeof window !== 'undefined' && window.innerWidth < 640
-      ? news.slice(2, 7)
-      : news.slice(2, 7)
+      ? news.slice(1, 7)
+      : news.slice(1, 4)
 
   return (
     <div className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 lg:gap-0 lg:w-4/12'>
       {articlesToShow.map((article) => (
         <div key={article.id}>
           <h2 className='text-base sm:text-lg md:text-lg lg:text-xl font-bold leading-6'>
-            {article.subheading}
+            {article.title}
           </h2>
           <div className='flex items-center justify-between mt-2 lg:ml-5'>
             <div className='flex flex-col lg:flex-row'>
               <div className='mr-4'>
                 <p className='text-sm sm:text-sm font-bold'>
-                  {article.category.name.toUpperCase()}
+                  {article.categories.nodes[0]?.name?.toUpperCase() ||
+                    'Uncategorized'}
                 </p>
               </div>
               <p className='text-sm sm:text-sm text-black lg:ml-2'>
-                By {article.author.name}
+                By {article.author.node.name}
               </p>
             </div>
             <Link

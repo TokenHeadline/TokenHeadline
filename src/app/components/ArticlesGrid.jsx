@@ -1,4 +1,3 @@
-// ArticlesGrid.js
 'use client'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -53,7 +52,7 @@ const ArticlesGrid = () => {
       const { data } = await client.query({
         query: GET_ARTICLE_FOR_GRID,
       })
-      setArticles(data?.articles || [])
+      setArticles(data?.posts?.nodes || []) // Adjusting to the new data structure
     }
 
     fetchArticles()
@@ -75,13 +74,12 @@ const ArticlesGrid = () => {
           >
             <div className='relative w-full h-48'>
               <Image
-                src={news.featuredImage.url}
+                src={news.featuredImage.node.sourceUrl} // Adjusting to the new data structure
                 alt={news.title}
                 fill
                 sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
                 style={{
                   objectFit: 'cover',
-
                   filter: hovered ? 'none' : 'grayscale(100%)',
                   transition: 'filter 0.3s ease',
                 }}
@@ -95,13 +93,19 @@ const ArticlesGrid = () => {
                 {news.title}
               </h2>
               <p className='text-sm text-gray-700 mb-4'>
-                {news.excerpt.split(' ').slice(0, 30).join(' ') + '...'}
+                {news.excerpt
+                  .replace(/<[^>]+>/g, '')
+                  .split(' ')
+                  .slice(0, 30)
+                  .join(' ') + '...'}{' '}
+                {/* Stripping HTML tags */}
               </p>
             </div>
 
             <div className='p-4 mt-auto'>
               <div className='flex justify-between text-sm text-black'>
-                <p>By {news.author.name}</p>
+                <p>By {news.author.node.name}</p>{' '}
+                {/* Adjusting to the new data structure */}
                 <p>{formatDateWithOrdinalAndAbbreviatedMonth(news.date)}</p>
               </div>
             </div>

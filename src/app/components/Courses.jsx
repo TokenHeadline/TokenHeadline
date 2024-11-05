@@ -6,15 +6,17 @@ import 'react-multi-carousel/lib/styles.css'
 import { GET_COURSES } from '../../../services/index'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
+
 const Courses = () => {
   const [courses, setCourses] = useState([])
   const [hovered, setHovered] = useState(false)
+
   useEffect(() => {
     const fetchCourses = async () => {
       const { data } = await client.query({
         query: GET_COURSES,
       })
-      setCourses(data?.courses || [])
+      setCourses(data?.courses?.nodes || []) // Adjusting to access nodes
     }
 
     fetchCourses()
@@ -67,14 +69,13 @@ const Courses = () => {
             } transition duration-300`}
           >
             <Image
-              src={course.featuredImage.url}
+              src={course.featuredImage.node.sourceUrl} // Accessing sourceUrl correctly
               alt={course.title}
               width={500}
               height={250}
               className='w-full h-56'
               style={{
                 objectFit: 'cover',
-
                 filter: hovered ? 'none' : 'grayscale(100%)',
                 transition: 'filter 0.3s ease',
               }}
@@ -89,11 +90,11 @@ const Courses = () => {
                 <div className='flex items-center mt-5'>
                   <div
                     className={`w-3 h-3 rounded-full mr-2 ${getLevelColor(
-                      course.courselevel
+                      course.level.level // Accessing the course level correctly
                     )}`}
                   ></div>
                   <span className='font-medium text-sm capitalize text-gray-700'>
-                    {course.courselevel}
+                    {course.level.level}
                   </span>
                 </div>
               </div>

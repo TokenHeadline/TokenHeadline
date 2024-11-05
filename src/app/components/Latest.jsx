@@ -10,13 +10,14 @@ const Latest = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [hovered, setHovered] = useState(false)
+
   useEffect(() => {
     const fetchLatestNews = async () => {
       try {
         const { data } = await client.query({
           query: GET_LATEST,
         })
-        setNews(data?.articles || [])
+        setNews(data?.opinions?.nodes || [])
       } catch (err) {
         setError(err)
       } finally {
@@ -41,21 +42,13 @@ const Latest = () => {
         >
           <div className='flex-1'>
             <div className='flex items-center space-x-4 p-4'>
-              {newsItem?.author?.image?.url && (
-                <Image
-                  src={newsItem.author.image.url}
-                  width={33}
-                  height={38}
-                  alt={newsItem.author.name}
-                  className='rounded-full'
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-              )}
               <p className='text-lg font-bold'>
-                {newsItem?.author?.name || 'Unknown Author'}
+                <span className='mr-2'> By</span>
+                {newsItem?.author?.node?.name || 'Unknown Author'}
               </p>
             </div>
             <div className='mr-0 lg:mr-20'>
+              {/* Title */}
               <Link
                 href={`opinion/${newsItem.slug}`}
                 className='font-bold text-2xl md:text-3xl lg:text-4xl mb-4 duration-300 ease-in-out transform hover:scale-105'
@@ -63,9 +56,14 @@ const Latest = () => {
                 {newsItem.title}
               </Link>
 
+              {/* Excerpt */}
               <p className='text-base md:text-lg'>
                 {newsItem.excerpt
-                  ? newsItem.excerpt.split(' ').slice(0, 70).join(' ') + '...'
+                  ? newsItem.excerpt
+                      .replace(/<\/?[^>]+(>|$)/g, '')
+                      .split(' ')
+                      .slice(0, 70)
+                      .join(' ') + '...' // Removing HTML tags
                   : 'No excerpt available'}
               </p>
             </div>
@@ -73,8 +71,9 @@ const Latest = () => {
 
           <div className='flex-1'>
             <div className='w-full'>
+              {/* Featured Image */}
               <Image
-                src={newsItem?.featuredImage?.url || '/image.png'}
+                src={newsItem?.featuredImage?.node?.sourceUrl || '/image.png'}
                 width={630}
                 height={452}
                 alt={newsItem.title}

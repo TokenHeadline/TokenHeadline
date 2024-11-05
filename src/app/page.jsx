@@ -43,9 +43,9 @@ export default function Home() {
         <Banner />
       </section>
       <BreakinNewsTicker />
-      <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16'>
+      {/* <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16'>
         <Topics />
-      </section>
+      </section> */}
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-8 lg:ml-16 lg:mr-16'>
         <Latest />
       </section>

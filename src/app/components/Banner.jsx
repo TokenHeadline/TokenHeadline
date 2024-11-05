@@ -5,39 +5,41 @@ import move from 'lodash-move'
 import { GET_BANNER } from '../../../services'
 import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
-const CARD_OFFSET = 30
-const SCALE_FACTOR = 0.04
-const VISIBLE_CARDS = 3
 import BannerSkeleton from './Skeleton/BannerSkeleton'
 import Link from 'next/link'
 
-const Banner = () => {
-  const [News, setNews] = useState([])
-  const { loading, error, data } = useQuery(GET_BANNER, { client: client })
+const CARD_OFFSET = 30
+const SCALE_FACTOR = 0.04
+const VISIBLE_CARDS = 3
 
+const Banner = () => {
   const [cards, setCards] = useState([])
   const [hoveredIndex, setHoveredIndex] = useState(null)
 
+  // Use the GET_BANNER query to fetch posts data
+  const { loading, error, data } = useQuery(GET_BANNER, { client: client })
+
   useEffect(() => {
-    if (data && data.articles) {
-      setNews(data.articles)
-      setCards(data.articles.slice(0, 6))
+    if (data && data.posts && data.posts.nodes) {
+      setCards(data.posts.nodes.slice(0, 6)) // Get the first 6 posts
     }
   }, [data])
 
   const moveToEnd = (from) => {
-    setCards(move(cards, from, cards.length - 1))
+    setCards((prevCards) => move(prevCards, from, prevCards.length - 1))
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      moveToEnd(0)
+      if (cards.length > 0) {
+        moveToEnd(0) // Move the first card to the end every 3 seconds
+      }
     }, 3000)
 
     return () => clearInterval(interval)
   }, [cards])
 
-  if (loading) return <BannerSkeleton />
+  if (loading) return <BannerSkeleton /> // Show skeleton while loading
 
   return (
     <div className='relative flex justify-center items-center'>
@@ -55,12 +57,12 @@ const Banner = () => {
                 canDrag ? 'cursor-grab' : 'cursor-auto'
               } ${hoveredIndex === index ? '' : 'grayscale'}`}
               style={{
-                backgroundImage: `url(${newsItem.featuredImage.url})`,
+                backgroundImage: `url(${newsItem.featuredImage.node.sourceUrl})`,
               }}
               animate={{
                 top: index * -CARD_OFFSET,
                 scale: 1 - index * SCALE_FACTOR,
-                zIndex: News.length - index,
+                zIndex: cards.length - index,
               }}
               drag={canDrag ? 'y' : false}
               dragConstraints={{
@@ -71,7 +73,7 @@ const Banner = () => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <div className='absolute bottom-2 left-2 text-white p-2 mb-0 pb-0 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px] '>
+              <div className='absolute bottom-2 left-2 text-white p-2 mb-0 pb-0 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px]'>
                 <Link
                   href={`/article/${newsItem.slug}`}
                   aria-label={`/article/${newsItem.slug}`}
