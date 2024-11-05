@@ -111,35 +111,34 @@ export const GET_BANNER = gql`
   }
 `
 export const GET_ALL_ARTICLES = gql`
-  query GetAllArticles($limit: Int, $offset: Int) {
-    articles(
-      orderBy: updatedAt_DESC
-      where: { opinion: false }
-      first: $limit
-      skip: $offset
-    ) {
-      id
-      title
-      featuredImage {
-        url
-      }
-      slug
-      author {
-        name
-      }
-      date
-      excerpt
-      category {
-        name
-      }
-    }
-    totalCount: articlesConnection(where: { opinion: false }) {
-      aggregate {
-        count
+  query GetArticles {
+    posts {
+      nodes {
+        id
+        title
+        excerpt
+        slug
+        date
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        author {
+          node {
+            name
+          }
+        }
+        categories {
+          nodes {
+            name
+          }
+        }
       }
     }
   }
 `
+
 export const GET_CATEGORY_ARTICLE = gql`
   query GetAllArticles($category: String, $limit: Int, $offset: Int) {
     articles(
