@@ -124,7 +124,7 @@ const ArticlesPage = () => {
         <div className='text-center mt-8'>
           <button
             onClick={handleLoadMore}
-            className='px-6 py-2 bg-softRed text-white rounded-md hover:bg-softGreen transition'
+            className='px-6 py-2 bg-red-500 text-white rounded-md hover:bg-green-400 transition'
           >
             {loading ? 'Loading...' : 'Load More'}
           </button>
