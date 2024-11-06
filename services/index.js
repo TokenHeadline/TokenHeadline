@@ -145,6 +145,36 @@ export const GET_ALL_ARTICLES = gql`
     }
   }
 `
+export const GET_ALL_OPINIONS = gql`
+  query GetArticles($first: Int, $after: String) {
+    posts(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          author {
+            node {
+              name
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`
 
 export const GET_CATEGORY_ARTICLE = gql`
   query GetAllArticles($category: String, $limit: Int, $offset: Int) {
