@@ -76,15 +76,19 @@ export default function Navbar() {
 
         {/* Logo */}
         <div className='flex items-center justify-center lg:mx-auto'>
-          <div className='text-3xl font-bold text-center mt-2 lg:pl-3'>
-            <Image
+          <Link
+            href='/'
+            passHref
+            className='text-3xl font-bold text-center mt-2 lg:pl-3'
+          >
+            <img
               src={'/logo.png'}
               height={50}
               width={155}
               alt='logo'
               priority={true}
             />
-          </div>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
