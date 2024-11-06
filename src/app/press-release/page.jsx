@@ -6,28 +6,32 @@ import { GET_ALL_PRESS_RELEASES } from '../../../services'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
 
-const ArticlesPage = () => {
-  const ARTICLES_PER_PAGE = 1
+const PressReleasesPage = () => {
+  const PRESS_RELEASES_PER_PAGE = 6
   const [cursor, setCursor] = useState(null)
+  const [pressReleases, setPressReleases] = useState([])
+
   const { loading, error, data } = useQuery(GET_ALL_PRESS_RELEASES, {
     client,
     variables: {
-      first: ARTICLES_PER_PAGE,
+      first: PRESS_RELEASES_PER_PAGE,
       after: cursor,
     },
     onCompleted: (newData) => {
       if (newData?.pressReleases?.edges) {
-        setCursor(newData.pressReleases.pageInfo.endCursor)
+        setPressReleases((prevPressReleases) => [
+          ...prevPressReleases,
+          ...newData.pressReleases.edges.map((edge) => edge.node),
+        ])
       }
     },
   })
 
+  // Format the date to a more readable format with abbreviated month
   function formatDateWithOrdinalAndAbbreviatedMonth(dateStr) {
     const date = new Date(dateStr)
-
     const day = date.getDate()
     const year = date.getFullYear()
-
     const months = [
       'JAN',
       'FEB',
@@ -43,20 +47,25 @@ const ArticlesPage = () => {
       'DEC',
     ]
     const month = months[date.getMonth()]
-
     return `${day} ${month} ${year}`
   }
 
-  if (loading && !data)
+  // Handle "Load More" button click
+  const handleLoadMore = () => {
+    if (data?.pressReleases?.pageInfo?.endCursor) {
+      setCursor(data.pressReleases.pageInfo.endCursor) // Set the new cursor
+    }
+  }
+
+  if (loading && pressReleases.length === 0)
     return <p className='text-center text-lg h-screen'>Loading...</p>
+
   if (error)
     return (
       <p className='text-center text-lg text-red-500'>
         Error loading press releases
       </p>
     )
-
-  const pressReleases = data?.pressReleases?.edges || []
 
   return (
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
@@ -69,18 +78,18 @@ const ArticlesPage = () => {
           />
         </head>
 
-        {pressReleases.map(({ node: news }) => (
+        {pressReleases.map((pressRelease, index) => (
           <Link
-            href={`/press-release/${news.slug}`}
-            aria-label={`${news.slug}`}
+            key={pressRelease.id} // Using unique ID as key
+            href={`/press-release/${pressRelease.slug}`}
+            aria-label={pressRelease.title}
             passHref
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
-            key={news.id}
           >
             <div className='relative h-60 w-full md:w-1/3'>
               <Image
-                src={news.featuredImage.node.sourceUrl}
-                alt={news.title}
+                src={pressRelease.featuredImage.node.sourceUrl}
+                alt={pressRelease.title}
                 fill
                 className='object-cover'
               />
@@ -91,42 +100,38 @@ const ArticlesPage = () => {
                 PRESS RELEASE
               </div>
               <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
-                {news.title}
+                {pressRelease.title}
               </h2>
               <p className='text-base text-gray-600 line-clamp-3'>
-                {news.excerpt.split(' ').slice(0, 65).join(' ') + '...'}
+                {pressRelease.excerpt.split(' ').slice(0, 65).join(' ') + '...'}
               </p>
-              <div className='flex black'>
+              <div className='flex'>
                 <p className='text-sm font-normal'>
-                  By {news.author.node.name.toUpperCase()}
+                  By {pressRelease.author.node.name.toUpperCase()}
                 </p>
                 <span className='mx-2'></span>
                 <p className='text-sm font-normal'>
-                  {formatDateWithOrdinalAndAbbreviatedMonth(news.date)}
+                  {formatDateWithOrdinalAndAbbreviatedMonth(pressRelease.date)}
                 </p>
               </div>
             </div>
           </Link>
         ))}
-      </div>
 
-      {data?.pressReleases?.pageInfo?.hasNextPage && (
-        <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
-          <button
-            className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
-              !cursor
-                ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-                : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
-            }`}
-            onClick={() => setCursor(data.pressReleases.pageInfo.endCursor)}
-            disabled={!cursor}
-          >
-            Load More
-          </button>
-        </div>
-      )}
+        {/* Load More Button */}
+        {data?.pressReleases?.pageInfo?.hasNextPage && (
+          <div className='text-center mt-8'>
+            <button
+              onClick={handleLoadMore}
+              className='px-6 py-2 bg-softRed text-white rounded-md hover:bg-softGreen transition'
+            >
+              {loading ? 'Loading...' : 'Load More'}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
 
-export default ArticlesPage
+export default PressReleasesPage
