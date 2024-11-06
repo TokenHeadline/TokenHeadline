@@ -455,24 +455,32 @@ export const GET_COURSES = gql`
 `
 
 export const GET_ALL_COURSES = gql`
-  query GetAllCourses($limit: Int, $offset: Int) {
-    courses(first: $limit, skip: $offset) {
-      id
-      title
-      slug
-      featuredImage {
-        url
+  query GetCourses($first: Int, $after: String) {
+    courses(first: $first, after: $after) {
+      edges {
+        cursor
+        node {
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          excerpt
+          level {
+            level
+          }
+          title
+          slug
+        }
       }
-      courselevel
-      courseDescription
-    }
-    coursesConnection {
-      aggregate {
-        count
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
   }
 `
+
 export const GET_COURSE = gql`
   query MyQuery($slug: ID!) {
     course(id: $slug, idType: SLUG) {

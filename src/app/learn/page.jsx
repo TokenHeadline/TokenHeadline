@@ -2,19 +2,18 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useQuery } from '@apollo/client'
+import { GET_ALL_COURSES } from '../../../services'
 import client from '../../lib/apolloClient'
 import Link from 'next/link'
-import { gql } from '@apollo/client'
-import { GET_ALL_COURSES } from '../../../services'
 
 const CoursesPage = () => {
-  const COURSES_PER_PAGE = 6
-  const [currentPage, setCurrentPage] = useState(1)
+  const COURSES_PER_PAGE = 5
+  const [cursor, setCursor] = useState(null) // Maintain cursor state
   const { loading, error, data } = useQuery(GET_ALL_COURSES, {
     client,
     variables: {
-      limit: COURSES_PER_PAGE,
-      offset: (currentPage - 1) * COURSES_PER_PAGE,
+      first: COURSES_PER_PAGE,
+      after: cursor, // Pass cursor to the query
     },
   })
 
@@ -25,27 +24,19 @@ const CoursesPage = () => {
     return 'bg-gray-500'
   }
 
+  const handleLoadMore = () => {
+    if (data?.courses?.pageInfo?.endCursor) {
+      setCursor(data.courses.pageInfo.endCursor)
+    }
+  }
+
   if (loading) return <p className='text-center text-lg h-screen'>Loading...</p>
   if (error)
     return (
       <p className='text-center text-lg text-red-500'>Error loading courses</p>
     )
 
-  const courses = data?.courses || []
-  const totalCourses = data?.coursesConnection?.aggregate?.count || 0
-  const totalPages = Math.ceil(totalCourses / COURSES_PER_PAGE)
-
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
-
-  const previousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
+  const courses = data?.courses?.edges || []
 
   return (
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 mt-5'>
@@ -57,14 +48,14 @@ const CoursesPage = () => {
             content='Discover a diverse collection of courses on various topics from TokenHeadline.'
           />
         </head>
-        {courses.map((course, index) => (
+        {courses.map(({ node: course }, index) => (
           <div
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
-            key={index}
+            key={course.id}
           >
             <div className='relative h-60 w-full md:w-1/3'>
               <Image
-                src={course.featuredImage.url}
+                src={course.featuredImage.node.sourceUrl}
                 alt={course.title}
                 fill
                 className='object-cover'
@@ -76,24 +67,21 @@ const CoursesPage = () => {
                 {course.title}
               </h2>
               <p className='text-base text-gray-600 line-clamp-3'>
-                {course.courseDescription.split(' ').slice(0, 40).join(' ') +
-                  '...'}
+                {course.excerpt.split(' ').slice(0, 40).join(' ') + '...'}
               </p>
               <div className='flex items-center mt-5'>
                 <div
                   className={`w-3 h-3 rounded-full mr-2 ${getLevelColor(
-                    course.courselevel
+                    course.level.level
                   )}`}
                 ></div>
                 <span className='font-medium text-sm capitalize text-gray-700'>
-                  {course.courselevel}
+                  {course.level.level}
                 </span>
               </div>
 
-              {/* Black line below the course level */}
               <div className='border-t border-black my-2'></div>
 
-              {/* Start Course link with arrow */}
               <Link href={`/learn/${course.slug}`} passHref>
                 <span className='ml-auto cursor-pointer flex items-center'>
                   Start Course
@@ -118,34 +106,16 @@ const CoursesPage = () => {
         ))}
       </div>
 
-      <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
-        <button
-          className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
-            currentPage === 1
-              ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-              : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
-          }`}
-          onClick={previousPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span className='text-lg font-semibold text-gray-700'>
-          Page <span className='text-red-600'>{currentPage}</span> of{' '}
-          <span className='text-green-600'>{totalPages}</span>
-        </span>
-        <button
-          className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
-            currentPage === totalPages
-              ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-              : 'border-green-500 text-green-500 hover:bg-green-500 hover:text-white'
-          }`}
-          onClick={nextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+      {data?.courses?.pageInfo?.hasNextPage && (
+        <div className='text-center mt-8'>
+          <button
+            onClick={handleLoadMore}
+            className='px-6 py-2 bg-red-500 text-white rounded-md hover:bg-green-400 transition'
+          >
+            {loading ? 'Loading...' : 'Load More'}
+          </button>
+        </div>
+      )}
     </div>
   )
 }
