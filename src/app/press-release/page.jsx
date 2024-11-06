@@ -103,7 +103,11 @@ const PressReleasesPage = () => {
                 {pressRelease.title}
               </h2>
               <p className='text-base text-gray-600 line-clamp-3'>
-                {pressRelease.excerpt.split(' ').slice(0, 65).join(' ') + '...'}
+                {pressRelease.excerpt
+                  .replace(/<[^>]+>/g, '')
+                  .split(' ')
+                  .slice(0, 65)
+                  .join(' ') + '...'}
               </p>
               <div className='flex'>
                 <p className='text-sm font-normal'>
@@ -118,7 +122,6 @@ const PressReleasesPage = () => {
           </Link>
         ))}
 
-        {/* Load More Button */}
         {data?.pressReleases?.pageInfo?.hasNextPage && (
           <div className='text-center mt-8'>
             <button
