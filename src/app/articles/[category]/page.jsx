@@ -14,7 +14,7 @@ const ArticlesPage = ({ params }) => {
     variables: {
       first: ARTICLES_PER_PAGE,
       after: cursor,
-      category: params.category, // Pass the category slug from the page params
+      category: params.slug, // Pass the category slug from the page params
     },
     onCompleted: (newData) => {
       if (newData?.posts?.pageInfo?.endCursor) {
@@ -22,7 +22,7 @@ const ArticlesPage = ({ params }) => {
       }
     },
   })
-
+  co
   function formatDateWithOrdinalAndAbbreviatedMonth(dateStr) {
     const date = new Date(dateStr)
 
