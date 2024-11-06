@@ -32,17 +32,17 @@ const Banner = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (cards.length > 0) {
-        moveToEnd(0)
+        moveToEnd(0) // Move the first card to the end every 3 seconds
       }
     }, 3000)
 
     return () => clearInterval(interval)
   }, [cards])
 
-  if (loading) return <BannerSkeleton />
+  if (loading) return <BannerSkeleton /> // Show skeleton while loading
 
   return (
-    <div className='relative flex justify-center items-center hidden md:flex'>
+    <div className='relative flex justify-center items-center '>
       <ul className='relative xl:w-[400px] xl:h-[520px] lg:h-[520px] lg:w-[250px] lg:p-10 mt-16 lg:mt-0 w-[650px] h-[300px]'>
         {cards.map((newsItem, index) => {
           const canDrag = index === 0
