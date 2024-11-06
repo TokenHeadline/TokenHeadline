@@ -7,13 +7,18 @@ import client from '../../lib/apolloClient'
 import Link from 'next/link'
 
 const ArticlesPage = () => {
-  const ARTICLES_PER_PAGE = 6
-  const [currentPage, setCurrentPage] = useState(1)
+  const ARTICLES_PER_PAGE = 1
+  const [cursor, setCursor] = useState(null)
   const { loading, error, data } = useQuery(GET_ALL_PRESS_RELEASES, {
     client,
     variables: {
-      limit: ARTICLES_PER_PAGE,
-      offset: (currentPage - 1) * ARTICLES_PER_PAGE,
+      first: ARTICLES_PER_PAGE,
+      after: cursor,
+    },
+    onCompleted: (newData) => {
+      if (newData?.pressReleases?.edges) {
+        setCursor(newData.pressReleases.pageInfo.endCursor)
+      }
     },
   })
 
@@ -41,51 +46,40 @@ const ArticlesPage = () => {
 
     return `${day} ${month} ${year}`
   }
-  if (loading) return <p className='text-center text-lg h-screen'>Loading...</p>
+
+  if (loading && !data)
+    return <p className='text-center text-lg h-screen'>Loading...</p>
   if (error)
     return (
-      <p className='text-center text-lg text-red-500'>Error loading articles</p>
+      <p className='text-center text-lg text-red-500'>
+        Error loading press releases
+      </p>
     )
 
-  const articles = data?.pressResleases || []
-  // console.log(data)
-
-  const totalArticles = data?.totalCount?.aggregate?.count || 0
-  const totalPages = Math.ceil(totalArticles / ARTICLES_PER_PAGE)
-
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
-
-  const previousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
+  const pressReleases = data?.pressReleases?.edges || []
 
   return (
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>Press-Releases</title>
+          <title>Press Releases</title>
           <meta
             name='description'
-            content='Discover a diverse collection of press-releases on various topics from TokenHeadline.'
+            content='Discover a diverse collection of press releases on various topics from TokenHeadline.'
           />
         </head>
-        {articles.map((news, index) => (
+
+        {pressReleases.map(({ node: news }) => (
           <Link
             href={`/press-release/${news.slug}`}
             aria-label={`${news.slug}`}
             passHref
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
-            key={index}
+            key={news.id}
           >
             <div className='relative h-60 w-full md:w-1/3'>
               <Image
-                src={news.featuredImage.url}
+                src={news.featuredImage.node.sourceUrl}
                 alt={news.title}
                 fill
                 className='object-cover'
@@ -104,7 +98,7 @@ const ArticlesPage = () => {
               </p>
               <div className='flex black'>
                 <p className='text-sm font-normal'>
-                  By {news.author.name.toUpperCase()}
+                  By {news.author.node.name.toUpperCase()}
                 </p>
                 <span className='mx-2'></span>
                 <p className='text-sm font-normal'>
@@ -116,34 +110,21 @@ const ArticlesPage = () => {
         ))}
       </div>
 
-      <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
-        <button
-          className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
-            currentPage === 1
-              ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-              : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
-          }`}
-          onClick={previousPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span className='text-lg font-semibold text-gray-700'>
-          Page <span className='text-red-600'>{currentPage}</span> of{' '}
-          <span className='text-green-600'>{totalPages}</span>
-        </span>
-        <button
-          className={`px-5 py-2  border-2 transition-all duration-300 text-lg font-medium ${
-            currentPage === totalPages
-              ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-              : 'border-green-500 text-green-500 hover:bg-green-500 hover:text-white'
-          }`}
-          onClick={nextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+      {data?.pressReleases?.pageInfo?.hasNextPage && (
+        <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
+          <button
+            className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
+              !cursor
+                ? 'border-gray-300 text-gray-300 cursor-not-allowed'
+                : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
+            }`}
+            onClick={() => setCursor(data.pressReleases.pageInfo.endCursor)}
+            disabled={!cursor}
+          >
+            Load More
+          </button>
+        </div>
+      )}
     </div>
   )
 }

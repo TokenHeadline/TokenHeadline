@@ -17,7 +17,6 @@ const ArticlesPage = () => {
       after: cursor,
     },
     onCompleted: (newData) => {
-      // Append the new articles to the existing list
       if (newData?.posts?.edges) {
         setArticles((prevArticles) => [
           ...prevArticles,

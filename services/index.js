@@ -306,28 +306,31 @@ export const GET_PRESS_RELEASES = gql`
   }
 `
 export const GET_ALL_PRESS_RELEASES = gql`
-  query GetAllArticles($limit: Int, $offset: Int) {
-    pressResleases(
-      orderBy: updatedAt_DESC
-      first: $limit
-      skip: $offset
-      where: { interview: false }
-    ) {
-      id
-      title
-      featuredImage {
-        url
+  query GetArticles($first: Int, $after: String) {
+    pressReleases(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          author {
+            node {
+              name
+            }
+          }
+        }
+        cursor
       }
-      slug
-      author {
-        name
-      }
-      date
-      excerpt
-    }
-    pressResleasesConnection {
-      aggregate {
-        count
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
