@@ -9,30 +9,6 @@ import ArticlesGrid from './components/ArticlesGrid'
 import Courses from './components/Courses'
 import Banner from './components/Banner'
 import PR from './components/PR'
-export async function generateMetadata() {
-  return {
-    title: 'Token Headline',
-    description:
-      'Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.',
-    keywords: [
-      'Token Headline',
-      'TokenHeadline',
-      'tokenheadline',
-      'Tokenheadline',
-      'Web3',
-      'crypto news',
-      'digital finance',
-      'blockchain',
-      'cryptocurrency',
-      'exclusive interviews',
-      'in-depth articles',
-      'latest updates',
-      'Token Headline',
-      'technology news',
-      'financial technology',
-    ].join(', '), // Join keywords into a single string
-  }
-}
 
 export default function Home() {
   return (

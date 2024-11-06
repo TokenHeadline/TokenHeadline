@@ -61,30 +61,39 @@ const Page = ({ params }) => {
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
       <div className='mx-auto p-6'>
         <head>
-          <title>{article.seo.title}</title>
-          <meta name='description' content='Description for the adaajkn' />
+          <title>{article.seo?.title || 'Untitled Article'}</title>
+          <meta
+            name='description'
+            content={article.seo?.metaDesc || 'No description available'}
+          />
         </head>
         <div className='mb-10'>
           <div className='items-center text-center'>
             <h1 className='text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6'>
-              {article.title}
+              {article.title || 'No Title'}
             </h1>
             <Image
-              src={article.featuredImage.node.sourceUrl}
-              alt={article.title}
+              src={article.featuredImage?.node?.sourceUrl || 'logo.png'}
+              alt={article.title || 'No Title'}
               width={800}
               height={450}
               className='rounded-lg mb-6 mx-auto'
             />
             <div className='flex justify-center text-gray-700 text-sm mb-4 flex-wrap'>
-              <span className='mr-4'>By {article.author.node.name}</span>
-              <span>{new Date(article.date).toLocaleDateString()}</span>
+              <span className='mr-4'>
+                By {article.author?.node?.name || 'Unknown Author'}
+              </span>
+              <span>
+                {new Date(article.date).toLocaleDateString() || 'Unknown Date'}
+              </span>
             </div>
           </div>
           <div className='prose lg:prose-lg text-gray-800 mx-auto'>
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(article.content),
+                __html: DOMPurify.sanitize(
+                  article.content || '<p>No content available</p>'
+                ),
               }}
             />
           </div>
@@ -100,8 +109,10 @@ const Page = ({ params }) => {
             {recentArticles.map((recentArticle, index) => (
               <li key={index} className='flex items-center mb-4'>
                 <Image
-                  src={recentArticle.featuredImage.node.sourceUrl}
-                  alt={recentArticle.title}
+                  src={
+                    recentArticle.featuredImage?.node?.sourceUrl || '/logo.png'
+                  }
+                  alt={recentArticle.title || 'No Title'}
                   width={100}
                   height={60}
                   className='rounded-md mr-4'
@@ -111,10 +122,11 @@ const Page = ({ params }) => {
                     href={`/article/${recentArticle.slug}`}
                     className='text-gray-900 hover:text-blue-600 hover:underline'
                   >
-                    {recentArticle.title}
+                    {recentArticle.title || 'No Title'}
                   </Link>
                   <span className='text-gray-500 text-xs block mt-1'>
-                    {new Date(recentArticle.date).toLocaleDateString()}
+                    {new Date(recentArticle.date).toLocaleDateString() ||
+                      'Unknown Date'}
                   </span>
                 </div>
               </li>
