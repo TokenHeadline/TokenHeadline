@@ -100,21 +100,38 @@ const Today = () => {
           </p>
           <div className='flex justify-center'>
             <div className='relative inline-block mt-3'>
-              <Image
-                src={article.featuredImage.node.sourceUrl}
-                alt={article.title}
-                width={400}
-                height={300}
-                priority={true}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  filter: hovered ? 'none' : 'grayscale(100%)',
-                  transition: 'filter 0.3s ease',
-                }}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-              />
+              <div className='absolute inset-0 pointer-events-none'>
+                {/* Decorative border */}
+                <div className='absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-black'>
+                  <div className='absolute -top-1 -left-1 w-2 h-2 bg-black rounded-br-full'></div>
+                </div>
+                <div className='absolute -top-1.5 -right-1.5 w-8 h-8 border-t-2 border-r-2 border-black'>
+                  <div className='absolute -top-0 -right-0 w-2 h-2 bg-black rounded-bl-full'></div>
+                </div>
+                <div className='absolute -bottom-1.5 -left-1.5 w-8 h-8 border-b-2 border-l-2 border-black'>
+                  <div className='absolute -bottom-0 -left-0 w-2 h-2 bg-black rounded-tr-full'></div>
+                </div>
+                <div className='absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-black'>
+                  <div className='absolute -bottom-1 -right-1 w-2 h-2 bg-black rounded-tl-full'></div>
+                </div>
+              </div>
+              <div className=''>
+                <Image
+                  src={article.featuredImage.node.sourceUrl}
+                  alt={article.title}
+                  width={400}
+                  height={300}
+                  priority={true}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    filter: hovered ? 'none' : 'grayscale(100%)',
+                    transition: 'filter 0.3s ease',
+                  }}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                />
+              </div>
             </div>
           </div>
         </div>
