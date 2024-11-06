@@ -13,7 +13,7 @@ export default function Navbar() {
   }
 
   const handleOutsideClick = (e) => {
-    if (e.target.classList.contains('modal-overlay')) {
+    if (e.target.classList && e.target.classList.contains('modal-overlay')) {
       setIsOpen(false)
     }
   }
@@ -30,31 +30,33 @@ export default function Navbar() {
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('click', handleOutsideClick) // Change mousedown to click
+      document.addEventListener('mousedown', handleOutsideClick)
     } else {
-      document.removeEventListener('click', handleOutsideClick)
+      document.removeEventListener('mousedown', handleOutsideClick)
     }
-    return () => document.removeEventListener('click', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
   }, [isOpen])
 
   return (
     <nav className='text-black font-semibold lg:mb-6 m-8 mt-5 mb-1'>
       <div className='container flex flex-row justify-between'>
+        {/* Desktop Menu */}
         <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6'>
-          <Link href='/' aria-label='Home'>
+          <Link href='/' passHref>
             <RiHome2Fill
               size={24}
               className='transition-transform duration-300 ease-in-out cursor-pointer'
               style={{ color: '#002993' }}
+              aria-label='Home'
             />
           </Link>
           <div className='border-l border-black border-2 h-12 mx-4'></div>
           <div className='space-x-4 xl:space-x-6 ml-0'>
             {menuItems.slice(0, 5).map((item, index) => (
               <Link
-                key={index}
                 href={item.href}
-                className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                key={index}
+                className='transition-colors duration-300 ease-in-out hover:text-blue-600'
                 aria-label={item.name}
               >
                 {item.name}
@@ -64,9 +66,9 @@ export default function Navbar() {
           <div className='ml-12 xl:ml-16 space-x-6'>
             {menuItems.slice(5).map((item, index) => (
               <Link
-                key={index}
                 href={item.href}
-                className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                key={index}
+                className='transition-colors duration-300 ease-in-out hover:text-blue-600'
                 aria-label={item.name}
               >
                 {item.name}
@@ -74,17 +76,21 @@ export default function Navbar() {
             ))}
           </div>
         </div>
-        <div className='flex items-center justify-center lg:mx-auto'>
-          <Link href='/' aria-label='Logo'>
+
+        {/* Logo */}
+        <div className='flex items-center justify-center lg:mx-auto '>
+          <Link href='/' passHref>
             <Image
               src='/logo.png'
               height={50}
               width={155}
               alt='logo'
-              priority
+              priority={true}
             />
           </Link>
         </div>
+
+        {/* Mobile Menu */}
         <div className='lg:hidden flex flex-col items-end mt-6'>
           <button
             onClick={toggleMenu}
@@ -100,13 +106,15 @@ export default function Navbar() {
                   onClick={toggleMenu}
                   aria-label='Close menu'
                   className='absolute top-2 right-2'
-                ></button>
-                <div className='flex flex-col space-y-4'>
+                >
+                  <FiX size={20} />
+                </button>
+                <div className='flex flex-col space-y-4 mt-4'>
                   {menuItems.map((item, index) => (
                     <Link
-                      key={index}
                       href={item.href}
-                      className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                      key={index}
+                      className='transition-colors duration-300 ease-in-out hover:text-blue-600'
                       aria-label={item.name}
                     >
                       {item.name}
