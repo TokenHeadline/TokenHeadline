@@ -41,14 +41,7 @@ const Latest = () => {
           key={index}
         >
           <div className='flex-1'>
-            <div className='flex items-center space-x-4 p-4'>
-              <p className='text-lg font-bold'>
-                <span className='mr-2'> By</span>
-                {newsItem?.author?.node?.name || 'Unknown Author'}
-              </p>
-            </div>
             <div className='mr-0 lg:mr-20'>
-              {/* Title */}
               <Link
                 href={`opinion/${newsItem.slug}`}
                 className='font-bold text-2xl md:text-3xl lg:text-4xl mb-4 duration-300 ease-in-out transform hover:scale-105'
@@ -65,6 +58,12 @@ const Latest = () => {
                       .slice(0, 70)
                       .join(' ') + '...' // Removing HTML tags
                   : 'No excerpt available'}
+              </p>
+            </div>
+            <div className='flex items-center space-x-4 p-4'>
+              <p className='text-lg font-bold'>
+                <span className='mr-2'> By</span>
+                {newsItem?.author?.node?.name || 'Unknown Author'}
               </p>
             </div>
           </div>
