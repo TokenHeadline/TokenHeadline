@@ -56,7 +56,7 @@ const Footer = () => {
           </div>
 
           {/* Column 3 */}
-          {/* <div className='mb-6'>
+          <div className='mb-6'>
             <ul>
               <li className='mb-2'>
                 <div className='flex space-x-4 mb-6 justify-center md:justify-start'>
@@ -104,7 +104,7 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
