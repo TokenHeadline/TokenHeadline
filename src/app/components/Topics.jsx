@@ -1,17 +1,36 @@
 // Topics.js
 import React from 'react'
-import { GET_CATEGORIES } from '../../../services/index'
-import client from '../../lib/apolloClient'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const Topics = async () => {
-  // Fetch data on the server side
-  const { data } = await client.query({
-    query: GET_CATEGORIES,
-  })
-
-  const categories = data.categories
+  const categories = [
+    {
+      name: 'Crypto',
+      slug: 'crypto',
+      imageUrl: '/crypto.png',
+    },
+    {
+      name: 'Latest Market',
+      slug: 'latest-market',
+      imageUrl: '/technical.png',
+    },
+    {
+      name: 'Bitcoin',
+      slug: 'bitcoin',
+      imageUrl: '/bitcoin.png',
+    },
+    {
+      name: 'Ethereum',
+      slug: 'ethereum',
+      imageUrl: '/ethereum.png',
+    },
+    {
+      name: 'Blockchain',
+      slug: 'blockchain',
+      imageUrl: '/blockchain.png',
+    },
+  ]
 
   return (
     <div className='mt-8'>
@@ -39,9 +58,10 @@ const Topics = async () => {
           style={{ width: '100px', height: '100px' }}
         />
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6'>
         <Link
-          href={`articles/`}
+          href={`/articles`}
           aria-label={`articles/topic`}
           className='flex flex-col p-4 hover:bg-green-300 transition duration-300 cursor-pointer shadow-md'
           style={{ width: 'auto', maxWidth: '100%' }}
@@ -55,18 +75,20 @@ const Topics = async () => {
           <hr className='my-4 border-black' />
           <div className='flex justify-center'>
             <Image
-              src={'/all.png'}
-              alt={'all'}
+              src={'/all.png'} // Replace with actual image URL
+              alt={'All Topics'}
               height={400}
               width={300}
               className='border-2 border-black'
             />
           </div>
         </Link>
+
+        {/* Dynamically render topics */}
         {categories.map((topic, index) => (
           <Link
-            href={`articles/${topic.slug}`}
-            aria-label={`articles/topic`}
+            href={`/articles/${topic.slug}`}
+            aria-label={`articles/${topic.slug}`}
             key={index}
             className={`flex flex-col p-4 transition duration-300 cursor-pointer shadow-md ${
               index % 2 === 0 ? ' hover:bg-red-400' : ' hover:bg-green-300'
@@ -84,7 +106,7 @@ const Topics = async () => {
             <hr className='my-4 border-black' />
             <div className='flex justify-center'>
               <Image
-                src={topic.imageUrl.url}
+                src={topic.imageUrl}
                 alt={topic.name}
                 height={400}
                 width={300}
