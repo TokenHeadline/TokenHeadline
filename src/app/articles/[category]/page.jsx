@@ -2,27 +2,32 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useQuery } from '@apollo/client'
-import { GET_CATEGORY_ARTICLE } from '../../../../services'
-import client from '../../../lib/apolloClient'
+import { GET_CATEGORY_ARTICLE } from '../../../services' // Your defined query
+import client from '../../lib/apolloClient'
 import Link from 'next/link'
 
 const ArticlesPage = ({ params }) => {
-  const ARTICLES_PER_PAGE = 6
+  const { slug } = params // Extract the category from the URL params
   const [cursor, setCursor] = useState(null)
+  const [articles, setArticles] = useState([])
+
   const { loading, error, data } = useQuery(GET_CATEGORY_ARTICLE, {
     client,
     variables: {
-      first: ARTICLES_PER_PAGE,
+      first: 5,
       after: cursor,
-      category: params.slug, // Pass the category slug from the page params
+      category: slug, // Pass the category (slug) as a variable
     },
     onCompleted: (newData) => {
-      if (newData?.posts?.pageInfo?.endCursor) {
-        setCursor(newData.posts.pageInfo.endCursor)
+      if (newData?.posts?.edges) {
+        setArticles((prevArticles) => [
+          ...prevArticles,
+          ...newData.posts.edges.map((edge) => edge.node),
+        ])
       }
     },
   })
-  co
+
   function formatDateWithOrdinalAndAbbreviatedMonth(dateStr) {
     const date = new Date(dateStr)
 
@@ -48,32 +53,36 @@ const ArticlesPage = ({ params }) => {
     return `${day} ${month} ${year}`
   }
 
-  if (loading && !data)
+  const handleLoadMore = () => {
+    if (data?.posts?.pageInfo?.endCursor) {
+      setCursor(data.posts.pageInfo.endCursor) // Set the new cursor
+    }
+  }
+
+  if (loading && articles.length === 0)
     return <p className='text-center text-lg h-screen'>Loading...</p>
   if (error)
     return (
       <p className='text-center text-lg text-red-500'>Error loading articles</p>
     )
 
-  const articles = data?.posts?.edges || []
-
   return (
-    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 '>
-      <div className='grid grid-cols-1 gap-8 items-center mb-10'>
+    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
+      <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>Explore Articles from TokenHeadline</title>
+          <title>{slug} Articles</title>
           <meta
             name='description'
-            content='Discover a diverse collection of expert-written articles on various topics from TokenHeadline.'
+            content={`Discover articles in the ${slug} category on TokenHeadline.`}
           />
         </head>
-        {articles.map(({ node: news }, index) => (
+        {articles.map((news) => (
           <Link
             href={`/article/${news.slug}`}
-            aria-label={`${news.slug}`}
+            aria-label={news.title}
             passHref
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
-            key={index}
+            key={news.id}
           >
             <div className='relative h-60 w-full md:w-1/3'>
               <Image
@@ -92,9 +101,13 @@ const ArticlesPage = ({ params }) => {
                 {news.title}
               </h2>
               <p className='text-base text-gray-600 line-clamp-3'>
-                {news.excerpt.split(' ').slice(0, 65).join(' ') + '...'}
+                {news.excerpt
+                  .replace(/<[^>]+>/g, ' ')
+                  .split(' ')
+                  .slice(0, 65)
+                  .join(' ') + '...'}
               </p>
-              <div className='flex black'>
+              <div className='flex'>
                 <p className='text-sm font-normal'>
                   By {news.author.node.name.toUpperCase()}
                 </p>
@@ -106,53 +119,18 @@ const ArticlesPage = ({ params }) => {
             </div>
           </Link>
         ))}
-      </div>
 
-      {/* Pagination Controls */}
-      {data?.posts?.pageInfo?.hasNextPage && (
-        <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
-          <button
-            className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
-              !cursor
-                ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-                : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
-            }`}
-            onClick={() => setCursor(data.posts.pageInfo.endCursor)}
-            disabled={!cursor}
-          >
-            Load More
-          </button>
-        </div>
-      )}
-
-      {/* Pagination Navigation */}
-      <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
-        <button
-          className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
-            cursor === null
-              ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-              : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
-          }`}
-          onClick={() => setCursor(data.posts.pageInfo.endCursor)}
-          disabled={cursor === null}
-        >
-          Previous
-        </button>
-        <span className='text-lg font-semibold text-gray-700'>
-          Page <span className='text-red-600'>{currentPage}</span> of{' '}
-          <span className='text-green-600'>{totalPages}</span>
-        </span>
-        <button
-          className={`px-5 py-2  border-2 transition-all duration-300 text-lg font-medium ${
-            currentPage === totalPages
-              ? 'border-gray-300 text-gray-300 cursor-not-allowed'
-              : 'border-green-500 text-green-500 hover:bg-green-500 hover:text-white'
-          }`}
-          onClick={() => nextPage()}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
+        {/* Load More Button */}
+        {data?.posts?.pageInfo?.hasNextPage && (
+          <div className='text-center mt-8'>
+            <button
+              onClick={handleLoadMore}
+              className='px-6 py-2 bg-red-500 text-white rounded-md hover:bg-green-400 transition'
+            >
+              {loading ? 'Loading...' : 'Load More'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
