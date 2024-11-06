@@ -13,8 +13,8 @@ const ArticlesPage = () => {
   const { loading, error, data } = useQuery(GET_ALL_ARTICLES, {
     client,
     variables: {
-      first: 1, // Number of articles to fetch per page
-      after: cursor, // Cursor for pagination
+      first: 5,
+      after: cursor,
     },
     onCompleted: (newData) => {
       // Append the new articles to the existing list
@@ -125,7 +125,7 @@ const ArticlesPage = () => {
         <div className='text-center mt-8'>
           <button
             onClick={handleLoadMore}
-            className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-800 transition'
+            className='px-6 py-2 bg-softRed text-white rounded-md hover:bg-softGreen transition'
           >
             {loading ? 'Loading...' : 'Load More'}
           </button>
