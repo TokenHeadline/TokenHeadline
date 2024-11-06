@@ -13,7 +13,6 @@ const ArticlesPage = () => {
   const { loading, error, data } = useQuery(GET_ALL_ARTICLES, {
     client,
     variables: {
-      first: 5,
       after: cursor,
     },
     onCompleted: (newData) => {
