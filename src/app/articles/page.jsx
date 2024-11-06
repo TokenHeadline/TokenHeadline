@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_ARTICLES } from '../../../services' // Use your defined query
@@ -7,8 +7,24 @@ import client from '../../lib/apolloClient'
 import Link from 'next/link'
 
 const ArticlesPage = () => {
+  const [cursor, setCursor] = useState(null)
+  const [articles, setArticles] = useState([])
+
   const { loading, error, data } = useQuery(GET_ALL_ARTICLES, {
     client,
+    variables: {
+      first: 1, // Number of articles to fetch per page
+      after: cursor, // Cursor for pagination
+    },
+    onCompleted: (newData) => {
+      // Append the new articles to the existing list
+      if (newData?.posts?.edges) {
+        setArticles((prevArticles) => [
+          ...prevArticles,
+          ...newData.posts.edges.map((edge) => edge.node),
+        ])
+      }
+    },
   })
 
   function formatDateWithOrdinalAndAbbreviatedMonth(dateStr) {
@@ -36,13 +52,18 @@ const ArticlesPage = () => {
     return `${day} ${month} ${year}`
   }
 
-  if (loading) return <p className='text-center text-lg h-screen'>Loading...</p>
+  const handleLoadMore = () => {
+    if (data?.posts?.pageInfo?.endCursor) {
+      setCursor(data.posts.pageInfo.endCursor) // Set the new cursor
+    }
+  }
+
+  if (loading && articles.length === 0)
+    return <p className='text-center text-lg h-screen'>Loading...</p>
   if (error)
     return (
       <p className='text-center text-lg text-red-500'>Error loading articles</p>
     )
-
-  const articles = data?.posts?.nodes || []
 
   return (
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
@@ -98,6 +119,18 @@ const ArticlesPage = () => {
           </Link>
         ))}
       </div>
+
+      {/* Load More Button */}
+      {data?.posts?.pageInfo?.hasNextPage && (
+        <div className='text-center mt-8'>
+          <button
+            onClick={handleLoadMore}
+            className='px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-800 transition'
+          >
+            {loading ? 'Loading...' : 'Load More'}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

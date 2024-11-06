@@ -111,29 +111,36 @@ export const GET_BANNER = gql`
   }
 `
 export const GET_ALL_ARTICLES = gql`
-  query GetArticles {
-    posts {
-      nodes {
-        id
-        title
-        excerpt
-        slug
-        date
-        featuredImage {
-          node {
-            sourceUrl
+  query GetArticles($first: Int, $after: String) {
+    posts(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          author {
+            node {
+              name
+            }
+          }
+          categories {
+            nodes {
+              name
+            }
           }
         }
-        author {
-          node {
-            name
-          }
-        }
-        categories {
-          nodes {
-            name
-          }
-        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
