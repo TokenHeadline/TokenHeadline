@@ -68,7 +68,7 @@ const ArticlesPage = () => {
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>Articles</title>
+          <title>Opinions</title>
           <meta
             name='description'
             content='Discover a diverse collection of expert-written articles on various topics from TokenHeadline.'
@@ -76,7 +76,7 @@ const ArticlesPage = () => {
         </head>
         {articles.map((news) => (
           <Link
-            href={`/article/${news.slug}`}
+            href={`/opinion/${news.slug}`}
             aria-label={news.title}
             passHref
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'

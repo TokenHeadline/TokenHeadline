@@ -81,7 +81,7 @@ const PressReleasesPage = () => {
         {pressReleases.map((pressRelease, index) => (
           <Link
             key={pressRelease.id} // Using unique ID as key
-            href={`/press-release/${pressRelease.slug}`}
+            href={`/interview/${pressRelease.slug}`}
             aria-label={pressRelease.title}
             passHref
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
