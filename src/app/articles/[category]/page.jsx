@@ -8,13 +8,18 @@ import Link from 'next/link'
 
 const ArticlesPage = ({ params }) => {
   const ARTICLES_PER_PAGE = 6
-  const [currentPage, setCurrentPage] = useState(1)
+  const [cursor, setCursor] = useState(null)
   const { loading, error, data } = useQuery(GET_CATEGORY_ARTICLE, {
     client,
     variables: {
-      limit: ARTICLES_PER_PAGE,
-      offset: (currentPage - 1) * ARTICLES_PER_PAGE,
-      category: params.category,
+      first: ARTICLES_PER_PAGE,
+      after: cursor,
+      category: params.category, // Pass the category slug from the page params
+    },
+    onCompleted: (newData) => {
+      if (newData?.posts?.pageInfo?.endCursor) {
+        setCursor(newData.posts.pageInfo.endCursor)
+      }
     },
   })
 
@@ -42,33 +47,15 @@ const ArticlesPage = ({ params }) => {
 
     return `${day} ${month} ${year}`
   }
-  if (loading) return <p className='text-center text-lg h-screen'>Loading...</p>
+
+  if (loading && !data)
+    return <p className='text-center text-lg h-screen'>Loading...</p>
   if (error)
     return (
-      console.log(error),
-      (
-        <p className='text-center text-lg text-red-500'>
-          Error loading articles
-        </p>
-      )
+      <p className='text-center text-lg text-red-500'>Error loading articles</p>
     )
 
-  const articles = data?.articles || []
-
-  const totalArticles = data?.totalCount?.aggregate?.count || 0
-  const totalPages = Math.ceil(totalArticles / ARTICLES_PER_PAGE)
-
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
-
-  const previousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
+  const articles = data?.posts?.edges || []
 
   return (
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 '>
@@ -80,7 +67,7 @@ const ArticlesPage = ({ params }) => {
             content='Discover a diverse collection of expert-written articles on various topics from TokenHeadline.'
           />
         </head>
-        {articles.map((news, index) => (
+        {articles.map(({ node: news }, index) => (
           <Link
             href={`/article/${news.slug}`}
             aria-label={`${news.slug}`}
@@ -90,7 +77,7 @@ const ArticlesPage = ({ params }) => {
           >
             <div className='relative h-60 w-full md:w-1/3'>
               <Image
-                src={news.featuredImage.url}
+                src={news.featuredImage.node.sourceUrl}
                 alt={news.title}
                 fill
                 className='object-cover'
@@ -99,7 +86,7 @@ const ArticlesPage = ({ params }) => {
 
             <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
               <div className='bg-orange-500 text-black font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center'>
-                {news.category.name.toUpperCase()}
+                {news.categories.nodes[0]?.name.toUpperCase()}
               </div>
               <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
                 {news.title}
@@ -109,7 +96,7 @@ const ArticlesPage = ({ params }) => {
               </p>
               <div className='flex black'>
                 <p className='text-sm font-normal'>
-                  By {news.author.name.toUpperCase()}
+                  By {news.author.node.name.toUpperCase()}
                 </p>
                 <span className='mx-2'></span>
                 <p className='text-sm font-normal'>
@@ -121,15 +108,33 @@ const ArticlesPage = ({ params }) => {
         ))}
       </div>
 
+      {/* Pagination Controls */}
+      {data?.posts?.pageInfo?.hasNextPage && (
+        <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
+          <button
+            className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
+              !cursor
+                ? 'border-gray-300 text-gray-300 cursor-not-allowed'
+                : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
+            }`}
+            onClick={() => setCursor(data.posts.pageInfo.endCursor)}
+            disabled={!cursor}
+          >
+            Load More
+          </button>
+        </div>
+      )}
+
+      {/* Pagination Navigation */}
       <div className='mt-12 flex justify-center items-center space-x-6 mb-2'>
         <button
           className={`px-5 py-2 border-2 transition-all duration-300 text-lg font-medium ${
-            currentPage === 1
+            cursor === null
               ? 'border-gray-300 text-gray-300 cursor-not-allowed'
               : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white'
           }`}
-          onClick={previousPage}
-          disabled={currentPage === 1}
+          onClick={() => setCursor(data.posts.pageInfo.endCursor)}
+          disabled={cursor === null}
         >
           Previous
         </button>
@@ -143,7 +148,7 @@ const ArticlesPage = ({ params }) => {
               ? 'border-gray-300 text-gray-300 cursor-not-allowed'
               : 'border-green-500 text-green-500 hover:bg-green-500 hover:text-white'
           }`}
-          onClick={nextPage}
+          onClick={() => nextPage()}
           disabled={currentPage === totalPages}
         >
           Next

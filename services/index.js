@@ -177,35 +177,41 @@ export const GET_ALL_OPINIONS = gql`
 `
 
 export const GET_CATEGORY_ARTICLE = gql`
-  query GetAllArticles($category: String, $limit: Int, $offset: Int) {
-    articles(
-      orderBy: updatedAt_DESC
-      where: { category: { slug: $category }, opinion: false }
-      first: $limit
-      skip: $offset
-    ) {
-      id
-      title
-      featuredImage {
-        url
+  query GetCategoryArticles($first: Int, $after: String, $category: String) {
+    posts(first: $first, after: $after, where: { categoryName: $category }) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          author {
+            node {
+              name
+            }
+          }
+          categories {
+            nodes {
+              name
+            }
+          }
+        }
+        cursor
       }
-      slug
-      author {
-        name
-      }
-      date
-      excerpt
-      category {
-        name
-      }
-    }
-    totalCount: articlesConnection(where: { category: { slug: $category } }) {
-      aggregate {
-        count
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
 `
+
 export const GET_CATEGORY_COUNT = gql`
   query GetAllArticles($slug: String) {
     totalCount: articlesConnection(where: { category: { slug: $slug } }) {
