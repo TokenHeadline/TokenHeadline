@@ -2,8 +2,8 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useQuery } from '@apollo/client'
-import { GET_CATEGORY_ARTICLE } from '../../../services' // Your defined query
-import client from '../../lib/apolloClient'
+import { GET_CATEGORY_ARTICLE } from '../../../../services' // Your defined query
+import client from '../../../lib/apolloClient'
 import Link from 'next/link'
 
 const ArticlesPage = ({ params }) => {

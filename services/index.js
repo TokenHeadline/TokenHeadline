@@ -212,15 +212,6 @@ export const GET_CATEGORY_ARTICLE = gql`
   }
 `
 
-export const GET_CATEGORY_COUNT = gql`
-  query GetAllArticles($slug: String) {
-    totalCount: articlesConnection(where: { category: { slug: $slug } }) {
-      aggregate {
-        count
-      }
-    }
-  }
-`
 export const GET_CATEGORIES = gql`
   query MyQuery {
     categories {
