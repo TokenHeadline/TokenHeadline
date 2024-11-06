@@ -76,11 +76,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <div className='flex items-center justify-center lg:mx-auto'>
-          <Link
-            href='/'
-            passHref
-            className='text-3xl font-bold text-center mt-2 lg:pl-3'
-          >
+          <div className='text-3xl font-bold text-center mt-2 lg:pl-3'>
             <Image
               src={'/logo.png'}
               height={50}
@@ -88,7 +84,7 @@ export default function Navbar() {
               alt='logo'
               priority={true}
             />
-          </Link>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
