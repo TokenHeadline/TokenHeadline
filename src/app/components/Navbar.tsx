@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { RiHome2Fill } from 'react-icons/ri'
 import Image from 'next/image'
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -12,8 +11,8 @@ export default function Navbar() {
     setIsOpen(!isOpen)
   }
 
-  const handleOutsideClick = (e) => {
-    if (e.target.classList && e.target.classList.contains('modal-overlay')) {
+  const handleOutsideClick = (e: any) => {
+    if (e.target.classList.contains('modal-overlay')) {
       setIsOpen(false)
     }
   }
@@ -40,8 +39,7 @@ export default function Navbar() {
   return (
     <nav className='text-black font-semibold lg:mb-6 m-8 mt-5 mb-1'>
       <div className='container flex flex-row justify-between'>
-        {/* Desktop Menu */}
-        <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6'>
+        <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6 '>
           <Link href='/' passHref>
             <RiHome2Fill
               size={24}
@@ -53,44 +51,48 @@ export default function Navbar() {
           <div className='border-l border-black border-2 h-12 mx-4'></div>
           <div className='space-x-4 xl:space-x-6 ml-0'>
             {menuItems.slice(0, 5).map((item, index) => (
-              <Link
-                href={item.href}
-                key={index}
-                className='transition-colors duration-300 ease-in-out hover:text-blue-600'
-                aria-label={item.name}
-              >
-                {item.name}
-              </Link>
+              <div className='relative inline-block' key={index}>
+                <Link
+                  href={item.href}
+                  className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                  aria-label={item.name}
+                >
+                  {item.name}
+                </Link>
+              </div>
             ))}
           </div>
           <div className='ml-12 xl:ml-16 space-x-6'>
             {menuItems.slice(5).map((item, index) => (
-              <Link
-                href={item.href}
-                key={index}
-                className='transition-colors duration-300 ease-in-out hover:text-blue-600'
-                aria-label={item.name}
-              >
-                {item.name}
-              </Link>
+              <div className='relative inline-block' key={index}>
+                <Link
+                  href={item.href}
+                  className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                  aria-label={item.name}
+                >
+                  {item.name}
+                </Link>
+              </div>
             ))}
           </div>
         </div>
-
-        {/* Logo */}
         <div className='flex items-center justify-center lg:mx-auto '>
-          <Link href='/' passHref>
+          <Link
+            href='/'
+            passHref
+            className='text-3xl font-bold text-center mt-2 lg:pl-3 '
+          >
             <Image
-              src='/logo.png'
+              src={'/logo.png'}
               height={50}
               width={155}
-              alt='logo'
+              alt='logo
+              
+          '
               priority={true}
             />
           </Link>
         </div>
-
-        {/* Mobile Menu */}
         <div className='lg:hidden flex flex-col items-end mt-6'>
           <button
             onClick={toggleMenu}
@@ -106,20 +108,30 @@ export default function Navbar() {
                   onClick={toggleMenu}
                   aria-label='Close menu'
                   className='absolute top-2 right-2'
-                >
-                  <FiX size={20} />
-                </button>
-                <div className='flex flex-col space-y-4 mt-4'>
-                  {menuItems.map((item, index) => (
+                ></button>
+                <div className='flex flex-col space-y-4'>
+                  {menuItems.slice(0, 4).map((item, index) => (
                     <Link
                       href={item.href}
                       key={index}
-                      className='transition-colors duration-300 ease-in-out hover:text-blue-600'
+                      className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
                       aria-label={item.name}
                     >
                       {item.name}
                     </Link>
                   ))}
+                  <div className='flex flex-col space-y-4'>
+                    {menuItems.slice(4).map((item, index) => (
+                      <Link
+                        href={item.href}
+                        key={index}
+                        className='relative transition-colors duration-300 ease-in-out hover:text-blue-600'
+                        aria-label={item.name}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
