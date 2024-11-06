@@ -7,16 +7,16 @@ import client from '../../../lib/apolloClient'
 import Link from 'next/link'
 
 const ArticlesPage = ({ params }) => {
-  const { slug } = params // Extract the category from the URL params
+  const { category } = params
   const [cursor, setCursor] = useState(null)
   const [articles, setArticles] = useState([])
-
+  console.log(params)
   const { loading, error, data } = useQuery(GET_CATEGORY_ARTICLE, {
     client,
     variables: {
       first: 5,
       after: cursor,
-      category: slug, // Pass the category (slug) as a variable
+      category: category,
     },
     onCompleted: (newData) => {
       if (newData?.posts?.edges) {
@@ -67,13 +67,13 @@ const ArticlesPage = ({ params }) => {
     )
 
   return (
-    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8'>
+    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 h-screen'>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>{slug} Articles</title>
+          <title>{category} Articles</title>
           <meta
             name='description'
-            content={`Discover articles in the ${slug} category on TokenHeadline.`}
+            content={`Discover articles in the ${category} category on TokenHeadline.`}
           />
         </head>
         {articles.map((news) => (

@@ -4,7 +4,7 @@ const TodaySkeleton = () => {
   return (
     <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-6/12 xl:basis-4/12'>
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold'>
-        TODAY RELEASE
+        RECENT RELEASE
       </h1>
       <div className='h-6 bg-gray-300 rounded-md w-64 mb-4 animate-pulse'></div>
       <div className='flex space-x-4 mb-4'>
