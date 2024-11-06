@@ -16,7 +16,7 @@ export default function Home() {
       <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:ml-16 lg:mr-16 '>
         <Today />
         <Articles />
-        {/* <Banner /> */}
+        <Banner />
       </section>
       <BreakinNewsTicker />
       <section className='space-y-8 m-4 lg:flex-row lg:space-x-4 lg:mt-4 lg:ml-16 lg:mr-16'>
