@@ -67,7 +67,11 @@ const CoursesPage = () => {
                 {course.title}
               </h2>
               <p className='text-base text-gray-600 line-clamp-3'>
-                {course.excerpt.split(' ').slice(0, 40).join(' ') + '...'}
+                {course.excerpt
+                  .replace(/<[^>]+>/g, '')
+                  .split(' ')
+                  .slice(0, 65)
+                  .join(' ') + '...'}
               </p>
               <div className='flex items-center mt-5'>
                 <div
