@@ -478,29 +478,32 @@ export const GET_RECENT_COURSES = gql`
     }
   }
 `
-export const GET_INTERVIEWS = gql`
-  query GetAllArticles($limit: Int, $offset: Int) {
-    pressResleases(
-      orderBy: updatedAt_DESC
-      first: $limit
-      skip: $offset
-      where: { interview: true }
-    ) {
-      id
-      title
-      featuredImage {
-        url
+export const GET_ALL_INTERVIEWS = gql`
+  query GetArticles($first: Int, $after: String) {
+    interviews(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          title
+          excerpt
+          slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          author {
+            node {
+              name
+            }
+          }
+        }
+        cursor
       }
-      slug
-      author {
-        name
-      }
-      date
-      excerpt
-    }
-    pressResleasesConnection(where: { interview: true }) {
-      aggregate {
-        count
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

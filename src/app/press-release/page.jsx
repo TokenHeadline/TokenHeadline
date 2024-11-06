@@ -7,7 +7,7 @@ import client from '../../lib/apolloClient'
 import Link from 'next/link'
 
 const PressReleasesPage = () => {
-  const PRESS_RELEASES_PER_PAGE = 6
+  const PRESS_RELEASES_PER_PAGE = 5
   const [cursor, setCursor] = useState(null)
   const [pressReleases, setPressReleases] = useState([])
 
@@ -126,7 +126,7 @@ const PressReleasesPage = () => {
           <div className='text-center mt-8'>
             <button
               onClick={handleLoadMore}
-              className='px-6 py-2 bg-red-500 text-white rounded-md hover:bg-green-400 transition'
+              className='px-6 py-2 bg-softRed text-white rounded-md hover:bg-softGreen transition'
             >
               {loading ? 'Loading...' : 'Load More'}
             </button>
