@@ -111,11 +111,15 @@ export default function Navbar() {
               className='modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
             >
               <div className='bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-md relative'>
+                {/* Close button in the modal */}
                 <button
                   onClick={toggleMenu}
                   aria-label='Close menu'
-                  className='absolute top-2 right-2'
-                ></button>
+                  className='absolute top-2 right-2 text-xl text-gray-500'
+                >
+                  <FiX />
+                </button>
+
                 <div className='flex flex-col space-y-4'>
                   {renderMenuItems(menuItems.slice(0, 4))}
                 </div>
