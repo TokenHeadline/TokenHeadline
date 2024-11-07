@@ -1,6 +1,7 @@
 import React from 'react'
 import Today from './components/Today'
 import Articles from './components/Articles'
+import './globals.css'
 import BreakinNewsTicker from './components/BreakingNewsTicker'
 import Topics from './components/Topics'
 import Latest from './components/Latest'
@@ -8,29 +9,16 @@ import ArticlesGrid from './components/ArticlesGrid'
 import Courses from './components/Courses'
 import Banner from './components/Banner'
 import PR from './components/PR'
-
 export async function generateMetadata() {
   return {
     title: 'Token Headline',
     description:
       'Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.',
-    keywords: [
-      'Web3',
-      'crypto news',
-      'digital finance',
-      'blockchain',
-      'cryptocurrency',
-      'technology news',
-      'exclusive interviews',
-      'crypto trends',
-      'digital assets',
-      'crypto industry',
-    ],
   }
 }
 export default function Home() {
   return (
-    <div className='h-max'>
+    <div>
       <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:ml-16 lg:mr-16 '>
         <Today />
         <Articles />

@@ -101,7 +101,6 @@ const Today = () => {
           <div className='flex justify-center'>
             <div className='relative inline-block mt-3'>
               <div className='absolute inset-0 pointer-events-none'>
-                {/* Decorative border */}
                 <div className='absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-black'>
                   <div className='absolute -top-1 -left-1 w-2 h-2 bg-black rounded-br-full'></div>
                 </div>
