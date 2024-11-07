@@ -89,7 +89,7 @@ const CoursePage = async ({ params }) => {
             Level: {course.level.level}
           </p>
           <div className='mt-6 prose lg:prose-lg text-gray-800 mx-auto'>
-            <ArticleContent content={course.content || '<p>Loading....</p>'} />
+            <ArticleContent content={course.content || '<p>Loading...</p>'} />
           </div>
         </div>
       </div>
