@@ -86,7 +86,7 @@ export default function Navbar() {
               height={50}
               width={155}
               alt='logo'
-              priority={true}
+              priority
             />
           </Link>
         </div>

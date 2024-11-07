@@ -1,7 +1,6 @@
 import React from 'react'
 import Today from './components/Today'
 import Articles from './components/Articles'
-import './globals.css'
 import BreakinNewsTicker from './components/BreakingNewsTicker'
 import Topics from './components/Topics'
 import Latest from './components/Latest'
@@ -9,6 +8,7 @@ import ArticlesGrid from './components/ArticlesGrid'
 import Courses from './components/Courses'
 import Banner from './components/Banner'
 import PR from './components/PR'
+
 export async function generateMetadata() {
   return {
     title: 'Home - Token Headline',
@@ -40,13 +40,14 @@ export async function generateMetadata() {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Home - Your Site Name',
+      title: 'Home - Token Headline',
       description:
         'Stay updated with the latest news, courses, and articles on various trending topics.',
       images: ['/logo.png'],
     },
   }
 }
+
 export default function Home() {
   return (
     <div className='h-max'>
