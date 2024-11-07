@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
           course.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
         images: [
           {
-            url: course.featuredImage?.node?.sourceUrl || '/default-image.jpg',
+            url: course.featuredImage.node.sourceUrl || '/default-image.jpg',
           },
         ],
       },
