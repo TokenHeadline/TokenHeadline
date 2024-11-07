@@ -84,9 +84,7 @@ const Page = async ({ params }) => {
             </div>
           </div>
           <div className='prose lg:prose-lg text-gray-800 mx-auto'>
-            <ArticleContent
-              content={article.content || '<p>No content available</p>'}
-            />
+            <ArticleContent content={article.content || '<p>Loading</p>'} />
           </div>
         </div>
       </div>

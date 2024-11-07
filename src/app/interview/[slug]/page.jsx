@@ -1,100 +1,90 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
 import { GET_INTERVIEW, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
-import DOMPurify from 'dompurify'
 import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
+import ArticleContent from './ArticleContent'
 
-const Page = ({ params }) => {
+export async function generateMetadata({ params }) {
   const { slug } = params
 
-  const [article, setArticle] = useState(null)
-  const [recentArticles, setRecentArticles] = useState([])
-  const [loading, setLoading] = useState(true)
+  try {
+    const { data } = await client.query({
+      query: GET_INTERVIEW,
+      variables: { slug },
+    })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch the current article
-        const { data } = await client.query({
-          query: GET_INTERVIEW,
-          variables: { slug },
-        })
-        setArticle(data.interview)
+    const article = data.interview
 
-        // Fetch recent articles
-        const { data: recentData } = await client.query({
-          query: GET_RECENT_ARTICLES,
-        })
-
-        // Filter out the current article
-
-        setRecentArticles(recentData.posts.nodes)
-      } catch (error) {
-        console.error('Error fetching articles:', error)
-      } finally {
-        setLoading(false)
-      }
+    return {
+      title: article.title || 'Untitled Article',
+      description:
+        article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
+      openGraph: {
+        type: 'article',
+        url: `https://tokenheadline.com/interview/${slug}`,
+        title: article.title,
+        description:
+          article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
+        images: [
+          {
+            url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
+          },
+        ],
+      },
     }
-
-    fetchData()
-  }, [slug])
-
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-green-500'>Loading</p>
-      </div>
-    )
+  } catch (error) {
+    return {
+      title: 'Article Not Found',
+      description: 'This article could not be found.',
+    }
   }
+}
 
-  if (!article) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-red-500'>Article not found</p>
-      </div>
-    )
-  }
+const Page = async ({ params }) => {
+  const { slug } = params
 
-  const title = article.title
+  const { data } = await client.query({
+    query: GET_INTERVIEW,
+    variables: { slug },
+  })
+
+  const article = data.interview
+
+  const { data: recentData } = await client.query({
+    query: GET_RECENT_ARTICLES,
+  })
+
+  const filteredArticles = recentData.posts.nodes.filter(
+    (recentArticle) => recentArticle.slug !== slug
+  )
 
   return (
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-      <Head>
-        <title>{title}</title>
-        <meta property='og:title' content={title} />
-        <meta
-          property='og:image'
-          content={article.featuredImage.node.sourceUrl}
-        />
-      </Head>
       <div className='mx-auto p-6'>
         <div className='mb-10'>
           <div className='items-center text-center'>
             <h1 className='text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6'>
-              {article.title}
+              {article.title || 'No Title'}
             </h1>
             <Image
-              src={article.featuredImage.node.sourceUrl}
-              alt={article.title}
+              src={article.featuredImage?.node?.sourceUrl || 'logo.png'}
+              alt={article.title || 'No Title'}
               width={800}
               height={450}
               className='rounded-lg mb-6 mx-auto'
             />
             <div className='flex justify-center text-gray-700 text-sm mb-4 flex-wrap'>
-              <span className='mr-4'>By {article.author.node.name}</span>
-              <span>{new Date(article.date).toLocaleDateString()}</span>
+              <span className='mr-4'>
+                By {article.author?.node?.name || 'Unknown Author'}
+              </span>
+              <span>
+                {new Date(article.date).toLocaleDateString() || 'Unknown Date'}
+              </span>
             </div>
           </div>
           <div className='prose lg:prose-lg text-gray-800 mx-auto'>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(article.content),
-              }}
-            />
+            <ArticleContent content={article.content || '<p>Loading....</p>'} />
           </div>
         </div>
       </div>
@@ -105,11 +95,13 @@ const Page = ({ params }) => {
             Recent Articles
           </h2>
           <ul>
-            {recentArticles.map((recentArticle, index) => (
+            {filteredArticles.map((recentArticle, index) => (
               <li key={index} className='flex items-center mb-4'>
                 <Image
-                  src={recentArticle.featuredImage.node.sourceUrl}
-                  alt={recentArticle.title}
+                  src={
+                    recentArticle.featuredImage?.node?.sourceUrl || '/logo.png'
+                  }
+                  alt={recentArticle.title || 'No Title'}
                   width={100}
                   height={60}
                   className='rounded-md mr-4'
@@ -119,10 +111,11 @@ const Page = ({ params }) => {
                     href={`/article/${recentArticle.slug}`}
                     className='text-gray-900 hover:text-blue-600 hover:underline'
                   >
-                    {recentArticle.title}
+                    {recentArticle.title || 'No Title'}
                   </Link>
                   <span className='text-gray-500 text-xs block mt-1'>
-                    {new Date(recentArticle.date).toLocaleDateString()}
+                    {new Date(recentArticle.date).toLocaleDateString() ||
+                      'Unknown Date'}
                   </span>
                 </div>
               </li>
