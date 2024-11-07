@@ -60,6 +60,13 @@ const CoursePage = ({ params }) => {
   return (
     <div className='container mx-auto max-w-7xl px-4 lg:px-8 py-2 pb-6'>
       <div className='flex flex-col lg:flex-row gap-10'>
+        <head>
+          <title>{course.title}</title>
+          <meta
+            name='description'
+            content={course.excerpt || 'No description available'}
+          ></meta>
+        </head>
         <div className='bg-white shadow-lg rounded-lg p-6 flex-1'>
           <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
             {course.title}
