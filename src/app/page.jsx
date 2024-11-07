@@ -9,7 +9,44 @@ import ArticlesGrid from './components/ArticlesGrid'
 import Courses from './components/Courses'
 import Banner from './components/Banner'
 import PR from './components/PR'
-
+export async function generateMetadata() {
+  return {
+    title: 'Home - Token Headline',
+    description:
+      'Stay updated with the latest news, courses, and articles on various trending topics.',
+    keywords: [
+      'news',
+      'Web3',
+      'trending topics',
+      'courses',
+      'crypto',
+      'breaking news',
+    ],
+    openGraph: {
+      title: 'Home - Token Headline',
+      description:
+        'Stay updated with the latest news, courses, and articles on various trending topics.',
+      url: 'https://tokenheadline.com',
+      images: [
+        {
+          url: '/logo.png',
+          width: 1200,
+          height: 630,
+          alt: 'Token Headline',
+        },
+      ],
+      type: 'website',
+      site_name: 'Token Headline',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Home - Your Site Name',
+      description:
+        'Stay updated with the latest news, courses, and articles on various trending topics.',
+      images: ['/logo.png'],
+    },
+  }
+}
 export default function Home() {
   return (
     <div className='h-max'>
