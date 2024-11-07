@@ -4,6 +4,13 @@ import { GET_COURSE } from '../../../../services'
 import client from '../../../lib/apolloClient'
 import ArticleContent from './ArticleContent'
 
+const getLevelColor = (level) => {
+  if (level === 'beginner') return 'text-green-500'
+  if (level === 'intermediate') return 'text-orange-500'
+  if (level === 'expert') return 'text-red-500'
+  return 'text-gray-500'
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = params
 
@@ -48,7 +55,7 @@ const CoursePage = async ({ params }) => {
     variables: { slug },
   })
 
-  const course = data.course
+  const course = data?.course
 
   if (!course) {
     return (
@@ -90,11 +97,6 @@ const CoursePage = async ({ params }) => {
   )
 }
 
-const getLevelColor = (level) => {
-  if (level === 'beginner') return 'text-green-500'
-  if (level === 'intermediate') return 'text-orange-500'
-  if (level === 'expert') return 'text-red-500'
-  return 'text-gray-500'
-}
+export const revalidate = 10
 
 export default CoursePage

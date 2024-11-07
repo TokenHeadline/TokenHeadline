@@ -134,3 +134,16 @@ const Page = async ({ params }) => {
 }
 
 export default Page
+
+export async function generateStaticParams() {
+  const { data } = await client.query({
+    query: GET_RECENT_ARTICLES,
+  })
+  const slugs = data.posts.nodes.map((post) => post.slug)
+
+  return slugs.map((slug) => ({
+    slug,
+  }))
+}
+
+export const revalidate = 10

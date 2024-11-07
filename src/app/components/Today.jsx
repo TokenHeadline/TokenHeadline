@@ -120,7 +120,7 @@ const Today = () => {
                   alt={article.title}
                   width={400}
                   height={300}
-                  priority={true}
+                  priority
                   style={{
                     width: '100%',
                     height: 'auto',
