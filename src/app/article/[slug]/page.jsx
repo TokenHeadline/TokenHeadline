@@ -18,12 +18,14 @@ export async function generateMetadata({ params }) {
 
     return {
       title: article.title || 'Untitled Article',
-      description: article.excerpt || 'No description available',
+      description:
+        article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
       openGraph: {
         type: 'article',
         url: `https://tokenheadline.com/article/${slug}`,
         title: article.title,
-        description: article.excerpt || 'No description available',
+        description:
+          article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
         images: [
           {
             url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
