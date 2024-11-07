@@ -1,72 +1,69 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+// app/article/[slug]/page.js
+
 import { GET_ARTICLE, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
-import DOMPurify from 'dompurify'
 import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
+import ArticleContent from './ArticleContent' // Import the client component
 
-const Page = ({ params }) => {
+// Server-side metadata generation for SEO and social sharing
+export async function generateMetadata({ params }) {
   const { slug } = params
 
-  const [article, setArticle] = useState(null)
-  const [recentArticles, setRecentArticles] = useState([])
-  const [loading, setLoading] = useState(true)
+  try {
+    const { data } = await client.query({
+      query: GET_ARTICLE,
+      variables: { slug },
+    })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await client.query({
-          query: GET_ARTICLE,
-          variables: { slug },
-        })
-        setArticle(data.post)
+    const article = data.post
 
-        const { data: recentData } = await client.query({
-          query: GET_RECENT_ARTICLES,
-        })
-
-        const filteredArticles = recentData.posts.nodes.filter(
-          (recentArticle) => recentArticle.slug !== slug
-        )
-        setRecentArticles(filteredArticles)
-      } catch (error) {
-        console.error('Error fetching articles:', error)
-      } finally {
-        setLoading(false)
-      }
+    return {
+      title: article.title || 'Untitled Article',
+      description: article.seo?.metaDesc || 'No description available',
+      openGraph: {
+        title: article.title,
+        description: article.seo?.metaDesc || 'No description available',
+        images: [
+          {
+            url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
+          },
+        ],
+      },
     }
-
-    fetchData()
-  }, [slug])
-
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-green-500'>Loading</p>
-      </div>
-    )
+  } catch (error) {
+    return {
+      title: 'Article Not Found',
+      description: 'This article could not be found.',
+    }
   }
+}
 
-  if (!article) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-red-500'>Article not found</p>
-      </div>
-    )
-  }
+// Main page component for SSR
+const Page = async ({ params }) => {
+  const { slug } = params
+
+  // Fetch article data and recent articles data
+  const { data } = await client.query({
+    query: GET_ARTICLE,
+    variables: { slug },
+  })
+
+  const article = data.post
+
+  // Fetch recent articles
+  const { data: recentData } = await client.query({
+    query: GET_RECENT_ARTICLES,
+  })
+
+  const filteredArticles = recentData.posts.nodes.filter(
+    (recentArticle) => recentArticle.slug !== slug
+  )
 
   return (
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
       <div className='mx-auto p-6'>
-        <head>
-          <title>{article.title || 'Untitled Article'}</title>
-          <meta
-            name='description'
-            content={article.seo?.metaDesc || 'No description available'}
-          />
-        </head>
         <div className='mb-10'>
           <div className='items-center text-center'>
             <h1 className='text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6'>
@@ -88,13 +85,11 @@ const Page = ({ params }) => {
               </span>
             </div>
           </div>
+
+          {/* Use the client-side ArticleContent component to render sanitized HTML */}
           <div className='prose lg:prose-lg text-gray-800 mx-auto'>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  article.content || '<p>No content available</p>'
-                ),
-              }}
+            <ArticleContent
+              content={article.content || '<p>No content available</p>'}
             />
           </div>
         </div>
@@ -106,7 +101,7 @@ const Page = ({ params }) => {
             Recent Articles
           </h2>
           <ul>
-            {recentArticles.map((recentArticle, index) => (
+            {filteredArticles.map((recentArticle, index) => (
               <li key={index} className='flex items-center mb-4'>
                 <Image
                   src={
