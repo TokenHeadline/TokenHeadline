@@ -14,18 +14,26 @@ export async function generateMetadata({ params }) {
       variables: { slug },
     })
 
-    const article = data.interview
+    const article = data?.interview
+
+    if (!article) {
+      return {
+        title: 'Interview Not Found',
+        description: 'This interview could not be found.',
+      }
+    }
 
     return {
       title: article.title || 'Untitled Article',
       description:
-        article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
+        article.excerpt?.replace(/<[^>]+>/g, '') || 'No description available',
       openGraph: {
         type: 'article',
         url: `https://tokenheadline.com/interview/${slug}`,
         title: article.title,
         description:
-          article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
+          article.excerpt?.replace(/<[^>]+>/g, '') ||
+          'No description available',
         images: [
           {
             url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
@@ -34,9 +42,10 @@ export async function generateMetadata({ params }) {
       },
     }
   } catch (error) {
+    console.error('Error generating metadata:', error)
     return {
-      title: 'Article Not Found',
-      description: 'This article could not be found.',
+      title: 'Interview Not Found',
+      description: 'This interview could not be found.',
     }
   }
 }
@@ -44,12 +53,31 @@ export async function generateMetadata({ params }) {
 const Page = async ({ params }) => {
   const { slug } = params
 
-  const { data } = await client.query({
-    query: GET_INTERVIEW,
-    variables: { slug },
-  })
+  let article = null
+  try {
+    const { data } = await client.query({
+      query: GET_INTERVIEW,
+      variables: { slug },
+    })
+    article = data?.interview
+  } catch (error) {
+    console.error('Error fetching article data:', error)
+  }
 
-  const article = data.interview
+  if (!article) {
+    return (
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
+        <div className='text-center py-10'>
+          <h1 className='text-3xl font-semibold text-gray-900'>
+            Interview Not Found
+          </h1>
+          <p className='text-gray-500'>
+            The requested interview could not be found.
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   const { data: recentData } = await client.query({
     query: GET_RECENT_ARTICLES,
@@ -108,7 +136,7 @@ const Page = async ({ params }) => {
                 />
                 <div>
                   <Link
-                    href={`/article/${recentArticle.slug}`}
+                    href={`/interview/${recentArticle.slug}`}
                     className='text-gray-900 hover:text-blue-600 hover:underline'
                   >
                     {recentArticle.title || 'No Title'}
