@@ -15,7 +15,7 @@ const ArticleContent = ({ content }) => {
   return (
     <div
       dangerouslySetInnerHTML={{
-        __html: sanitizedContent || '<p>Loading..</p>',
+        __html: sanitizedContent || '<p>Loading...</p>',
       }}
     />
   )
