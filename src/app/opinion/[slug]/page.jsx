@@ -3,7 +3,7 @@ import client from '../../../lib/apolloClient'
 import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
-import ArticleContent from './ArticleContent'
+import ArticleContent from '../../../lib/ArticleContent'
 
 export async function generateMetadata({ params }) {
   const { slug } = params

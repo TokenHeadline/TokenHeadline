@@ -209,17 +209,6 @@ export const GET_CATEGORY_ARTICLE = gql`
   }
 `
 
-export const GET_CATEGORIES = gql`
-  query MyQuery {
-    categories {
-      name
-      slug
-      imageUrl {
-        url
-      }
-    }
-  }
-`
 export const BREAKING_NEWS = gql`
   query MyQuery {
     posts(first: 6, where: { orderby: { field: DATE, order: DESC } }) {

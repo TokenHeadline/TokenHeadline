@@ -1,53 +1,54 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
-import DOMPurify from 'dompurify'
 import { GET_COURSE } from '../../../../services'
 import client from '../../../lib/apolloClient'
+import ArticleContent from './ArticleContent'
 
-const CoursePage = ({ params }) => {
+export async function generateMetadata({ params }) {
   const { slug } = params
-  const [course, setCourse] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true) // Set loading to true before fetching
-      try {
-        const { data } = await client.query({
-          query: GET_COURSE,
-          variables: { slug },
-        })
-        setCourse(data.course)
-      } catch (err) {
-        setError(err) // Store error if any
-        console.error('Error fetching course:', err)
-      } finally {
-        setLoading(false) // Set loading to false after fetch attempt
-      }
+  try {
+    const { data } = await client.query({
+      query: GET_COURSE,
+      variables: { slug },
+    })
+
+    const course = data.course
+
+    return {
+      title: course.title || 'Untitled Course',
+      description:
+        course.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
+      openGraph: {
+        type: 'article',
+        url: `https://tokenheadline.com/course/${slug}`,
+        title: course.title,
+        description:
+          course.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
+        images: [
+          {
+            url: course.featuredImage?.node?.sourceUrl || '/default-image.jpg',
+          },
+        ],
+      },
     }
-
-    fetchData()
-  }, [slug])
-  // console.log(course.content)
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-green-500'>Loading....</p>
-      </div>
-    )
+  } catch (error) {
+    return {
+      title: 'Course Not Found',
+      description: 'This course could not be found.',
+    }
   }
+}
 
-  if (error) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p className='text-xl font-semibold text-red-500'>
-          Error: {error.message}
-        </p>
-      </div>
-    )
-  }
+const CoursePage = async ({ params }) => {
+  const { slug } = params
+
+  const { data } = await client.query({
+    query: GET_COURSE,
+    variables: { slug },
+  })
+
+  const course = data.course
 
   if (!course) {
     return (
@@ -60,13 +61,6 @@ const CoursePage = ({ params }) => {
   return (
     <div className='container mx-auto max-w-7xl px-4 lg:px-8 py-2 pb-6'>
       <div className='flex flex-col lg:flex-row gap-10'>
-        <head>
-          <title>{course.title}</title>
-          <meta
-            name='description'
-            content={course.excerpt || 'No description available'}
-          ></meta>
-        </head>
         <div className='bg-white shadow-lg rounded-lg p-6 flex-1'>
           <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
             {course.title}
@@ -88,11 +82,7 @@ const CoursePage = ({ params }) => {
             Level: {course.level.level}
           </p>
           <div className='mt-6 prose lg:prose-lg text-gray-800 mx-auto'>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(course.content),
-              }}
-            />
+            <ArticleContent content={course.content || '<p>Loading....</p>'} />
           </div>
         </div>
       </div>
