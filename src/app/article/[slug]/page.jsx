@@ -1,13 +1,10 @@
-// app/article/[slug]/page.js
-
 import { GET_ARTICLE, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
-import ArticleContent from './ArticleContent' // Import the client component
+import ArticleContent from './ArticleContent'
 
-// Server-side metadata generation for SEO and social sharing
 export async function generateMetadata({ params }) {
   const { slug } = params
 
@@ -21,10 +18,12 @@ export async function generateMetadata({ params }) {
 
     return {
       title: article.title || 'Untitled Article',
-      description: article.seo?.metaDesc || 'No description available',
+      description: article.excerpt || 'No description available',
       openGraph: {
+        type: 'article',
+        url: `https://tokenheadline.com/article/${slug}`,
         title: article.title,
-        description: article.seo?.metaDesc || 'No description available',
+        description: article.excerpt || 'No description available',
         images: [
           {
             url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
@@ -40,11 +39,9 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Main page component for SSR
 const Page = async ({ params }) => {
   const { slug } = params
 
-  // Fetch article data and recent articles data
   const { data } = await client.query({
     query: GET_ARTICLE,
     variables: { slug },
@@ -52,7 +49,6 @@ const Page = async ({ params }) => {
 
   const article = data.post
 
-  // Fetch recent articles
   const { data: recentData } = await client.query({
     query: GET_RECENT_ARTICLES,
   })
@@ -85,8 +81,6 @@ const Page = async ({ params }) => {
               </span>
             </div>
           </div>
-
-          {/* Use the client-side ArticleContent component to render sanitized HTML */}
           <div className='prose lg:prose-lg text-gray-800 mx-auto'>
             <ArticleContent
               content={article.content || '<p>No content available</p>'}
