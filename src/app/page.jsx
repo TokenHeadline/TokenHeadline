@@ -11,43 +11,23 @@ import PR from './components/PR'
 
 export async function generateMetadata() {
   return {
-    title: 'Home - Token Headline',
+    title: 'Token Headline',
     description:
-      'Stay updated with the latest news, courses, and articles on various trending topics.',
+      'Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.',
     keywords: [
-      'news',
       'Web3',
-      'trending topics',
-      'courses',
-      'crypto',
-      'breaking news',
+      'crypto news',
+      'digital finance',
+      'blockchain',
+      'cryptocurrency',
+      'technology news',
+      'exclusive interviews',
+      'crypto trends',
+      'digital assets',
+      'crypto industry',
     ],
-    openGraph: {
-      title: 'Home - Token Headline',
-      description:
-        'Stay updated with the latest news, courses, and articles on various trending topics.',
-      url: 'https://tokenheadline.com',
-      images: [
-        {
-          url: '/logo.png',
-          width: 1200,
-          height: 630,
-          alt: 'Token Headline',
-        },
-      ],
-      type: 'website',
-      site_name: 'Token Headline',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Home - Token Headline',
-      description:
-        'Stay updated with the latest news, courses, and articles on various trending topics.',
-      images: ['/logo.png'],
-    },
   }
 }
-
 export default function Home() {
   return (
     <div className='h-max'>
