@@ -53,6 +53,7 @@ export const GET_ARTICLES = gql`
 export const GET_ARTICLE = gql`
   query MyQuery($slug: ID!) {
     post(id: $slug, idType: SLUG) {
+      excerpt
       categories {
         nodes {
           name
@@ -361,6 +362,7 @@ export const GET_ALL_PRESS_RELEASES = gql`
 export const GET_PRESS_RELEASE = gql`
   query MyQuery($slug: ID!) {
     pressRelease(id: $slug, idType: SLUG) {
+      excerpt
       title
       author {
         node {
@@ -380,6 +382,7 @@ export const GET_PRESS_RELEASE = gql`
 export const GET_OPINION = gql`
   query MyQuery($slug: ID!) {
     opinion(id: $slug, idType: SLUG) {
+      excerpt
       title
       author {
         node {
@@ -399,6 +402,7 @@ export const GET_OPINION = gql`
 export const GET_INTERVIEW = gql`
   query MyQuery($slug: ID!) {
     interview(id: $slug, idType: SLUG) {
+      excerpt
       title
       author {
         node {
@@ -465,6 +469,7 @@ export const GET_ALL_COURSES = gql`
 export const GET_COURSE = gql`
   query MyQuery($slug: ID!) {
     course(id: $slug, idType: SLUG) {
+      excerpt
       id
       featuredImage {
         node {
