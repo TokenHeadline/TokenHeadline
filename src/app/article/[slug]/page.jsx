@@ -61,7 +61,7 @@ const Page = ({ params }) => {
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
       <div className='mx-auto p-6'>
         <head>
-          <title>{article.seo?.title || 'Untitled Article'}</title>
+          <title>{article.title || 'Untitled Article'}</title>
           <meta
             name='description'
             content={article.seo?.metaDesc || 'No description available'}
