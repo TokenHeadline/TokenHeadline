@@ -15,7 +15,14 @@ export async function generateMetadata({ params }) {
       variables: { slug },
     })
 
-    const article = data.opinion
+    const article = data?.opinion
+
+    if (!article) {
+      return {
+        title: 'Opinion Not Found',
+        description: 'This opinion article could not be found.',
+      }
+    }
 
     return {
       title: article.title || 'Untitled Article',
@@ -35,9 +42,10 @@ export async function generateMetadata({ params }) {
       },
     }
   } catch (error) {
+    console.error('Error generating metadata:', error)
     return {
-      title: 'Article Not Found',
-      description: 'This article could not be found.',
+      title: 'Opinion Not Found',
+      description: 'This opinion article could not be found.',
     }
   }
 }
@@ -46,13 +54,33 @@ export async function generateMetadata({ params }) {
 const Page = async ({ params }) => {
   const { slug } = params
 
-  // Fetch the opinion article based on slug
-  const { data } = await client.query({
-    query: GET_OPINION,
-    variables: { slug },
-  })
+  let article = null
+  try {
+    // Fetch the opinion article based on slug
+    const { data } = await client.query({
+      query: GET_OPINION,
+      variables: { slug },
+    })
+    article = data?.opinion
+  } catch (error) {
+    console.error('Error fetching article:', error)
+  }
 
-  const article = data.opinion
+  if (!article) {
+    // Return a fallback UI when the article is not found
+    return (
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
+        <div className='text-center py-10'>
+          <h1 className='text-3xl font-semibold text-gray-900'>
+            Opinion Not Found
+          </h1>
+          <p className='text-gray-500'>
+            The requested opinion article could not be found.
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   // Fetch the recent articles for the sidebar
   const { data: recentData } = await client.query({
@@ -113,7 +141,7 @@ const Page = async ({ params }) => {
                 />
                 <div>
                   <Link
-                    href={`/article/${recentArticle.slug}`}
+                    href={`/opinion/${recentArticle.slug}`}
                     className='text-gray-900 hover:text-blue-600 hover:underline'
                   >
                     {recentArticle.title || 'No Title'}
