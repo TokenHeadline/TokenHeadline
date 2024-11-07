@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import ArticleContent from './ArticleContent'
 
+// Generate metadata for the Article page
 export async function generateMetadata({ params }) {
   const { slug } = params
 
@@ -41,9 +42,11 @@ export async function generateMetadata({ params }) {
   }
 }
 
+// The Article Page Component
 const Page = async ({ params }) => {
   const { slug } = params
 
+  // Fetch the article data
   const { data } = await client.query({
     query: GET_ARTICLE,
     variables: { slug },
@@ -51,6 +54,7 @@ const Page = async ({ params }) => {
 
   const article = data.post
 
+  // Fetch recent articles for the sidebar
   const { data: recentData } = await client.query({
     query: GET_RECENT_ARTICLES,
   })
@@ -131,3 +135,24 @@ const Page = async ({ params }) => {
 }
 
 export default Page
+
+// Static Paths for Article
+export async function generateStaticParams() {
+  try {
+    const { data } = await client.query({
+      query: GET_RECENT_ARTICLES, // Fetch the list of article slugs
+    })
+
+    const slugs = data.posts.nodes.map((post) => post.slug)
+
+    return slugs.map((slug) => ({
+      slug,
+    }))
+  } catch (error) {
+    console.error('Error fetching slugs:', error)
+    return []
+  }
+}
+
+// Revalidate every 10 seconds
+export const revalidate = 10

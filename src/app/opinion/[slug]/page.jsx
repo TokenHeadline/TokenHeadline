@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import ArticleContent from '../../../lib/ArticleContent'
 
+// Generate metadata for the Opinion article
 export async function generateMetadata({ params }) {
   const { slug } = params
 
@@ -41,9 +42,11 @@ export async function generateMetadata({ params }) {
   }
 }
 
+// The Opinion Page component
 const Page = async ({ params }) => {
   const { slug } = params
 
+  // Fetch the opinion article based on slug
   const { data } = await client.query({
     query: GET_OPINION,
     variables: { slug },
@@ -51,10 +54,12 @@ const Page = async ({ params }) => {
 
   const article = data.opinion
 
+  // Fetch the recent articles for the sidebar
   const { data: recentData } = await client.query({
     query: GET_RECENT_ARTICLES,
   })
 
+  // Filter out the current article from the list of recent articles
   const filteredArticles = recentData.posts.nodes.filter(
     (recentArticle) => recentArticle.slug !== slug
   )
@@ -131,3 +136,19 @@ const Page = async ({ params }) => {
 }
 
 export default Page
+
+// Generate static paths for the Opinion article slugs
+export async function generateStaticParams() {
+  const { data } = await client.query({
+    query: GET_RECENT_ARTICLES, // Or use GET_OPINION to fetch only opinion articles
+  })
+
+  const slugs = data.posts.nodes.map((post) => post.slug)
+
+  return slugs.map((slug) => ({
+    slug,
+  }))
+}
+
+// Revalidate every 10 seconds to ensure fresh content
+export const revalidate = 10
