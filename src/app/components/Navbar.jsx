@@ -81,13 +81,7 @@ export default function Navbar() {
             passHref
             className='text-3xl font-bold text-center mt-2 lg:pl-3'
           >
-            <img
-              src={'/logo.png'}
-              height={50}
-              width={155}
-              alt='logo'
-              priority
-            />
+            <img src={'/logo.png'} height={50} width={155} alt='logo' />
           </Link>
         </div>
 

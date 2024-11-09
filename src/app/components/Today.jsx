@@ -94,7 +94,6 @@ const Today = () => {
             </p>
           </div>
           <p className='text-base sm:text-lg md:text-xl'>
-            {/* Render cleaned excerpt */}
             {cleanExcerpt(article.excerpt).split(' ').slice(0, 20).join(' ') +
               '...'}
           </p>

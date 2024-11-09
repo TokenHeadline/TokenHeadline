@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
 import BannerSkeleton from './Skeleton/BannerSkeleton'
 import Link from 'next/link'
+import Image from 'next/image' // Import Next.js Image component
 
 const CARD_OFFSET = 30
 const SCALE_FACTOR = 0.04
@@ -42,23 +43,23 @@ const Banner = () => {
   if (loading) return <BannerSkeleton /> // Show skeleton while loading
 
   return (
-    <div className='relative flex justify-center items-center '>
+    <div className='relative flex justify-center items-center'>
       <ul className='relative xl:w-[400px] xl:h-[520px] lg:h-[520px] lg:w-[250px] lg:p-10 mt-16 lg:mt-0 w-[650px] h-[300px]'>
         {cards.map((newsItem, index) => {
           const canDrag = index === 0
           const isVisible = index < VISIBLE_CARDS
 
           if (!isVisible) return null
-          console.log(newsItem.featuredImage.node.sourceUrl)
+
+          const backgroundImageUrl =
+            newsItem.featuredImage?.node?.sourceUrl || '/logo.png'
+
           return (
             <motion.li
               key={newsItem.id}
-              className={`absolute w-full h-full bg-cover bg-center lg:rounded-br-[50px] ${
+              className={`absolute w-full h-full lg:rounded-br-[50px] ${
                 canDrag ? 'cursor-grab' : 'cursor-auto'
               } ${hoveredIndex === index ? '' : 'grayscale'}`}
-              style={{
-                backgroundImage: `url(${newsItem.featuredImage.node.sourceUrl})`,
-              }}
               animate={{
                 top: index * -CARD_OFFSET,
                 scale: 1 - index * SCALE_FACTOR,
@@ -73,6 +74,18 @@ const Banner = () => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
+              {/* Use the Image component for optimized image rendering */}
+              <div className='absolute top-0 left-0 w-full h-full'>
+                <Image
+                  src={backgroundImageUrl}
+                  alt={newsItem.title || 'Banner Image'}
+                  layout='fill'
+                  objectFit='cover'
+                  objectPosition='center'
+                  className='rounded-br-[50px]'
+                />
+              </div>
+
               <div className='absolute bottom-2 left-2 text-white p-2 mb-0 pb-0 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px]'>
                 <Link
                   href={`/article/${newsItem.slug}`}
