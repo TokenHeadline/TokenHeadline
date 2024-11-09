@@ -82,7 +82,7 @@ const Banner = () => {
                   layout='fill'
                   objectFit='cover'
                   objectPosition='center'
-                  className='rounded-br-[50px]'
+                  className='lg:rounded-br-[50px]'
                 />
               </div>
 
