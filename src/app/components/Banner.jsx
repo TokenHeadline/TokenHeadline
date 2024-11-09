@@ -49,7 +49,7 @@ const Banner = () => {
           const isVisible = index < VISIBLE_CARDS
 
           if (!isVisible) return null
-
+          console.log(newsItem.featuredImage.node.sourceUrl)
           return (
             <motion.li
               key={newsItem.id}
