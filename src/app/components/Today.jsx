@@ -7,6 +7,7 @@ import client from '../../lib/apolloClient'
 import Link from 'next/link'
 
 const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
+  if (!dateStr) return 'Unknown Date'
   const date = new Date(dateStr)
   const day = date.getDate()
   const year = date.getFullYear()
@@ -66,10 +67,12 @@ const Today = () => {
   if (!news || news.length === 0) return <p>No articles available.</p>
 
   const cleanExcerpt = (excerpt) => {
-    let cleanContent = excerpt.replace(/\n/g, '').replace(/<\/?p>/g, '')
-    return cleanContent
+    return excerpt
+      ? excerpt.replace(/\n/g, '').replace(/<\/?p>/g, '')
+      : 'No description available.'
   }
-  console.log(news)
+
+  const fallbackImageUrl = '/fallback.jpg' // Update with your fallback image URL
 
   return (
     <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-6/12 xl:basis-4/12'>
@@ -79,17 +82,21 @@ const Today = () => {
             RECENT RELEASE
           </h1>
           <Link
-            href={`/article/${article.slug}`}
-            aria-label={`/article/${article.slug}`}
+            href={`/article/${article.slug || '#'}`}
+            aria-label={`/article/${article.slug || '#'}`}
             className='text-xl sm:text-2xl md:text-3xl font-bold'
           >
-            {article.title}
+            {article.title || 'Untitled Article'}
           </Link>
           <div className='flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 text-sm sm:text-base'>
             <p className='font-bold'>
-              {article.categories.nodes[0]?.name.toUpperCase()}
+              {(
+                article.categories.nodes[0]?.name || 'Uncategorized'
+              ).toUpperCase()}
             </p>
-            <p className='text-black'>By {article.author.node.name}</p>
+            <p className='text-black'>
+              By {article.author?.node?.name || 'Unknown Author'}
+            </p>
             <p className='text-black'>
               {formatDateWithOrdinalAndAbbreviatedMonth(article.date)}
             </p>
@@ -116,8 +123,10 @@ const Today = () => {
               </div>
               <div className=''>
                 <Image
-                  src={article.featuredImage.node.sourceUrl}
-                  alt={article.title}
+                  src={
+                    article.featuredImage?.node?.sourceUrl || fallbackImageUrl
+                  }
+                  alt={article.title || 'Featured image'}
                   width={400}
                   height={300}
                   priority

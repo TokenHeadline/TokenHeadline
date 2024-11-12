@@ -1,4 +1,3 @@
-// ArticlesGrid.js
 'use client'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -45,19 +44,25 @@ const formatDateWithOrdinalAndAbbreviatedMonth = (dateStr) => {
 }
 
 const ArticlesGrid = () => {
-  const [hovered, setHovered] = useState(false)
   const [articles, setArticles] = useState([])
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchArticles = async () => {
-      const { data } = await client.query({
-        query: GET_PRESS_RELEASES,
-      })
-      setArticles(data?.pressReleases?.nodes || [])
+      try {
+        const { data } = await client.query({ query: GET_PRESS_RELEASES })
+        setArticles(data?.pressReleases?.nodes || [])
+      } catch (err) {
+        console.error('Error fetching press releases:', err)
+        setError(err)
+      }
     }
 
     fetchArticles()
   }, [])
+
+  if (error) return <p>Error loading articles: {error.message}</p>
+  if (articles.length === 0) return <p>No articles found</p>
 
   return (
     <div className='m-4 pt-5 md:pl-16 md:pr-16 xl:pl-16'>
@@ -66,50 +71,53 @@ const ArticlesGrid = () => {
       </h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
-        {articles.map((news, index) => (
-          <Link
-            href={`/press-release/${news.slug}`}
-            aria-label={`/press-release/${news.slug}`}
-            className='flex flex-col justify-between overflow-hidden shadow-md backdrop-blur-md bg-white/40 h-full'
-            key={index}
-          >
-            <div className='relative w-full h-48'>
-              <Image
-                src={news.featuredImage.node.sourceUrl}
-                alt={news.title}
-                fill
-                sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
-                style={{
-                  objectFit: 'cover',
-                  filter: hovered ? 'none' : 'grayscale(100%)',
-                  transition: 'filter 0.3s ease',
-                }}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-              />
-            </div>
+        {articles.map((news, index) => {
+          const title = news?.title || 'Untitled Article'
+          const slug = news?.slug || '#'
+          const author = news?.author?.node?.name || 'Unknown Author'
+          const excerpt = news?.excerpt
+            ? news.excerpt
+                .replace(/<[^>]+>/g, '')
+                .split(' ')
+                .slice(0, 30)
+                .join(' ') + '...'
+            : 'No excerpt available'
+          const imageUrl = news?.featuredImage?.node?.sourceUrl || '/image.png'
+          const date = formatDateWithOrdinalAndAbbreviatedMonth(news?.date)
 
-            <div className='p-4 flex-grow'>
-              <h2 className='text-lg sm:text-xl font-semibold mb-2'>
-                {news.title}
-              </h2>
-              <p className='text-sm text-gray-700 mb-4'>
-                {news.excerpt
-                  .replace(/<[^>]+>/g, '')
-                  .split(' ')
-                  .slice(0, 30)
-                  .join(' ') + '...'}{' '}
-              </p>
-            </div>
-
-            <div className='p-4 mt-auto'>
-              <div className='flex justify-between text-sm text-black'>
-                <p>By {news.author.node.name}</p>
-                <p>{formatDateWithOrdinalAndAbbreviatedMonth(news.date)}</p>
+          return (
+            <Link
+              href={`/press-release/${slug}`}
+              aria-label={`/press-release/${slug}`}
+              className='flex flex-col justify-between overflow-hidden shadow-md backdrop-blur-md bg-white/40 h-full transition duration-300'
+              key={index}
+            >
+              <div className='relative w-full h-48'>
+                <Image
+                  src={imageUrl}
+                  alt={title}
+                  fill
+                  sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
+                  className='object-cover grayscale hover:grayscale-0 transition-all duration-300 ease-in-out'
+                />
               </div>
-            </div>
-          </Link>
-        ))}
+
+              <div className='p-4 flex-grow'>
+                <h2 className='text-lg sm:text-xl font-semibold mb-2'>
+                  {title}
+                </h2>
+                <p className='text-sm text-gray-700 mb-4'>{excerpt}</p>
+              </div>
+
+              <div className='p-4 mt-auto'>
+                <div className='flex justify-between text-sm text-black'>
+                  <p>By {author}</p>
+                  <p>{date}</p>
+                </div>
+              </div>
+            </Link>
+          )
+        })}
       </div>
 
       <div className='text-center mt-8'>

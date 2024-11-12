@@ -13,12 +13,16 @@ const Courses = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      const { data } = await client.query({
-        query: GET_COURSES,
-      })
-      setCourses(data?.courses?.nodes || []) // Adjusting to access nodes
+      try {
+        const { data } = await client.query({
+          query: GET_COURSES,
+        })
+        setCourses(data?.courses?.nodes || []) // Fallback to an empty array if data is missing
+      } catch (error) {
+        console.error('Error fetching courses:', error)
+        setCourses([]) // Set to an empty array in case of error
+      }
     }
-
     fetchCourses()
   }, [])
 
@@ -45,7 +49,7 @@ const Courses = () => {
     if (level === 'beginner') return 'bg-green-500'
     if (level === 'intermediate') return 'bg-orange-500'
     if (level === 'expert') return 'bg-red-500'
-    return 'bg-gray-500'
+    return 'bg-gray-500' // Default color for unknown levels
   }
 
   return (
@@ -53,55 +57,69 @@ const Courses = () => {
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mb-10'>
         LEARN
       </h1>
-      <Carousel
-        responsive={responsive}
-        infinite={true}
-        keyBoardControl={true}
-        autoPlay={true}
-        containerClass='carousel-container'
-        itemClass='px-4'
-      >
-        {courses.map((course, index) => (
-          <div
-            key={index}
-            className={`relative bg-white rounded-xl overflow-hidden ${
-              index % 2 === 0 ? 'hover:bg-red-400' : 'hover:bg-green-300'
-            } transition duration-300`}
-          >
-            <Image
-              src={course.featuredImage.node.sourceUrl} // Accessing sourceUrl correctly
-              alt={course.title}
-              width={500}
-              height={250}
-              className='w-full h-56'
-              style={{
-                objectFit: 'cover',
-                filter: hovered ? 'none' : 'grayscale(100%)',
-                transition: 'filter 0.3s ease',
-              }}
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-            />
-            <Link href={`/learn/${course.slug}`}>
-              <div className='p-5'>
-                <h2 className='text-3xl font-semibold text-gray-800 mb-2'>
-                  {course.title}
-                </h2>
-                <div className='flex items-center mt-5'>
-                  <div
-                    className={`w-3 h-3 rounded-full mr-2 ${getLevelColor(
-                      course.level.level // Accessing the course level correctly
-                    )}`}
-                  ></div>
-                  <span className='font-medium text-sm capitalize text-gray-700'>
-                    {course.level.level}
-                  </span>
-                </div>
+      {courses.length > 0 ? (
+        <Carousel
+          responsive={responsive}
+          infinite={true}
+          keyBoardControl={true}
+          autoPlay={true}
+          containerClass='carousel-container'
+          itemClass='px-4'
+        >
+          {courses.map((course, index) => {
+            const imageUrl =
+              course?.featuredImage?.node?.sourceUrl || '/default-image.png' // Fallback to default image
+            const title = course?.title || 'Untitled Course' // Fallback title
+            const slug = course?.slug || '#' // Fallback slug
+            const level = course?.level?.level || 'unknown' // Fallback level
+
+            return (
+              <div
+                key={course.id || index} // Use course ID if available, otherwise index
+                className={`relative bg-white rounded-xl overflow-hidden ${
+                  index % 2 === 0 ? 'hover:bg-red-400' : 'hover:bg-green-300'
+                } transition duration-300`}
+              >
+                <Image
+                  src={imageUrl}
+                  alt={title}
+                  width={500}
+                  height={250}
+                  className='w-full h-56'
+                  style={{
+                    objectFit: 'cover',
+                    filter: hovered ? 'none' : 'grayscale(100%)',
+                    transition: 'filter 0.3s ease',
+                  }}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                />
+                <Link href={`/learn/${slug}`}>
+                  <div className='p-5'>
+                    <h2 className='text-3xl font-semibold text-gray-800 mb-2'>
+                      {title}
+                    </h2>
+                    <div className='flex items-center mt-5'>
+                      <div
+                        className={`w-3 h-3 rounded-full mr-2 ${getLevelColor(
+                          level
+                        )}`}
+                      ></div>
+                      <span className='font-medium text-sm capitalize text-gray-700'>
+                        {level}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               </div>
-            </Link>
-          </div>
-        ))}
-      </Carousel>
+            )
+          })}
+        </Carousel>
+      ) : (
+        <p className='text-center text-gray-500'>
+          No courses available at the moment
+        </p>
+      )}
     </div>
   )
 }

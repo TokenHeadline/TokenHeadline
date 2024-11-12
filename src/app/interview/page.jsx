@@ -78,49 +78,73 @@ const PressReleasesPage = () => {
           />
         </head>
 
-        {pressReleases.map((pressRelease, index) => (
-          <Link
-            key={pressRelease.id} // Using unique ID as key
-            href={`/interview/${pressRelease.slug}`}
-            aria-label={pressRelease.title}
-            passHref
-            className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
-          >
-            <div className='relative h-60 w-full md:w-1/3'>
-              <Image
-                src={pressRelease.featuredImage.node.sourceUrl}
-                alt={pressRelease.title}
-                fill
-                className='object-cover'
-              />
-            </div>
+        {pressReleases.map((pressRelease, index) => {
+          // Adding fallbacks for fields
+          const {
+            title = 'Untitled Interview', // Fallback for title
+            featuredImage = {}, // Fallback for featuredImage
+            excerpt = 'No excerpt available.', // Fallback for excerpt
+            author = {}, // Fallback for author
+            date = '', // Fallback for date
+            slug = '', // Fallback for slug
+            id = index, // Use index if id is not available
+          } = pressRelease
 
-            <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
-              <div className='bg-gradient-to-tl from-blue-400 to-blue-900 text-white pt-1 font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center rounded-br-md rounded-bl-md'>
-                INTERVIEW
+          // Destructuring with fallbacks for author data
+          const authorName = author?.node?.name || 'Unknown Author'
+          const authorImage =
+            author?.node?.image?.sourceUrl || '/placeholder.jpg'
+
+          // Destructuring with fallbacks for featured image
+          const imageUrl = featuredImage?.node?.sourceUrl || '/placeholder.jpg'
+
+          // Format the date with fallback
+          const formattedDate = date
+            ? formatDateWithOrdinalAndAbbreviatedMonth(date)
+            : 'Unknown Date'
+
+          // Remove HTML tags and fallback to 'No excerpt available.'
+          const sanitizedExcerpt =
+            excerpt?.replace(/<[^>]+>/g, '') || 'No excerpt available.'
+
+          return (
+            <Link
+              key={id || index} // Using ID or index if ID is unavailable
+              href={`/interview/${slug || ''}`} // Fallback to empty slug if not available
+              aria-label={title || 'Untitled Interview'}
+              passHref
+              className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
+            >
+              <div className='relative h-60 w-full md:w-1/3'>
+                <Image
+                  src={imageUrl}
+                  alt={title || 'Interview Image'}
+                  fill
+                  className='object-cover'
+                />
               </div>
-              <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
-                {pressRelease.title}
-              </h2>
-              <p className='text-base text-gray-600 line-clamp-3'>
-                {pressRelease.excerpt
-                  .replace(/<[^>]+>/g, '')
-                  .split(' ')
-                  .slice(0, 65)
-                  .join(' ') + '...'}
-              </p>
-              <div className='flex'>
-                <p className='text-sm font-normal'>
-                  By {pressRelease.author.node.name.toUpperCase()}
+
+              <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
+                <div className='bg-gradient-to-tl from-blue-400 to-blue-900 text-white pt-1 font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center rounded-br-md rounded-bl-md'>
+                  INTERVIEW
+                </div>
+                <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
+                  {title || 'Untitled Interview'}
+                </h2>
+                <p className='text-base text-gray-600 line-clamp-3'>
+                  {sanitizedExcerpt.split(' ').slice(0, 65).join(' ') + '...'}
                 </p>
-                <span className='mx-2'></span>
-                <p className='text-sm font-normal'>
-                  {formatDateWithOrdinalAndAbbreviatedMonth(pressRelease.date)}
-                </p>
+                <div className='flex'>
+                  <p className='text-sm font-normal'>
+                    By {authorName.toUpperCase()}
+                  </p>
+                  <span className='mx-2'></span>
+                  <p className='text-sm font-normal'>{formattedDate}</p>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          )
+        })}
 
         {data?.interviews?.pageInfo?.hasNextPage && (
           <div className='text-center mt-8'>

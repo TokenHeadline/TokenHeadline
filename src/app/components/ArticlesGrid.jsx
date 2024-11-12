@@ -67,15 +67,17 @@ const ArticlesGrid = () => {
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
         {articles.map((news, index) => (
           <Link
-            href={`/article/${news.slug}`}
-            aria-label={`/article/${news.slug}`}
+            href={`/article/${news.slug || ''}`}
+            aria-label={`/article/${news.slug || ''}`}
             className='flex flex-col justify-between overflow-hidden shadow-md backdrop-blur-md bg-white/40 h-full'
             key={index}
           >
             <div className='relative w-full h-48'>
               <Image
-                src={news.featuredImage.node.sourceUrl} // Adjusting to the new data structure
-                alt={news.title}
+                src={
+                  news.featuredImage?.node?.sourceUrl || '/fallback-image.jpg'
+                } // Adjusting to the new data structure
+                alt={news.title || 'No title'}
                 fill
                 sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
                 style={{
@@ -90,23 +92,29 @@ const ArticlesGrid = () => {
 
             <div className='p-4 flex-grow'>
               <h2 className='text-lg sm:text-xl font-semibold mb-2'>
-                {news.title}
+                {news.title || 'No title'}
               </h2>
               <p className='text-sm text-gray-700 mb-4'>
                 {news.excerpt
-                  .replace(/<[^>]+>/g, '')
-                  .split(' ')
-                  .slice(0, 30)
-                  .join(' ') + '...'}{' '}
+                  ? news.excerpt
+                      .replace(/<[^>]+>/g, '')
+                      .split(' ')
+                      .slice(0, 30)
+                      .join(' ') + '...'
+                  : 'No excerpt available'}{' '}
                 {/* Stripping HTML tags */}
               </p>
             </div>
 
             <div className='p-4 mt-auto'>
               <div className='flex justify-between text-sm text-black'>
-                <p>By {news.author.node.name}</p>{' '}
+                <p>By {news.author?.node?.name || 'Unknown author'}</p>{' '}
                 {/* Adjusting to the new data structure */}
-                <p>{formatDateWithOrdinalAndAbbreviatedMonth(news.date)}</p>
+                <p>
+                  {news.date
+                    ? formatDateWithOrdinalAndAbbreviatedMonth(news.date)
+                    : 'No date available'}
+                </p>
               </div>
             </div>
           </Link>

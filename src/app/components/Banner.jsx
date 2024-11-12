@@ -21,8 +21,10 @@ const Banner = () => {
   const { loading, error, data } = useQuery(GET_BANNER, { client: client })
 
   useEffect(() => {
-    if (data && data.posts && data.posts.nodes) {
-      setCards(data.posts.nodes.slice(0, 6)) // Get the first 6 posts
+    if (data?.posts?.nodes) {
+      setCards(data.posts.nodes.slice(0, 6)) // Get the first 6 posts, or an empty array if posts are undefined
+    } else {
+      setCards([]) // Fallback to an empty array if data is missing
     }
   }, [data])
 
@@ -41,6 +43,7 @@ const Banner = () => {
   }, [cards])
 
   if (loading) return <BannerSkeleton /> // Show skeleton while loading
+  if (error) return <p>Error loading banner</p> // Show error message if there's an error
 
   return (
     <div className='relative flex justify-center items-center'>
@@ -51,12 +54,16 @@ const Banner = () => {
 
           if (!isVisible) return null
 
+          // Fallback for missing values
           const backgroundImageUrl =
-            newsItem.featuredImage?.node?.sourceUrl || '/logo.png'
+            newsItem?.featuredImage?.node?.sourceUrl || '/logo.png'
+          const title = newsItem?.title || 'Untitled'
+          const slug = newsItem?.slug || '#'
+          const id = newsItem?.id || `card-${index}` // Fallback to a generated ID if id is missing
 
           return (
             <motion.li
-              key={newsItem.id}
+              key={id}
               className={`absolute w-full h-full lg:rounded-br-[50px] ${
                 canDrag ? 'cursor-grab' : 'cursor-auto'
               } ${hoveredIndex === index ? '' : 'grayscale'}`}
@@ -78,7 +85,7 @@ const Banner = () => {
               <div className='absolute top-0 left-0 w-full h-full'>
                 <Image
                   src={backgroundImageUrl}
-                  alt={newsItem.title || 'Banner Image'}
+                  alt={title || 'Image'}
                   layout='fill'
                   objectFit='cover'
                   objectPosition='center'
@@ -88,11 +95,11 @@ const Banner = () => {
 
               <div className='absolute bottom-2 left-2 text-white p-2 mb-0 pb-0 lg:rounded-md bg-black bg-opacity-50 lg:rounded-br-[50px]'>
                 <Link
-                  href={`/article/${newsItem.slug}`}
-                  aria-label={`/article/${newsItem.slug}`}
+                  href={`/article/${slug}`}
+                  aria-label={`/article/${slug}`}
                   className='text-lg font-semibold'
                 >
-                  {newsItem.title}
+                  {title}
                 </Link>
               </div>
             </motion.li>

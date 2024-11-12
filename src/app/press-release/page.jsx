@@ -46,7 +46,7 @@ const PressReleasesPage = () => {
       'NOV',
       'DEC',
     ]
-    const month = months[date.getMonth()]
+    const month = months[date.getMonth()] || 'UNKNOWN'
     return `${day} ${month} ${year}`
   }
 
@@ -78,49 +78,59 @@ const PressReleasesPage = () => {
           />
         </head>
 
-        {pressReleases.map((pressRelease, index) => (
-          <Link
-            key={pressRelease.id} // Using unique ID as key
-            href={`/press-release/${pressRelease.slug}`}
-            aria-label={pressRelease.title}
-            passHref
-            className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
-          >
-            <div className='relative h-60 w-full md:w-1/3'>
-              <Image
-                src={pressRelease.featuredImage.node.sourceUrl}
-                alt={pressRelease.title}
-                fill
-                className='object-cover'
-              />
-            </div>
+        {pressReleases.map((pressRelease) => {
+          // Provide fallbacks for fields
+          const title = pressRelease?.title || 'Untitled Press Release'
+          const imageUrl =
+            pressRelease?.featuredImage?.node?.sourceUrl || '/default-image.jpg'
+          const excerpt =
+            (pressRelease?.excerpt || '')
+              .replace(/<[^>]+>/g, '')
+              .split(' ')
+              .slice(0, 65)
+              .join(' ') + '...'
+          const authorName =
+            pressRelease?.author?.node?.name?.toUpperCase() || 'Anonymous'
+          const date = pressRelease?.date
+            ? formatDateWithOrdinalAndAbbreviatedMonth(pressRelease.date)
+            : 'Unknown Date'
 
-            <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
-              <div className='bg-gradient-to-tl from-blue-400 to-blue-900 text-white pt-1 font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center rounded-br-md rounded-bl-md'>
-                PRESS RELEASE
+          return (
+            <Link
+              key={pressRelease.id} // Using unique ID as key
+              href={`/press-release/${pressRelease.slug}`}
+              aria-label={title}
+              passHref
+              className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
+            >
+              <div className='relative h-60 w-full md:w-1/3'>
+                <Image
+                  src={imageUrl}
+                  alt={title}
+                  fill
+                  className='object-cover'
+                />
               </div>
-              <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
-                {pressRelease.title}
-              </h2>
-              <p className='text-base text-gray-600 line-clamp-3'>
-                {pressRelease.excerpt
-                  .replace(/<[^>]+>/g, '')
-                  .split(' ')
-                  .slice(0, 65)
-                  .join(' ') + '...'}
-              </p>
-              <div className='flex'>
-                <p className='text-sm font-normal'>
-                  By {pressRelease.author.node.name.toUpperCase()}
+
+              <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
+                <div className='bg-gradient-to-tl from-blue-400 to-blue-900 text-white pt-1 font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center rounded-br-md rounded-bl-md'>
+                  PRESS RELEASE
+                </div>
+                <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
+                  {title}
+                </h2>
+                <p className='text-base text-gray-600 line-clamp-3'>
+                  {excerpt}
                 </p>
-                <span className='mx-2'></span>
-                <p className='text-sm font-normal'>
-                  {formatDateWithOrdinalAndAbbreviatedMonth(pressRelease.date)}
-                </p>
+                <div className='flex'>
+                  <p className='text-sm font-normal'>By {authorName}</p>
+                  <span className='mx-2'></span>
+                  <p className='text-sm font-normal'>{date}</p>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          )
+        })}
 
         {data?.pressReleases?.pageInfo?.hasNextPage && (
           <div className='text-center mt-8'>

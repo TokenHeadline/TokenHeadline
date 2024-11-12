@@ -46,7 +46,7 @@ const ArticlesPage = () => {
       'NOV',
       'DEC',
     ]
-    const month = months[date.getMonth()]
+    const month = months[date.getMonth()] || 'UNKNOWN'
 
     return `${day} ${month} ${year}`
   }
@@ -74,49 +74,58 @@ const ArticlesPage = () => {
             content='Discover a diverse collection of expert-written articles on various topics from TokenHeadline.'
           />
         </head>
-        {articles.map((news) => (
-          <Link
-            href={`/opinion/${news.slug}`}
-            aria-label={news.title}
-            passHref
-            className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
-            key={news.id}
-          >
-            <div className='relative h-60 w-full md:w-1/3'>
-              <Image
-                src={news.featuredImage.node.sourceUrl}
-                alt={news.title}
-                fill
-                className='object-cover'
-              />
-            </div>
+        {articles.map((news) => {
+          const title = news?.title || 'Untitled Article'
+          const imageUrl =
+            news?.featuredImage?.node?.sourceUrl || '/default-image.jpg'
+          const excerpt =
+            (news?.excerpt || '')
+              .replace(/<[^>]+>/g, '')
+              .split(' ')
+              .slice(0, 65)
+              .join(' ') + '...'
+          const authorName =
+            news?.author?.node?.name?.toUpperCase() || 'Anonymous'
+          const date = news?.date
+            ? formatDateWithOrdinalAndAbbreviatedMonth(news.date)
+            : 'Unknown Date'
 
-            <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
-              <div className='bg-orange-500 text-black font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center'>
-                OPINION
+          return (
+            <Link
+              href={`/opinion/${news.slug}`}
+              aria-label={title}
+              passHref
+              className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
+              key={news.id}
+            >
+              <div className='relative h-60 w-full md:w-1/3'>
+                <Image
+                  src={imageUrl}
+                  alt={title}
+                  fill
+                  className='object-cover'
+                />
               </div>
-              <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
-                {news.title}
-              </h2>
-              <p className='text-base text-gray-600 line-clamp-3'>
-                {news.excerpt
-                  .replace(/<[^>]+>/g, '')
-                  .split(' ')
-                  .slice(0, 65)
-                  .join(' ') + '...'}
-              </p>
-              <div className='flex'>
-                <p className='text-sm font-normal'>
-                  By {news.author.node.name.toUpperCase()}
+
+              <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
+                <div className='bg-orange-500 text-black font-semibold px-2 absolute h-8 w-40 top-0 font-2xl items-center text-center'>
+                  OPINION
+                </div>
+                <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
+                  {title}
+                </h2>
+                <p className='text-base text-gray-600 line-clamp-3'>
+                  {excerpt}
                 </p>
-                <span className='mx-2'></span>
-                <p className='text-sm font-normal'>
-                  {formatDateWithOrdinalAndAbbreviatedMonth(news.date)}
-                </p>
+                <div className='flex'>
+                  <p className='text-sm font-normal'>By {authorName}</p>
+                  <span className='mx-2'></span>
+                  <p className='text-sm font-normal'>{date}</p>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          )
+        })}
       </div>
 
       {/* Load More Button */}

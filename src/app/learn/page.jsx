@@ -53,40 +53,45 @@ const CoursesPage = () => {
             className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
             key={course.id}
           >
-            <div className='relative h-60 w-full md:w-1/3'>
+            <div className='relative md:w-1/3'>
+              {/* Make image fill the container and ensure it covers the space */}
               <Image
-                src={course.featuredImage.node.sourceUrl}
-                alt={course.title}
-                fill
-                className='object-cover'
+                src={course?.featuredImage?.node?.sourceUrl || '/logo.png'} // Fallback to placeholder
+                alt={course?.title || 'Course image'} // Fallback alt text
+                layout='fill' // Ensure image fills container
+                objectFit='cover' // This ensures the image will cover the container area
+                className='object-cover w-full '
               />
             </div>
 
             <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>
               <h2 className='text-2xl font-semibold text-gray-800 line-clamp-2 mt-4'>
-                {course.title}
+                {course?.title || 'No title available'} {/* Fallback title */}
               </h2>
               <p className='text-base text-gray-600 line-clamp-3'>
-                {course.excerpt
-                  .replace(/<[^>]+>/g, '')
-                  .split(' ')
-                  .slice(0, 65)
-                  .join(' ') + '...'}
+                {course?.excerpt
+                  ? course.excerpt
+                      .replace(/<[^>]+>/g, '')
+                      .split(' ')
+                      .slice(0, 65)
+                      .join(' ') + '...'
+                  : 'No description available.'}{' '}
+                {/* Fallback excerpt */}
               </p>
               <div className='flex items-center mt-5'>
                 <div
                   className={`w-3 h-3 rounded-full mr-2 ${getLevelColor(
-                    course.level.level
+                    course?.level?.level || 'unknown' // Fallback to 'unknown'
                   )}`}
                 ></div>
                 <span className='font-medium text-sm capitalize text-gray-700'>
-                  {course.level.level}
+                  {course?.level?.level || 'unknown'} {/* Fallback level */}
                 </span>
               </div>
 
               <div className='border-t border-black my-2'></div>
 
-              <Link href={`/learn/${course.slug}`} passHref>
+              <Link href={`/learn/${course?.slug || ''}`} passHref>
                 <span className='ml-auto cursor-pointer flex items-center'>
                   Start Course
                   <svg
