@@ -69,6 +69,7 @@ const Today = () => {
     let cleanContent = excerpt.replace(/\n/g, '').replace(/<\/?p>/g, '')
     return cleanContent
   }
+  console.log(news)
 
   return (
     <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-6/12 xl:basis-4/12'>
