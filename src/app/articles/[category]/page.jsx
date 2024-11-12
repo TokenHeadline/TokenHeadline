@@ -10,7 +10,6 @@ const ArticlesPage = ({ params }) => {
   const { category } = params
   const [cursor, setCursor] = useState(null)
   const [articles, setArticles] = useState([])
-  console.log(params)
   const { loading, error, data } = useQuery(GET_CATEGORY_ARTICLE, {
     client,
     variables: {
