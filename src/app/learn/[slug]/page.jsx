@@ -72,7 +72,7 @@ const CoursePage = async ({ params }) => {
           <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
             {course.title}
           </h1>
-          <div className='relative h-60 w-full rounded-lg overflow-hidden mb-6'>
+          <div className='relative h-96 w-full rounded-lg overflow-hidden mb-6'>
             <Image
               src={course.featuredImage.node.sourceUrl}
               alt={course.title}
@@ -81,6 +81,7 @@ const CoursePage = async ({ params }) => {
               className='rounded-lg'
             />
           </div>
+
           <p
             className={`text-sm font-medium text-center ${getLevelColor(
               course.level.level
