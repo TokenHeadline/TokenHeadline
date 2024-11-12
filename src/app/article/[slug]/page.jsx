@@ -155,4 +155,4 @@ export async function generateStaticParams() {
 }
 
 // Revalidate every 10 seconds
-export const revalidate = 3600
+export const revalidate = 600
