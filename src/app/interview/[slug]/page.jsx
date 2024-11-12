@@ -136,7 +136,7 @@ const Page = async ({ params }) => {
                 />
                 <div>
                   <Link
-                    href={`/interview/${recentArticle.slug}`}
+                    href={`/article/${recentArticle.slug}`}
                     className='text-gray-900 hover:text-blue-600 hover:underline'
                   >
                     {recentArticle.title || 'No Title'}
