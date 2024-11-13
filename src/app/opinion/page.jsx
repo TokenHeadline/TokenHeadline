@@ -102,7 +102,7 @@ const ArticlesPage = () => {
                 <div className='relative w-full h-full'>
                   <img
                     src={imageUrl}
-                    alt={title || 'Default Title'} // Fallback title if not available
+                    alt={title || 'Default Title'}
                     className='object-cover w-full h-full'
                   />
                 </div>

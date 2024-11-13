@@ -2,7 +2,10 @@
 const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['cms.tokenheadline.com', 'secure.gravatar.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cms.tokenheadline.com' },
+      { protocol: 'https', hostname: 'secure.gravatar.com' },
+    ],
   },
 }
 
