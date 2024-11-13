@@ -95,13 +95,14 @@ const Page = async ({ params }) => {
             <h1 className='text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6'>
               {article.title || 'No Title'}
             </h1>
-            <Image
+            <img
               src={article.featuredImage?.node?.sourceUrl || 'logo.png'}
               alt={article.title || 'No Title'}
-              width={800}
-              height={450}
+              width='800'
+              height='450'
               className='rounded-lg mb-6 mx-auto'
             />
+
             <div className='flex justify-center text-gray-700 text-sm mb-4 flex-wrap'>
               <span className='mr-4'>
                 By {article.author?.node?.name || 'Unknown Author'}
@@ -125,15 +126,16 @@ const Page = async ({ params }) => {
           <ul>
             {filteredArticles.map((recentArticle, index) => (
               <li key={index} className='flex items-center mb-4'>
-                <Image
+                <img
                   src={
                     recentArticle.featuredImage?.node?.sourceUrl || '/logo.png'
                   }
                   alt={recentArticle.title || 'No Title'}
-                  width={100}
-                  height={60}
+                  width='100'
+                  height='60'
                   className='rounded-md mr-4'
                 />
+
                 <div>
                   <Link
                     href={`/article/${recentArticle.slug}`}

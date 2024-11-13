@@ -80,11 +80,11 @@ const Courses = () => {
                   index % 2 === 0 ? 'hover:bg-red-400' : 'hover:bg-green-300'
                 } transition duration-300`}
               >
-                <Image
+                <img
                   src={imageUrl}
                   alt={title}
-                  width={500}
-                  height={250}
+                  width='500'
+                  height='250'
                   className='w-full h-56'
                   style={{
                     objectFit: 'cover',
@@ -94,6 +94,7 @@ const Courses = () => {
                   onMouseEnter={() => setHovered(true)}
                   onMouseLeave={() => setHovered(false)}
                 />
+
                 <Link href={`/learn/${slug}`}>
                   <div className='p-5'>
                     <h2 className='text-3xl font-semibold text-gray-800 mb-2'>

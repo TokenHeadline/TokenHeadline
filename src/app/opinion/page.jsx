@@ -99,12 +99,13 @@ const ArticlesPage = () => {
               key={news.id}
             >
               <div className='relative h-60 w-full md:w-1/3'>
-                <Image
-                  src={imageUrl}
-                  alt={title}
-                  fill
-                  className='object-cover'
-                />
+                <div className='relative w-full h-full'>
+                  <img
+                    src={imageUrl}
+                    alt={title || 'Default Title'} // Fallback title if not available
+                    className='object-cover w-full h-full'
+                  />
+                </div>
               </div>
 
               <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>

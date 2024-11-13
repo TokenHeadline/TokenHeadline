@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
 import TodaySkeleton from './Skeleton/TodaySkeleton'
 import { GET_TODAY } from '../../../services/index'
 import client from '../../lib/apolloClient'
@@ -122,14 +121,13 @@ const Today = () => {
                 </div>
               </div>
               <div className=''>
-                <Image
+                <img
                   src={
                     article.featuredImage?.node?.sourceUrl || fallbackImageUrl
                   }
                   alt={article.title || 'Featured image'}
                   width={400}
                   height={300}
-                  priority
                   style={{
                     width: '100%',
                     height: 'auto',

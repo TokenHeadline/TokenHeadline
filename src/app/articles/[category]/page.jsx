@@ -86,15 +86,13 @@ const ArticlesPage = ({ params }) => {
             key={news.id}
           >
             <div className='relative h-60 w-full md:w-1/3'>
-              <Image
-                src={
-                  news.featuredImage?.node?.sourceUrl ||
-                  '/placeholder-image.jpg'
-                }
-                alt={news.title || 'Article Image'}
-                fill
-                className='object-cover'
-              />
+              <div className='relative w-full h-full'>
+                <img
+                  src={news.featuredImage?.node?.sourceUrl || '/logo.png'}
+                  alt={news.title || 'Placeholder Title'}
+                  className='object-cover w-full h-full'
+                />
+              </div>
             </div>
 
             <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>

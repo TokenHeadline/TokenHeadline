@@ -104,11 +104,10 @@ const PressReleasesPage = () => {
               className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
             >
               <div className='relative h-60 w-full md:w-1/3'>
-                <Image
+                <img
                   src={imageUrl}
-                  alt={title}
-                  fill
-                  className='object-cover'
+                  alt={title || 'Default Title'} // Fallback alt text if title is not available
+                  className='object-cover w-full h-full'
                 />
               </div>
 

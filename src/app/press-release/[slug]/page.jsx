@@ -101,13 +101,14 @@ const Page = async ({ params }) => {
               <h1 className='text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6'>
                 {article.title || 'No Title'}
               </h1>
-              <Image
-                src={article.featuredImage?.node?.sourceUrl || 'logo.png'}
-                alt={article.title || 'No Title'}
-                width={800}
-                height={450}
-                className='rounded-lg mb-6 mx-auto'
+              <img
+                src={article.featuredImage?.node?.sourceUrl || 'logo.png'} // Fallback to 'logo.png' if the image source is unavailable
+                alt={article.title || 'No Title'} // Fallback alt text if the article title is unavailable
+                width='800' // Set the width of the image
+                height='450' // Set the height of the image
+                className='rounded-lg mb-6 mx-auto' // Apply Tailwind CSS classes for rounded corners, margin, and centering
               />
+
               <div className='flex justify-center text-gray-700 text-sm mb-4 flex-wrap'>
                 <span className='mr-4'>
                   By {article.author?.node?.name || 'Unknown Author'}
@@ -134,14 +135,14 @@ const Page = async ({ params }) => {
             <ul>
               {filteredArticles.map((recentArticle, index) => (
                 <li key={index} className='flex items-center mb-4'>
-                  <Image
+                  <img
                     src={
                       recentArticle.featuredImage?.node?.sourceUrl ||
                       '/logo.png'
                     }
                     alt={recentArticle.title || 'No Title'}
-                    width={100}
-                    height={60}
+                    width='100'
+                    height='60'
                     className='rounded-md mr-4'
                   />
                   <div>

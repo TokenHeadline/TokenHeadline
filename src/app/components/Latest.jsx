@@ -78,11 +78,11 @@ const Latest = () => {
             <div className='flex-1'>
               <div className='w-full'>
                 {/* Featured Image */}
-                <Image
-                  src={imageUrl}
-                  width={630}
-                  height={452}
-                  alt={title}
+                <img
+                  src={imageUrl || '/fallback-image.jpg'}
+                  width='630'
+                  height='452'
+                  alt={title || 'Default Title'}
                   className='object-contain lg:w-[630px] lg:h-[452px]'
                   style={{
                     filter: hovered ? 'none' : 'grayscale(100%)',

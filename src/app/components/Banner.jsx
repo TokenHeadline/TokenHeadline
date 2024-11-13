@@ -7,7 +7,6 @@ import { useQuery } from '@apollo/client'
 import client from '../../lib/apolloClient'
 import BannerSkeleton from './Skeleton/BannerSkeleton'
 import Link from 'next/link'
-import Image from 'next/image' // Import Next.js Image component
 
 const CARD_OFFSET = 30
 const SCALE_FACTOR = 0.04
@@ -81,15 +80,11 @@ const Banner = () => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              {/* Use the Image component for optimized image rendering */}
               <div className='absolute top-0 left-0 w-full h-full'>
-                <Image
+                <img
                   src={backgroundImageUrl}
                   alt={title || 'Image'}
-                  layout='fill'
-                  objectFit='cover'
-                  objectPosition='center'
-                  className='lg:rounded-br-[50px]'
+                  className='w-full h-full object-cover lg:rounded-br-[50px]'
                 />
               </div>
 

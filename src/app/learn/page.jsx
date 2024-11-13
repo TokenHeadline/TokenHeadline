@@ -55,13 +55,16 @@ const CoursesPage = () => {
           >
             <div className='relative md:w-1/3'>
               {/* Make image fill the container and ensure it covers the space */}
-              <Image
-                src={course?.featuredImage?.node?.sourceUrl || '/logo.png'} // Fallback to placeholder
-                alt={course?.title || 'Course image'} // Fallback alt text
-                layout='fill' // Ensure image fills container
-                objectFit='cover' // This ensures the image will cover the container area
-                className='object-cover w-full '
-              />
+              <div className='relative w-full h-full'>
+                <img
+                  src={course?.featuredImage?.node?.sourceUrl || '/logo.png'} // Fallback to placeholder
+                  alt={course?.title || 'Course image'} // Fallback alt text
+                  className='object-cover w-full h-full'
+                  style={{
+                    objectFit: 'cover', // Ensure the image covers the container area
+                  }}
+                />
+              </div>
             </div>
 
             <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>

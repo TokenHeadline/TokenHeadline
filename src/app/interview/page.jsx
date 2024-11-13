@@ -116,12 +116,13 @@ const PressReleasesPage = () => {
               className='mx-auto flex flex-col md:flex-row shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border-2 border-black'
             >
               <div className='relative h-60 w-full md:w-1/3'>
-                <Image
-                  src={imageUrl}
-                  alt={title || 'Interview Image'}
-                  fill
-                  className='object-cover'
-                />
+                <div className='relative w-full h-full'>
+                  <img
+                    src={imageUrl || '/fallback-image.jpg'}
+                    alt={title || 'Interview Image'}
+                    className='object-cover w-full h-full'
+                  />
+                </div>
               </div>
 
               <div className='p-6 flex flex-col justify-between w-full md:w-2/3 relative'>

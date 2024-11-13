@@ -73,21 +73,24 @@ const ArticlesGrid = () => {
             key={index}
           >
             <div className='relative w-full h-48'>
-              <Image
-                src={
-                  news.featuredImage?.node?.sourceUrl || '/fallback-image.jpg'
-                } // Adjusting to the new data structure
-                alt={news.title || 'No title'}
-                fill
-                sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw'
-                style={{
-                  objectFit: 'cover',
-                  filter: hovered ? 'none' : 'grayscale(100%)',
-                  transition: 'filter 0.3s ease',
-                }}
+              <div
+                className='relative w-full h-full'
+                style={{ maxWidth: '640px' }}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-              />
+              >
+                <img
+                  src={
+                    news.featuredImage?.node?.sourceUrl || '/fallback-image.jpg'
+                  }
+                  alt={news.title || 'No title'}
+                  className='w-full h-full object-cover'
+                  style={{
+                    filter: hovered ? 'none' : 'grayscale(100%)',
+                    transition: 'filter 0.3s ease',
+                  }}
+                />
+              </div>
             </div>
 
             <div className='p-4 flex-grow'>

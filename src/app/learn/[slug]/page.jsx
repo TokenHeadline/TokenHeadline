@@ -73,13 +73,16 @@ const CoursePage = async ({ params }) => {
             {course.title}
           </h1>
           <div className='relative h-96 w-full rounded-lg overflow-hidden mb-6'>
-            <Image
-              src={course.featuredImage.node.sourceUrl}
-              alt={course.title}
-              layout='fill'
-              objectFit='cover'
-              className='rounded-lg'
-            />
+            <div className='relative w-full h-full'>
+              <img
+                src={course.featuredImage.node.sourceUrl}
+                alt={course.title}
+                className='rounded-lg object-cover w-full h-full'
+                style={{
+                  objectFit: 'cover', // Ensure the image covers the container area
+                }}
+              />
+            </div>
           </div>
 
           <p
