@@ -1,135 +1,57 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
-import { GET_ARTICLE, GET_RECENT_ARTICLES } from '../../../../services/index'
-import client from '../../../lib/apolloClient'
-import Link from 'next/link'
-import Cryptowidget from '../../components/Cryptowidget'
+import React from 'react'
 import ArticleContent from './ArticleContent'
-
-const Page = ({ params }) => {
+import client from '../../../lib/apolloClient'
+import { GET_ARTICLE } from '../../../../services/index'
+export async function generateMetadata({ params }) {
   const { slug } = params
-  const [article, setArticle] = useState(null)
-  const [recentArticles, setRecentArticles] = useState([])
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch the article by slug
-        const { data: articleData } = await client.query({
-          query: GET_ARTICLE,
-          variables: { slug },
-        })
+  try {
+    const { data } = await client.query({
+      query: GET_ARTICLE,
+      variables: { slug },
+    })
 
-        // Fetch recent articles
-        const { data: recentData } = await client.query({
-          query: GET_RECENT_ARTICLES,
-        })
+    const article = data?.post
 
-        // Filter out the current article from the recent articles list
-        const filteredArticles = recentData.posts.nodes.filter(
-          (recentArticle) => recentArticle.slug !== slug
-        )
-
-        // Update state with fetched data
-        setArticle(articleData.post)
-        setRecentArticles(filteredArticles)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      } finally {
-        setLoading(false)
+    if (!article) {
+      return {
+        title: 'Article Not Found',
+        description: 'This Article could not be found.',
       }
     }
 
-    fetchData()
-  }, [slug])
-
-  if (loading) {
-    return (
-      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-        <p>Loading...</p>
-      </div>
-    )
+    return {
+      title: article.title || 'Untitled Article',
+      description:
+        article.excerpt?.replace(/<[^>]+>/g, '') || 'No description available',
+      openGraph: {
+        type: 'article',
+        url: `https://tokenheadline.com/article/${slug}`,
+        title: article.title,
+        description:
+          article.excerpt?.replace(/<[^>]+>/g, '') ||
+          'No description available',
+        images: [
+          {
+            url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
+          },
+        ],
+      },
+    }
+  } catch (error) {
+    console.error('Error generating metadata:', error)
+    return {
+      title: 'Article Not Found',
+      description: 'This Article could not be found.',
+    }
   }
-
-  if (!article) {
-    return (
-      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-        <p>Article not found</p>
-      </div>
-    )
-  }
+}
+const Page = ({ params }) => {
+  const { slug } = params
 
   return (
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-      <div className='mx-auto p-6'>
-        <div className='mb-10'>
-          <div className='items-center text-center'>
-            <h1 className='text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6'>
-              {article.title || 'No Title'}
-            </h1>
-            <img
-              src={article.featuredImage?.node?.sourceUrl || 'logo.png'}
-              alt={article.title || 'No Title'}
-              width='800'
-              height='450'
-              className='rounded-lg mb-6 mx-auto'
-            />
-
-            <div className='flex justify-center text-gray-700 text-sm mb-4 flex-wrap'>
-              <span className='mr-4'>
-                By {article.author?.node?.name || 'Unknown Author'}
-              </span>
-              <span>
-                {new Date(article.date).toLocaleDateString() || 'Unknown Date'}
-              </span>
-            </div>
-          </div>
-          <div className='prose lg:prose-lg text-gray-800 mx-auto'>
-            <ArticleContent content={article.content || '<p>Loading</p>'} />
-          </div>
-        </div>
-      </div>
-
-      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl flex flex-col md:flex-row'>
-        <div className='max-w-full md:max-w-2xl mx-5 bg-gray-50 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
-          <h2 className='text-3xl font-semibold text-gray-800 mb-6'>
-            Recent Articles
-          </h2>
-          <ul>
-            {recentArticles.map((recentArticle, index) => (
-              <li key={index} className='flex items-center mb-4'>
-                <img
-                  src={
-                    recentArticle.featuredImage?.node?.sourceUrl || '/logo.png'
-                  }
-                  alt={recentArticle.title || 'No Title'}
-                  width='100'
-                  height='60'
-                  className='rounded-md mr-4'
-                />
-
-                <div>
-                  <Link
-                    href={`/article/${recentArticle.slug}`}
-                    className='text-gray-900 hover:text-blue-600 hover:underline'
-                  >
-                    {recentArticle.title || 'No Title'}
-                  </Link>
-                  <span className='text-gray-500 text-xs block mt-1'>
-                    {new Date(recentArticle.date).toLocaleDateString() ||
-                      'Unknown Date'}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className='flex-none md:w-1/3'>
-          <Cryptowidget />
-        </div>
-      </div>
+      <ArticleContent slug={slug} />
     </div>
   )
 }
