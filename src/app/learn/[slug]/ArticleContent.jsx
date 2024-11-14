@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useEffect, useState } from 'react'
 import { GET_COURSE } from '../../../../services'
 import client from '../../../lib/apolloClient'

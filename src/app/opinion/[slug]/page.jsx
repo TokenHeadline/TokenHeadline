@@ -1,51 +1,6 @@
 import React from 'react'
 import ArticleContent from './ArticleContent'
-import client from '../../../lib/apolloClient'
-import { GET_OPINION } from '../../../../services/index'
-export async function generateMetadata({ params }) {
-  const { slug } = params
 
-  try {
-    const { data } = await client.query({
-      query: GET_OPINION,
-      variables: { slug },
-    })
-
-    const article = data?.opinion
-
-    if (!article) {
-      return {
-        title: 'Opinion Not Found',
-        description: 'This opinion could not be found.',
-      }
-    }
-
-    return {
-      title: article.title || 'Untitled Article',
-      description:
-        article.excerpt?.replace(/<[^>]+>/g, '') || 'No description available',
-      openGraph: {
-        type: 'article',
-        url: `https://tokenheadline.com/opinion/${slug}`,
-        title: article.title,
-        description:
-          article.excerpt?.replace(/<[^>]+>/g, '') ||
-          'No description available',
-        images: [
-          {
-            url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
-          },
-        ],
-      },
-    }
-  } catch (error) {
-    console.error('Error generating metadata:', error)
-    return {
-      title: 'Article Not Found',
-      description: 'This Article could not be found.',
-    }
-  }
-}
 const Page = ({ params }) => {
   const { slug } = params
 
