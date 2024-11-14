@@ -1,6 +1,5 @@
 import { GET_INTERVIEW, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
-import Image from 'next/image'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import ArticleContent from '../../../lib/ArticleContent'

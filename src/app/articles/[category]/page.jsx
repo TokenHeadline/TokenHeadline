@@ -66,7 +66,7 @@ const ArticlesPage = ({ params }) => {
     )
 
   return (
-    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 lg:h-screen'>
+    <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 '>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
           <title>{category ? `${category} Articles` : 'Articles'}</title>

@@ -1,51 +1,10 @@
-import { MetadataRoute } from 'next'
-
 export default async function sitemap() {
-  const baseUrl = 'https://tokenheadline.vercel.app'
+  const baseUrl = 'https://tokenheadline.com'
 
-  const response = await fetch(
-    'https://ap-south-1.cdn.hygraph.com/content/cm1adzv1802sy07ut097esnry/master',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `
-        query GetAllArticlesSlugs {
-          articles {
-            slug
-            date
-          }
-        }
-      `,
-      }),
-    }
-  )
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch article slugs')
-  }
-
-  const data = await response.json()
-  const articles = data?.data?.articles || []
-
-  const articleUrls = articles.map((article) => {
-    const formattedDate = new Date(article.date).toISOString().split('T')[0]
-
-    return {
-      url: `${baseUrl}article/${article.slug}`,
-      lastModified: formattedDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    }
-  })
-
-  // Add the base URL entry to the sitemap
   return [
     {
       url: baseUrl,
-      lastModified: new Date().toISOString().split('T')[0], // Ensure base URL uses ISO format
+      lastModified: new Date().toISOString().split('T')[0],
       changeFrequency: 'yearly',
       priority: 1,
     },
@@ -53,6 +12,7 @@ export default async function sitemap() {
       url: `${baseUrl}/articles`,
       lastModified: new Date().toISOString().split('T')[0],
       changeFrequency: 'daily',
+      priority: 0.8, // Optional: add priority values for other routes
     },
     {
       url: `${baseUrl}/opinion`,
@@ -74,6 +34,5 @@ export default async function sitemap() {
       lastModified: new Date().toISOString().split('T')[0],
       changeFrequency: 'daily',
     },
-    ...articleUrls,
   ]
 }

@@ -1,66 +1,65 @@
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import { GET_ARTICLE, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
 import ArticleContent from './ArticleContent'
 
-// Generate metadata for the Article page
-export async function generateMetadata({ params }) {
+const Page = ({ params }) => {
   const { slug } = params
+  const [article, setArticle] = useState(null)
+  const [recentArticles, setRecentArticles] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  try {
-    const { data } = await client.query({
-      query: GET_ARTICLE,
-      variables: { slug },
-    })
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch the article by slug
+        const { data: articleData } = await client.query({
+          query: GET_ARTICLE,
+          variables: { slug },
+        })
 
-    const article = data.post
+        // Fetch recent articles
+        const { data: recentData } = await client.query({
+          query: GET_RECENT_ARTICLES,
+        })
 
-    return {
-      title: article.title || 'Untitled Article',
-      description:
-        article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
-      openGraph: {
-        type: 'article',
-        url: `https://tokenheadline.com/article/${slug}`,
-        title: article.title,
-        description:
-          article.excerpt.replace(/<[^>]+>/g, '') || 'No description available',
-        images: [
-          {
-            url: article.featuredImage?.node?.sourceUrl || '/default-image.jpg',
-          },
-        ],
-      },
+        // Filter out the current article from the recent articles list
+        const filteredArticles = recentData.posts.nodes.filter(
+          (recentArticle) => recentArticle.slug !== slug
+        )
+
+        // Update state with fetched data
+        setArticle(articleData.post)
+        setRecentArticles(filteredArticles)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      } finally {
+        setLoading(false)
+      }
     }
-  } catch (error) {
-    return {
-      title: 'Article Not Found',
-      description: 'This article could not be found.',
-    }
+
+    fetchData()
+  }, [slug])
+
+  if (loading) {
+    return (
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
+        <p>Loading...</p>
+      </div>
+    )
   }
-}
 
-// The Article Page Component
-const Page = async ({ params }) => {
-  const { slug } = params
-
-  // Fetch the article data
-  const { data } = await client.query({
-    query: GET_ARTICLE,
-    variables: { slug },
-  })
-
-  const article = data.post
-
-  // Fetch recent articles for the sidebar
-  const { data: recentData } = await client.query({
-    query: GET_RECENT_ARTICLES,
-  })
-
-  const filteredArticles = recentData.posts.nodes.filter(
-    (recentArticle) => recentArticle.slug !== slug
-  )
+  if (!article) {
+    return (
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
+        <p>Article not found</p>
+      </div>
+    )
+  }
 
   return (
     <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
@@ -99,7 +98,7 @@ const Page = async ({ params }) => {
             Recent Articles
           </h2>
           <ul>
-            {filteredArticles.map((recentArticle, index) => (
+            {recentArticles.map((recentArticle, index) => (
               <li key={index} className='flex items-center mb-4'>
                 <img
                   src={
@@ -136,24 +135,3 @@ const Page = async ({ params }) => {
 }
 
 export default Page
-
-// Static Paths for Article
-export async function generateStaticParams() {
-  try {
-    const { data } = await client.query({
-      query: GET_RECENT_ARTICLES, // Fetch the list of article slugs
-    })
-
-    const slugs = data.posts.nodes.map((post) => post.slug)
-
-    return slugs.map((slug) => ({
-      slug,
-    }))
-  } catch (error) {
-    console.error('Error fetching slugs:', error)
-    return []
-  }
-}
-
-// Revalidate every 10 seconds
-export const revalidate = 600
