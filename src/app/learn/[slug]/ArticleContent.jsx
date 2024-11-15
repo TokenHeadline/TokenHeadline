@@ -44,7 +44,7 @@ const ArticleContent = ({ slug }) => {
   }
 
   return (
-    <div>
+    <div className='bg-white p-6 rounded-lg shadow-lg'>
       <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
         {courseData.title}
       </h1>
