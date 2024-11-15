@@ -40,7 +40,7 @@ const ArticleContent = ({ slug }) => {
   }
 
   if (!courseData) {
-    return <p>Loading...</p>
+    return <p className='text-center min-h-screen'>Loading...</p>
   }
 
   return (
