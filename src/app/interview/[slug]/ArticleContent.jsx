@@ -61,7 +61,7 @@ const ArticleContent = ({ slug }) => {
       <div className='mx-auto p-6'>
         <div className='mb-10'>
           <div className='items-center text-center'>
-            <h1 className='text-4xl sm:text-3xl font-extrabold text-gray-900 mb-6'>
+            <h1 className='text-xl lg:text-4xl font-extrabold text-gray-900 mb-6'>
               {article.title || 'No Title'}
             </h1>
             <img
@@ -88,8 +88,8 @@ const ArticleContent = ({ slug }) => {
         </div>
       </div>
 
-      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl flex flex-col md:flex-row'>
-        <div className='max-w-full md:max-w-2xl mx-5 bg-gray-50 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 flex flex-col md:flex-row'>
+        <div className='max-w-full md:max-w-4xl md:mx-1 md:bg-gray-50 bg-gray-200 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
           <h2 className='text-3xl font-semibold text-gray-800 mb-6'>
             Recent Articles
           </h2>
