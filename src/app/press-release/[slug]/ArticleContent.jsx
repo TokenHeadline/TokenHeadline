@@ -64,7 +64,7 @@ const ArticleContent = ({ slug }) => {
       <div className='mx-auto p-6'>
         <div className='mb-10'>
           <div className='items-center text-center'>
-            <h1 className='text-xl lg:text-4xl font-extrabold text-gray-900 mb-6'>
+            <h1 className='text-3xl lg:text-4xl font-extrabold text-gray-900 mb-6'>
               {article.title || 'No Title'}
             </h1>
             <img
