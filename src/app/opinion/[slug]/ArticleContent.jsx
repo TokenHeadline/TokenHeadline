@@ -48,7 +48,7 @@ const ArticleContent = ({ slug }) => {
 
   if (!article) {
     return (
-      <div className='container pt-0 pb-4 max-w-6xl px-1'>
+      <div className='container pt-0 pb-4 max-w-6xl mx-auto'>
         <p>Article not found</p>
       </div>
     )
@@ -57,7 +57,7 @@ const ArticleContent = ({ slug }) => {
   const sanitizedContent = DOMPurify.sanitize(article.content)
 
   return (
-    <div className='container pt-0 pb-4 max-w-6xl px-1'>
+    <div className='container pt-0 pb-4 max-w-6xl mx-auto'>
       <div className='p-4 md:p-6'>
         <div className='mb-10'>
           <div className=' md:text-center'>
