@@ -18,7 +18,6 @@ export async function generateMetadata() {
     url: 'https://tokenheadline.com',
     type: 'website',
     siteName: 'Token Headline',
-    twitter: '@tokenheadline',
   }
 }
 export default function Home() {
