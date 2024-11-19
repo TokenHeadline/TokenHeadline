@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { GET_ARTICLE_FOR_GRID } from '../../../services/index'
 import client from '../../lib/apolloClient'
@@ -57,6 +56,7 @@ const ArticlesGrid = () => {
 
     fetchArticles()
   }, [])
+  console.log(articles)
 
   return (
     <div className='m-4 pt-5 md:pl-16 md:pr-16 xl:pl-16'>

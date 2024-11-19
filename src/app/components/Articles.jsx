@@ -34,8 +34,8 @@ const Articles = () => {
   // Show different articles based on screen width (optional)
   const articlesToShow =
     typeof window !== 'undefined' && window.innerWidth < 640
-      ? news.slice(1, 7)
-      : news.slice(1, 4)
+      ? news.slice(2, 7)
+      : news.slice(2, 7)
 
   return (
     <div className='container lg:pl-10 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 lg:gap-0 lg:w-4/12'>
