@@ -57,11 +57,11 @@ const ArticleContent = ({ slug }) => {
   const sanitizedContent = DOMPurify.sanitize(article.content)
 
   return (
-    <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-      <div className='mx-auto p-6'>
+    <div className='container pt-0 pb-4 max-w-6xl mx-auto'>
+      <div className='p-4 md:p-6'>
         <div className='mb-10'>
-          <div className='items-center text-center'>
-            <h1 className='text-3xl lg:text-4xl font-extrabold text-gray-900 mb-6'>
+          <div className=' md:text-center'>
+            <h1 className='text-xl md:text-4xl font-extrabold text-gray-900 mb-6'>
               {article.title || 'No Title'}
             </h1>
             <img

@@ -77,7 +77,7 @@ export const GET_ARTICLE = gql`
 `
 export const GET_RECENT_ARTICLES = gql`
   query GetRecentArticles {
-    posts(first: 9, where: { orderby: { field: DATE, order: DESC } }) {
+    posts(first: 8, where: { orderby: { field: DATE, order: DESC } }) {
       nodes {
         title
         featuredImage {
