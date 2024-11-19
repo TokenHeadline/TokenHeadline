@@ -89,7 +89,7 @@ const ArticleContent = ({ slug }) => {
       </div>
 
       <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 flex flex-col md:flex-row'>
-        <div className='max-w-full md:max-w-4xl md:mx-1 md:bg-gray-50 bg-gray-200 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
+        <div className='max-w-full md:max-w-4xl md:mx-1 md:bg-gray-50 bg-opacity-80 shadow-lg rounded-lg border border-gray-200 p-6 flex-1 mb-4 md:mb-0'>
           <h2 className='text-3xl font-semibold text-gray-800 mb-6'>
             Recent Articles
           </h2>
