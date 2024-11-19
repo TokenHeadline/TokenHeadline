@@ -48,7 +48,7 @@ const ArticleContent = ({ slug }) => {
 
   if (!article) {
     return (
-      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
+      <div className='container pt-0 pb-4 max-w-6xl'>
         <p>Article not found</p>
       </div>
     )
