@@ -1,8 +1,7 @@
-// app/articles/[slug]/page.js
-
+import React from 'react'
 import ArticleContent from './ArticleContent'
 
-export default async function Page({ params }) {
+const Page = ({ params }) => {
   const { slug } = params
 
   return (
@@ -11,3 +10,5 @@ export default async function Page({ params }) {
     </div>
   )
 }
+
+export default Page
