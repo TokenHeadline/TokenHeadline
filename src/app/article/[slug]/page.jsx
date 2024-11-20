@@ -1,14 +1,15 @@
-import React from 'react'
-import ArticleContent from './ArticleContent'
-import client from '../../../lib/apolloClient'
+// app/articles/[slug]/page.js
 import { gql } from '@apollo/client'
+import client from '@/lib/apolloClient'
+import ArticleContent from './ArticleContent'
+import { image } from 'framer-motion/client'
 
-const GET_ARTICLE_METADATA = gql`
+const GET_ARTICLE_META = gql`
   query MyQuery($slug: ID!) {
     post(id: $slug, idType: SLUG) {
       excerpt
-      title
       slug
+      title
       featuredImage {
         node {
           sourceUrl
@@ -18,78 +19,38 @@ const GET_ARTICLE_METADATA = gql`
   }
 `
 
-// This function is for dynamically generating metadata for the page
 export async function generateMetadata({ params }) {
   const { slug } = params
 
-  // Fetching only the necessary data for the article based on the slug
-  const { data: articleData } = await client.query({
-    query: GET_ARTICLE_METADATA,
+  // Fetch article metadata
+  const { data } = await client.query({
+    query: GET_ARTICLE_META,
     variables: { slug },
   })
 
-  // Prepare metadata object
-  const metadata = {
-    title: articleData.post.title,
-    description:
-      articleData.post.excerpt
-        .replace(/<[^>]+>/g, '') // Remove HTML tags
-        .split(' ')
-        .slice(0, 30)
-        .join(' ') + '...', // Limit description length
-    openGraph: {
-      title: articleData.post.title,
-      description:
-        articleData.post.excerpt
-          .replace(/<[^>]+>/g, '')
-          .split(' ')
-          .slice(0, 30)
-          .join(' ') + '...',
-      url: `https://tokenheadline.com/article/${articleData.post.slug}`,
-      type: 'article',
-      siteName: 'Token Headline',
-      images: [
-        {
-          url:
-            articleData.post.featuredImage?.node.sourceUrl ||
-            '/default-image.jpg',
-          width: 1200,
-          height: 630,
-          alt: articleData.post.title,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: articleData.post.title,
-      description:
-        articleData.post.excerpt
-          .replace(/<[^>]+>/g, '')
-          .split(' ')
-          .slice(0, 30)
-          .join(' ') + '...',
-      image:
-        articleData.post.featuredImage?.node.sourceUrl || '/default-image.jpg',
-    },
-  }
+  const article = data?.post || {}
 
-  return metadata
+  const { title, excerpt, featuredImage } = article
+
+  return {
+    title: title || 'Default Title',
+    description: excerpt || 'Default description',
+    image: featuredImage?.node?.sourceUrl || '/logo.png',
+  }
 }
 
-const Page = async ({ params }) => {
+export default async function Page({ params }) {
   const { slug } = params
 
-  // Fetching only the necessary data for the article based on the slug
-  const { data: articleData } = await client.query({
-    query: GET_ARTICLE_METADATA,
+  // Fetch the article content
+  const { data } = await client.query({
+    query: GET_ARTICLE_META,
     variables: { slug },
   })
 
   return (
     <div className='container pt-0 pb-4 max-w-6xl mx-auto px-2'>
-      <ArticleContent slug={slug} articleData={articleData} />
+      <ArticleContent slug={slug} />
     </div>
   )
 }
-
-export default Page
