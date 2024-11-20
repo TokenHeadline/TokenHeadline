@@ -1,15 +1,31 @@
 import React from 'react'
 import ArticleContent from './ArticleContent'
-import { GET_ARTICLE } from '../../../../services/index'
+import { GET_ARTICLE_METADATA } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
+
+// Optimized GraphQL query to only fetch the necessary data for metadata and page content
+export const GET_ARTICLE_METADATA = `
+  query GetArticleMetadata($slug: String!) {
+    post(slug: $slug) {
+      title
+      excerpt
+      slug
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+    }
+  }
+`
 
 // This function is for dynamically generating metadata for the page
 export async function generateMetadata({ params }) {
   const { slug } = params
 
-  // Fetching article data based on slug
+  // Fetching only the necessary data for the article based on the slug
   const { data: articleData } = await client.query({
-    query: GET_ARTICLE,
+    query: GET_ARTICLE_METADATA,
     variables: { slug },
   })
 
@@ -18,10 +34,10 @@ export async function generateMetadata({ params }) {
     title: articleData.post.title,
     description:
       articleData.post.excerpt
-        .replace(/<[^>]+>/g, '')
+        .replace(/<[^>]+>/g, '') // Remove HTML tags
         .split(' ')
         .slice(0, 30)
-        .join(' ') + '...',
+        .join(' ') + '...', // Limit description length
     openGraph: {
       title: articleData.post.title,
       description:
@@ -53,9 +69,8 @@ export async function generateMetadata({ params }) {
           .split(' ')
           .slice(0, 30)
           .join(' ') + '...',
-      images: [
+      image:
         articleData.post.featuredImage?.node.sourceUrl || '/default-image.jpg',
-      ],
     },
   }
 
@@ -65,9 +80,9 @@ export async function generateMetadata({ params }) {
 const Page = async ({ params }) => {
   const { slug } = params
 
-  // Fetching article data based on slug
+  // Fetching only the necessary data for the article based on the slug
   const { data: articleData } = await client.query({
-    query: GET_ARTICLE,
+    query: GET_ARTICLE_METADATA,
     variables: { slug },
   })
 
