@@ -14,7 +14,14 @@ export async function generateMetadata() {
     title: 'Token Headline',
     description:
       'Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.',
-    image: '/logo.png',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Token Headline',
+      },
+    ],
     url: 'https://tokenheadline.com',
     type: 'website',
     siteName: 'Token Headline',
