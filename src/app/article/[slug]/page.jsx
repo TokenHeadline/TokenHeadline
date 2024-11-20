@@ -3,7 +3,7 @@ import ArticleContent from './ArticleContent'
 import client from '../../../lib/apolloClient'
 import { gql } from '@apollo/client'
 
-export const GET_ARTICLE_METADATA = gql`
+const GET_ARTICLE_METADATA = gql`
   query MyQuery($slug: ID!) {
     post(id: $slug, idType: SLUG) {
       excerpt
