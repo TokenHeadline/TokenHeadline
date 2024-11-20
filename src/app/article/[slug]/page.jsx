@@ -1,6 +1,5 @@
 import React from 'react'
 import ArticleContent from './ArticleContent'
-import { GET_ARTICLE_METADATA } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 
 // Optimized GraphQL query to only fetch the necessary data for metadata and page content
