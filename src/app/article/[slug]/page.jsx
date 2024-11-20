@@ -2,7 +2,6 @@
 import { gql } from '@apollo/client'
 import client from '@/lib/apolloClient'
 import ArticleContent from './ArticleContent'
-import { image } from 'framer-motion/client'
 
 const GET_ARTICLE_META = gql`
   query MyQuery($slug: ID!) {
@@ -35,7 +34,20 @@ export async function generateMetadata({ params }) {
   return {
     title: title || 'Default Title',
     description: excerpt || 'Default description',
-    image: featuredImage?.node?.sourceUrl || '/logo.png',
+    openGraph: {
+      title: title || 'Default Title',
+      description: excerpt || 'Default description',
+      images: featuredImage?.node?.sourceUrl
+        ? [{ url: featuredImage.node.sourceUrl }]
+        : [],
+    },
+    twitter: {
+      title: title || 'Default Title',
+      description: excerpt || 'Default description',
+      images: featuredImage?.node?.sourceUrl
+        ? [{ url: featuredImage.node.sourceUrl }]
+        : [],
+    },
   }
 }
 
