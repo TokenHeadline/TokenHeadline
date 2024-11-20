@@ -2,12 +2,11 @@ import React from 'react'
 import ArticleContent from './ArticleContent'
 import client from '../../../lib/apolloClient'
 
-// Optimized GraphQL query to only fetch the necessary data for metadata and page content
-export const GET_ARTICLE_METADATA = `
-  query GetArticleMetadata($slug: String!) {
-    post(slug: $slug) {
-      title
+export const GET_ARTICLE_METADATA = gql`
+  query MyQuery($slug: ID!) {
+    post(id: $slug, idType: SLUG) {
       excerpt
+      title
       slug
       featuredImage {
         node {
