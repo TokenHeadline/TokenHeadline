@@ -3,13 +3,17 @@ import ArticleContent from './ArticleContent'
 import { GET_ARTICLE } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 
+// This function is for dynamically generating metadata for the page
 export async function generateMetadata({ params }) {
   const { slug } = params
+
+  // Fetching article data based on slug
   const { data: articleData } = await client.query({
     query: GET_ARTICLE,
     variables: { slug },
   })
 
+  // Prepare metadata object
   const metadata = {
     title: articleData.post.title,
     description:
@@ -58,12 +62,18 @@ export async function generateMetadata({ params }) {
   return metadata
 }
 
-const Page = ({ params }) => {
+const Page = async ({ params }) => {
   const { slug } = params
+
+  // Fetching article data based on slug
+  const { data: articleData } = await client.query({
+    query: GET_ARTICLE,
+    variables: { slug },
+  })
 
   return (
     <div className='container pt-0 pb-4 max-w-6xl mx-auto px-2'>
-      <ArticleContent slug={slug} />
+      <ArticleContent slug={slug} articleData={articleData} />
     </div>
   )
 }
