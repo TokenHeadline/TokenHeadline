@@ -9,7 +9,25 @@ import ArticlesGrid from './components/ArticlesGrid'
 import Courses from './components/Courses'
 import Banner from './components/Banner'
 import PR from './components/PR'
-
+export async function generateMetadata() {
+  return {
+    metadataBase: new URL('https://tokenheadline.com'),
+    title: 'Token Headline',
+    description:
+      'Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Token Headline',
+      },
+    ],
+    url: 'https://tokenheadline.com',
+    type: 'website',
+    siteName: 'Token Headline',
+  }
+}
 export default function Home() {
   return (
     <div>
