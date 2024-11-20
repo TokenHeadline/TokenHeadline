@@ -2,6 +2,7 @@ import { Inria_Sans } from 'next/font/google'
 import './globals.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { metadata } from 'framer-motion/client'
 
 const inriaSans = Inria_Sans({
   subsets: ['latin'],
@@ -10,6 +11,7 @@ const inriaSans = Inria_Sans({
 
 export async function generateMetadata() {
   return {
+    metadataBase: new URL('https://tokenheadline.com'),
     title: 'Token Headline',
     description:
       'Token Headline provides the latest updates on Web3 and crypto news, in-depth articles, and exclusive interviews. Stay informed with our comprehensive coverage and expert insights on the rapidly evolving world of digital finance and technology.',
