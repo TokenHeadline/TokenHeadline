@@ -1,7 +1,7 @@
-import React from 'react'
-import ArticleContent from './ArticleContent'
+// app/[slug]/page.js or app/[slug]/page.tsx
 import { gql } from '@apollo/client'
 import client from '../../../lib/apolloClient'
+import ArticleContent from './ArticleContent'
 
 const GET_ARTICLE_META = gql`
   query MyQuery($slug: ID!) {
@@ -26,50 +26,29 @@ export async function generateMetadata({ params }) {
     variables: { slug },
   })
 
-  const article = data.interview
+  const article = data?.interview
 
-  const openGraphMetadata = {
-    title: article.title,
-    description:
-      article.excerpt
-        .replace(/<[^>]+>/g, '')
-        .split(' ')
-        .slice(0, 30)
-        .join(' ') + '...', // Limit description to 30 words
-    openGraph: {
+  if (article) {
+    return {
       title: article.title,
-      description:
-        article.excerpt
-          .replace(/<[^>]+>/g, '')
-          .split(' ')
-          .slice(0, 30)
-          .join(' ') + '...',
-      url: `https://tokenheadline.com/article/${article.slug}`,
-      type: 'article',
-      siteName: 'Token Headline',
-      images: [
-        {
-          url: article.featuredImage?.node.sourceUrl || '/default-image.jpg',
-          width: 1200,
-          height: 630,
-          alt: article.title,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: article.title,
-      description:
-        article.excerpt
-          .replace(/<[^>]+>/g, '')
-          .split(' ')
-          .slice(0, 30)
-          .join(' ') + '...',
-      image: article.featuredImage?.node.sourceUrl || '/default-image.jpg',
-    },
+      description: article.excerpt,
+      openGraph: {
+        title: article.title,
+        description: article.excerpt,
+        image: article.featuredImage?.node?.sourceUrl || '',
+      },
+      twitter: {
+        title: article.title,
+        description: article.excerpt,
+        image: article.featuredImage?.node?.sourceUrl || '',
+      },
+    }
   }
 
-  return openGraphMetadata
+  return {
+    title: 'Article Not Found',
+    description: 'This article does not exist.',
+  }
 }
 
 const Page = ({ params }) => {
