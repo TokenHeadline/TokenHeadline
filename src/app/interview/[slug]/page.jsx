@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client'
 import client from '../../../lib/apolloClient'
 import ArticleContent from './ArticleContent'
-import { u } from 'framer-motion/client'
 
 const GET_ARTICLE_META = gql`
   query MyQuery($slug: ID!) {
