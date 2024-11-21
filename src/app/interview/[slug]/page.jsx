@@ -1,4 +1,3 @@
-// app/[slug]/page.js or app/[slug]/page.tsx
 import { gql } from '@apollo/client'
 import client from '../../../lib/apolloClient'
 import ArticleContent from './ArticleContent'
@@ -21,37 +20,42 @@ const GET_ARTICLE_META = gql`
 export async function generateMetadata({ params }) {
   const { slug } = params
 
+  // Fetch article meta data using Apollo Client
   const { data } = await client.query({
     query: GET_ARTICLE_META,
     variables: { slug },
   })
 
   const article = data?.interview
-
-  if (article) {
-    return {
-      title: article.title,
-      description: article.excerpt,
-      openGraph: {
-        title: article.title,
-        description: article.excerpt,
-        image: article.featuredImage?.node?.sourceUrl || '',
-      },
-      twitter: {
-        title: article.title,
-        description: article.excerpt,
-        image: article.featuredImage?.node?.sourceUrl || '',
-      },
-    }
-  }
+  const title = article?.title || 'Default Title'
+  const excerpt = article?.excerpt || 'Default description.'
+  const imageUrl =
+    article?.featuredImage?.node?.sourceUrl || 'default-image.jpg'
 
   return {
-    title: 'Article Not Found',
-    description: 'This article does not exist.',
+    title,
+    description: excerpt,
+    openGraph: {
+      title,
+      description: excerpt,
+      images: [
+        {
+          url: imageUrl,
+          width: 800,
+          height: 600,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: excerpt,
+      images: [imageUrl],
+    },
   }
 }
 
-const Page = ({ params }) => {
+const Page = async ({ params }) => {
   const { slug } = params
 
   return (
