@@ -5,6 +5,7 @@ const client = new ApolloClient({
     uri: 'https://cms.tokenheadline.com/graphql',
   }),
   cache: new InMemoryCache(),
+  ssrMode: true,
 })
 
 export default client

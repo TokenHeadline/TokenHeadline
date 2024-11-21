@@ -69,7 +69,9 @@ const ArticlesPage = ({ params }) => {
     <div className='container items-center mx-auto lg:px-14 md:px-12 px-8 '>
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
-          <title>{category ? `${category} Articles` : 'Articles'}</title>
+          <title>
+            {category ? `${category.toUppercase()} Articles` : 'Articles'}
+          </title>
           <meta
             name='description'
             content={`Discover articles in the ${
