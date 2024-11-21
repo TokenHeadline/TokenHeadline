@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
     variables: { slug },
   })
 
-  const article = data.post
+  const article = data.interview
 
   const openGraphMetadata = {
     title: article.title,
