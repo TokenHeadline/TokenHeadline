@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: 'https', hostname: 'cms.tokenheadline.com' },
+      { hostname: 'tokenheadline-wordpress/graphql' },
       { protocol: 'https', hostname: 'secure.gravatar.com' },
     ],
   },

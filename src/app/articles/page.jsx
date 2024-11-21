@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-import Image from 'next/image'
 import { useQuery } from '@apollo/client'
 import { GET_ALL_ARTICLES } from '../../../services' // Use your defined query
 import client from '../../lib/apolloClient'
