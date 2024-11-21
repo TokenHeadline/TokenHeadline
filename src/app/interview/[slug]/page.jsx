@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client'
-import client from '../../../lib/apolloClient'
+// File: Page.js or the appropriate filename in your project
+
 import ArticleContent from './ArticleContent'
 
-const GET_ARTICLE_META = gql`
+const GET_ARTICLE_META = `
   query MyQuery($slug: ID!) {
     interview(id: $slug, idType: SLUG) {
       excerpt
@@ -17,14 +17,23 @@ const GET_ARTICLE_META = gql`
   }
 `
 
+// Function to fetch metadata using fetch instead of Apollo Client
 export async function generateMetadata({ params }) {
   const { slug } = params
 
-  // Fetch article meta data using Apollo Client
-  const { data } = await client.query({
-    query: GET_ARTICLE_META,
-    variables: { slug },
+  // Fetch article meta data using fetch
+  const res = await fetch('https://cms.tokenheadline.com/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: GET_ARTICLE_META,
+      variables: { slug },
+    }),
   })
+
+  const { data } = await res.json()
 
   const article = data?.interview
   const title = article?.title || 'Default Title'
@@ -35,7 +44,6 @@ export async function generateMetadata({ params }) {
 
   return {
     title,
-
     description: excerpt,
     openGraph: {
       title,
@@ -59,6 +67,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
+// Page component to render the article content
 const Page = async ({ params }) => {
   const { slug } = params
 
