@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 import client from '../../../lib/apolloClient'
 import ArticleContent from './ArticleContent'
+import { u } from 'framer-motion/client'
 
 const GET_ARTICLE_META = gql`
   query MyQuery($slug: ID!) {
@@ -28,16 +29,20 @@ export async function generateMetadata({ params }) {
 
   const article = data?.interview
   const title = article?.title || 'Default Title'
-  const excerpt = article?.excerpt || 'Default description.'
+  const excerpt =
+    article?.excerpt?.replace(/<[^>]+>/g, '') || 'Default description.'
   const imageUrl =
     article?.featuredImage?.node?.sourceUrl || 'default-image.jpg'
 
   return {
     title,
+
     description: excerpt,
     openGraph: {
       title,
       description: excerpt,
+      url: `https://yourwebsite.com/interview/${slug}`,
+      type: 'article',
       images: [
         {
           url: imageUrl,
