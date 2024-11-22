@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useQuery } from '@apollo/client'
-import { GET_CATEGORY_ARTICLE } from '../../../../services' // Your defined query
+import { GET_CATEGORY_ARTICLE } from '../../../../services'
 import client from '../../../lib/apolloClient'
 import Link from 'next/link'
 
@@ -54,7 +54,7 @@ const ArticlesPage = ({ params }) => {
 
   const handleLoadMore = () => {
     if (data?.posts?.pageInfo?.endCursor) {
-      setCursor(data.posts.pageInfo.endCursor) // Set the new cursor
+      setCursor(data.posts.pageInfo.endCursor)
     }
   }
 
@@ -70,8 +70,9 @@ const ArticlesPage = ({ params }) => {
       <div className='grid grid-cols-1 gap-8 items-center'>
         <head>
           <title>
-            {category ? `${category.toUppercase()} Articles` : 'Articles'}
+            {category ? `${category.toUpperCase()} ARTICLES` : 'ARTICLES'}
           </title>
+
           <meta
             name='description'
             content={`Discover articles in the ${

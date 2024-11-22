@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
     article?.featuredImage?.node?.sourceUrl || 'default-image.jpg'
 
   return {
-    title,
+    title: title,
 
     description: excerpt,
     openGraph: {

@@ -54,7 +54,27 @@ const ArticleContent = ({ slug }) => {
     )
   }
 
-  const sanitizedContent = DOMPurify.sanitize(article.content)
+  const replaceWordPressLinks = (content) => {
+    return content.replace(
+      /https?:\/\/cms\.tokenheadline\.com(\/(opinion|press-release|interview|article|[^"\s]+))/g,
+      (_, path) => {
+        // Skip paths that belong to image files
+        if (/\.(jpg|jpeg|png|gif|svg|webp)$/i.test(path)) {
+          return `https://cms.tokenheadline.com${path}` // Keep original for images
+        }
+
+        // Handle article or specific categories
+        return path.startsWith('/opinion') ||
+          path.startsWith('/press-release') ||
+          path.startsWith('/interview')
+          ? `https://tokenheadline.com${path}`
+          : `https://tokenheadline.com/article${path}`
+      }
+    )
+  }
+  const sanitizedContent = DOMPurify.sanitize(
+    replaceWordPressLinks(article.content)
+  )
 
   return (
     <div className='container pt-0 pb-4 max-w-6xl mx-auto'>

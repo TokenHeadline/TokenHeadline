@@ -1,14 +1,17 @@
 'use client'
+
 import React, { useEffect, useState } from 'react'
 import DOMPurify from 'dompurify'
 import { GET_ARTICLE, GET_RECENT_ARTICLES } from '../../../../services/index'
 import client from '../../../lib/apolloClient'
 import Link from 'next/link'
 import Cryptowidget from '../../components/Cryptowidget'
+
 const ArticleContent = ({ slug }) => {
   const [article, setArticle] = useState(null)
   const [recentArticles, setRecentArticles] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,8 +31,9 @@ const ArticleContent = ({ slug }) => {
 
         setArticle(articleData.post)
         setRecentArticles(filteredArticles)
-      } catch (error) {
-        console.error('Error fetching data:', error)
+      } catch (err) {
+        console.error('Error fetching data:', err)
+        setError('Failed to load content. Please try again later.')
       } finally {
         setLoading(false)
       }
@@ -41,7 +45,15 @@ const ArticleContent = ({ slug }) => {
   if (loading) {
     return (
       <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl h-screen text-center text-green'>
-        <p>Loading...</p>
+        <p className='text-lg font-semibold'>Loading...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
+        <p className='text-red-500 text-center'>{error}</p>
       </div>
     )
   }
@@ -49,23 +61,46 @@ const ArticleContent = ({ slug }) => {
   if (!article) {
     return (
       <div className='container mx-auto px-4 lg:px-0 pt-0 pb-4 max-w-6xl'>
-        <p>Article not found</p>
+        <p className='text-gray-700 text-center'>Article not found</p>
       </div>
     )
   }
 
-  const sanitizedContent = DOMPurify.sanitize(article.content)
+  // Replace WordPress links in article content
+  const replaceWordPressLinks = (content) => {
+    return content.replace(
+      /https?:\/\/cms\.tokenheadline\.com(\/(opinion|press-release|interview|article|[^"\s]+))/g,
+      (_, path) => {
+        // Skip paths that belong to image files
+        if (/\.(jpg|jpeg|png|gif|svg|webp)$/i.test(path)) {
+          return `https://cms.tokenheadline.com${path}` // Keep original for images
+        }
+
+        // Handle article or specific categories
+        return path.startsWith('/opinion') ||
+          path.startsWith('/press-release') ||
+          path.startsWith('/interview')
+          ? `https://tokenheadline.com${path}`
+          : `https://tokenheadline.com/article${path}`
+      }
+    )
+  }
+  const sanitizedContent = DOMPurify.sanitize(
+    replaceWordPressLinks(article.content)
+  )
 
   return (
     <div className='container pt-0 pb-4 max-w-6xl mx-auto'>
       <div className='p-4 md:p-6'>
         <div className='mb-10'>
-          <div className=' md:text-center'>
+          <div className='md:text-center'>
             <h1 className='text-xl md:text-4xl font-extrabold text-gray-900 mb-6'>
               {article.title || 'No Title'}
             </h1>
             <img
-              src={article.featuredImage?.node?.sourceUrl || '/logo.png'}
+              src={
+                article.featuredImage?.node?.sourceUrl || '/default-logo.png'
+              }
               alt={article.title || 'No Title'}
               width={800}
               height={450}
@@ -98,7 +133,8 @@ const ArticleContent = ({ slug }) => {
               <li key={index} className='flex items-center mb-4'>
                 <img
                   src={
-                    recentArticle.featuredImage?.node?.sourceUrl || '/logo.png'
+                    recentArticle.featuredImage?.node?.sourceUrl ||
+                    '/default-logo.png'
                   }
                   alt={recentArticle.title || 'No Title'}
                   width='100'

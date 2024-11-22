@@ -60,7 +60,7 @@ const ArticlesGrid = () => {
   return (
     <div className='m-4 pt-5 md:pl-16 md:pr-16 xl:pl-16'>
       <h1 className='text-3xl sm:text-4xl lg:text-5xl font-bold mt-12'>
-        LATEST ARTICLES
+        PRESS RELEASES
       </h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-4 mt-10'>
