@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
-import { FaFacebook, FaLinkedin, FaYoutube } from 'react-icons/fa'
-import Image from 'next/image'
+import { FaFacebook, FaYoutube, FaTelegram } from 'react-icons/fa'
 import { FaSquareInstagram } from 'react-icons/fa6'
 import { AiFillTwitterCircle } from 'react-icons/ai'
 import Link from 'next/link'
@@ -60,13 +59,6 @@ const Footer = () => {
               <li className='mb-2'>
                 <div className='flex space-x-4 mb-6 justify-center md:justify-start'>
                   <Link
-                    href='#'
-                    aria-label='Facebook'
-                    className='hover:text-gray-600'
-                  >
-                    <FaFacebook size={40} />
-                  </Link>
-                  <Link
                     href='https://www.instagram.com/tokenheadline/'
                     aria-label='Instagram'
                     className='hover:text-gray-400 rounded-full'
@@ -75,20 +67,19 @@ const Footer = () => {
                     <FaSquareInstagram size={40} />
                   </Link>
                   <Link
-                    href='https://x.com/TokenHeadline/'
+                    href='https://t.me/tokenheadline'
+                    aria-label='Telegram'
+                    className='hover:text-gray-600'
+                  >
+                    <FaTelegram size={40} />
+                  </Link>
+                  <Link
+                    href='https://x.com/TokenHeadline'
                     target='_blank'
                     aria-label='Twitter'
                     className='hover:text-gray-400'
                   >
                     <AiFillTwitterCircle size={40} />
-                  </Link>
-
-                  <Link
-                    href='#'
-                    aria-label='YouTube'
-                    className='hover:text-gray-400'
-                  >
-                    <FaYoutube size={40} />
                   </Link>
                 </div>
               </li>
