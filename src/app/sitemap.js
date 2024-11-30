@@ -10,59 +10,67 @@ export default async function sitemap() {
       posts(first: 100) {
         nodes {
           slug
-          updatedAt
+          dateGmt
         }
       }
     }
   `
 
-  const { data } = await client.query({ query: ARTICLES_QUERY })
+  try {
+    const { data } = await client.query({ query: ARTICLES_QUERY })
 
-  const articleSitemapEntries = data.posts.nodes.map((article) => ({
-    url: `${baseUrl}/articles/${article.slug}`,
-    lastModified: new Date(article.updatedAt).toISOString().split('T')[0],
-    changeFrequency: 'daily',
-    priority: 1,
-  }))
+    // Map over the fetched articles
+    const articleSitemapEntries = data.posts.nodes.map((article) => ({
+      url: `${baseUrl}/articles/${article.slug}`,
+      lastModified: new Date(article.dateGmt).toISOString().split('T')[0],
+      changeFrequency: 'daily',
+      priority: 1,
+    }))
 
-  const staticEntries = [
-    {
-      url: baseUrl,
-      lastModified: new Date().toISOString().split('T')[0],
-      changeFrequency: 'yearly',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/articles`,
-      lastModified: new Date().toISOString().split('T')[0],
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/opinion`,
-      lastModified: new Date().toISOString().split('T')[0],
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/press-release`,
-      lastModified: new Date().toISOString().split('T')[0],
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/interview`,
-      lastModified: new Date().toISOString().split('T')[0],
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/learn`,
-      lastModified: new Date().toISOString().split('T')[0],
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-  ]
+    // Define static entries
+    const staticEntries = [
+      {
+        url: baseUrl,
+        lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: 'yearly',
+        priority: 1,
+      },
+      {
+        url: `${baseUrl}/articles`,
+        lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: 'daily',
+        priority: 1,
+      },
+      {
+        url: `${baseUrl}/opinion`,
+        lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: 'daily',
+        priority: 1,
+      },
+      {
+        url: `${baseUrl}/press-release`,
+        lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: 'daily',
+        priority: 1,
+      },
+      {
+        url: `${baseUrl}/interview`,
+        lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: 'daily',
+        priority: 1,
+      },
+      {
+        url: `${baseUrl}/learn`,
+        lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: 'daily',
+        priority: 1,
+      },
+    ]
 
-  return [...staticEntries, ...articleSitemapEntries]
+    // Return combined entries
+    return [...staticEntries, ...articleSitemapEntries]
+  } catch (error) {
+    console.error('Error generating sitemap:', error)
+    return []
+  }
 }
