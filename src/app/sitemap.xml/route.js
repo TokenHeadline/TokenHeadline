@@ -1,4 +1,4 @@
-import client from '@/lib/apolloClient'
+import server from '@/lib/apolloserver'
 import { gql } from '@apollo/client'
 
 const baseUrl = 'https://tokenheadline.com'
@@ -18,7 +18,7 @@ export async function GET() {
 
   try {
     // Fetch data from Apollo Client
-    const { data } = await client.query({ query: ARTICLES_QUERY })
+    const { data } = await server.query({ query: ARTICLES_QUERY })
 
     // Generate sitemap entries for articles
     const articleSitemapEntries = data.posts.nodes.map((article) => ({
