@@ -7,10 +7,10 @@ export default async function sitemap() {
   // Define the GraphQL query to fetch all articles
   const ARTICLES_QUERY = gql`
     query GET {
-      posts(first: 100) {  // Adjust the number based on your API's pagination limit
+      posts(first: 100) {
         nodes {
-          slug  // Assuming articles have unique slugs
-          updatedAt  // Assuming articles have a timestamp for last update
+          slug
+          updatedAt
         }
       }
     }
