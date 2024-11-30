@@ -22,7 +22,7 @@ export default async function sitemap() {
     url: `${baseUrl}/articles/${article.slug}`,
     lastModified: new Date(article.updatedAt).toISOString().split('T')[0],
     changeFrequency: 'daily',
-    priority: 0.8,
+    priority: 1,
   }))
 
   const staticEntries = [
