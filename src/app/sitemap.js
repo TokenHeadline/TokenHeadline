@@ -1,4 +1,4 @@
-import server from '../lib/apolloServer'
+import client from '../lib/apolloClient'
 import { gql } from '@apollo/client'
 
 export default async function sitemap() {
@@ -16,7 +16,7 @@ export default async function sitemap() {
     }
   `
 
-  const { data } = await server.query({ query: ARTICLES_QUERY })
+  const { data } = await client.query({ query: ARTICLES_QUERY })
 
   const articleSitemapEntries = data.posts.nodes.map((article) => ({
     url: `${baseUrl}/articles/${article.slug}`,
