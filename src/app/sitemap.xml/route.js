@@ -1,10 +1,10 @@
-import client from '../lib/apolloClient'
+import client from '@/lib/apolloClient'
 import { gql } from '@apollo/client'
 
-export default async function sitemap() {
-  const baseUrl = 'https://tokenheadline.com'
+const baseUrl = 'https://tokenheadline.com'
 
-  // Define the GraphQL query to fetch all articles
+export async function GET() {
+  // Define the GraphQL query
   const ARTICLES_QUERY = gql`
     query GET {
       posts(first: 100) {
@@ -17,9 +17,10 @@ export default async function sitemap() {
   `
 
   try {
+    // Fetch data from Apollo Client
     const { data } = await client.query({ query: ARTICLES_QUERY })
 
-    // Map over the fetched articles
+    // Generate sitemap entries for articles
     const articleSitemapEntries = data.posts.nodes.map((article) => ({
       url: `${baseUrl}/articles/${article.slug}`,
       lastModified: new Date(article.dateGmt).toISOString().split('T')[0],
@@ -27,7 +28,7 @@ export default async function sitemap() {
       priority: 1,
     }))
 
-    // Define static entries
+    // Define static sitemap entries
     const staticEntries = [
       {
         url: baseUrl,
@@ -67,10 +68,39 @@ export default async function sitemap() {
       },
     ]
 
-    // Return combined entries
-    return [...staticEntries, ...articleSitemapEntries]
+    // Combine static and dynamic entries
+    const allEntries = [...staticEntries, ...articleSitemapEntries]
+
+    // Generate XML
+    const sitemap = generateXml(allEntries)
+
+    // Return the XML response
+    return new Response(sitemap, {
+      headers: {
+        'Content-Type': 'application/xml',
+      },
+    })
   } catch (error) {
     console.error('Error generating sitemap:', error)
-    return []
+    return new Response('Error generating sitemap', { status: 500 })
   }
+}
+
+// Function to generate XML from sitemap entries
+function generateXml(entries) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${entries
+      .map(
+        (entry) => `
+      <url>
+        <loc>${entry.url}</loc>
+        <lastmod>${entry.lastModified}</lastmod>
+        <changefreq>${entry.changeFrequency}</changefreq>
+        <priority>${entry.priority}</priority>
+      </url>
+    `
+      )
+      .join('')}
+  </urlset>`
 }
