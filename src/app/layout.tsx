@@ -16,11 +16,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={inriaSans.className}
+        className={inriaSans.className + ' min-h-screen flex flex-col'}
         style={{ backgroundColor: '#e9e9e9' }}
       >
         <Navbar />
-        {children}
+        <main className='flex-grow'>{children}</main>
         <Footer />
       </body>
     </html>
