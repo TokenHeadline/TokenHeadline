@@ -62,7 +62,7 @@ const Today = () => {
     fetchData()
   }, [])
 
-  if (loading) return <p>Loading</p>
+  if (loading) return <TodaySkeleton />
   if (!news || news.length === 0) return <p>No articles available.</p>
 
   const cleanExcerpt = (excerpt) => {
