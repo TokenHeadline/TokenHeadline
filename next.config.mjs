@@ -5,6 +5,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: 'tokenheadline-wordpress/graphql' },
       { protocol: 'https', hostname: 'secure.gravatar.com' },
+      { hostname: 'cms.tokenheadline.com' },
     ],
   },
 }

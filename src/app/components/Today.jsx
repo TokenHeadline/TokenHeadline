@@ -62,7 +62,7 @@ const Today = () => {
     fetchData()
   }, [])
 
-  if (loading) return <TodaySkeleton />
+  if (loading) return <p>Loading</p>
   if (!news || news.length === 0) return <p>No articles available.</p>
 
   const cleanExcerpt = (excerpt) => {
@@ -71,7 +71,7 @@ const Today = () => {
       : 'No description available.'
   }
 
-  const fallbackImageUrl = '/fallback.jpg' // Update with your fallback image URL
+  const fallbackImageUrl = '/fallback.jpg'
 
   return (
     <div className='flex flex-col lg:pl-6 lg:pt-0 p-4 md:basis-6/12 xl:basis-4/12'>

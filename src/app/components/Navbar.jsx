@@ -53,7 +53,7 @@ export default function Navbar() {
     ))
 
   return (
-    <nav className='text-black font-semibold lg:mb-6 m-8 mt-5 mb-1'>
+    <nav className='text-black font-semibold lg:mb-6 m-8 mt-4 mb-3'>
       <div className='container flex flex-row justify-between'>
         {/* Desktop Menu */}
         <div className='hidden lg:flex items-center text-base mx-2 xl:mx-6'>
@@ -86,7 +86,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className='lg:hidden flex flex-col items-end mt-6'>
+        <div className='lg:hidden flex flex-col items-end mt-6 '>
           <button
             onClick={toggleMenu}
             aria-label={isOpen ? 'Close menu' : 'Open menu'}

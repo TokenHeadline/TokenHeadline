@@ -4,10 +4,9 @@ import { gql } from '@apollo/client'
 const baseUrl = 'https://tokenheadline.com'
 
 export async function GET() {
-  // Define the GraphQL query
   const ARTICLES_QUERY = gql`
     query GET {
-      posts(first: 100) {
+      posts(first: 10) {
         nodes {
           slug
           dateGmt
@@ -17,18 +16,15 @@ export async function GET() {
   `
 
   try {
-    // Fetch data from Apollo Client
     const { data } = await server.query({ query: ARTICLES_QUERY })
 
-    // Generate sitemap entries for articles
     const articleSitemapEntries = data.posts.nodes.map((article) => ({
-      url: `${baseUrl}/articles/${article.slug}`,
+      url: `${baseUrl}/article/${article.slug}`,
       lastModified: new Date(article.dateGmt).toISOString().split('T')[0],
-      changeFrequency: 'daily',
+      changeFrequency: 'always',
       priority: 1,
     }))
 
-    // Define static sitemap entries
     const staticEntries = [
       {
         url: baseUrl,
@@ -68,13 +64,10 @@ export async function GET() {
       },
     ]
 
-    // Combine static and dynamic entries
     const allEntries = [...staticEntries, ...articleSitemapEntries]
 
-    // Generate XML
     const sitemap = generateXml(allEntries)
 
-    // Return the XML response
     return new Response(sitemap, {
       headers: {
         'Content-Type': 'application/xml',
@@ -86,7 +79,6 @@ export async function GET() {
   }
 }
 
-// Function to generate XML from sitemap entries
 function generateXml(entries) {
   return `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
