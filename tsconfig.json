@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,28 +18,24 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".nextt/types/**/*.ts",
+    ".next/types/**/*.ts",
     "src/app/components/Articles.jsx",
     "src/app/components/Today.jsx",
     "src/app/components/Banner.jsx",
     "src/app/page.jsx",
     "src/app/components/Banner.jsx",
+
     "src/app/sitemap.js",
     "src/app/components/Navbar.jsx",
     "src/lib/apolloClient.js",
-    "src/lib/apolloClient.js",
-    ".next/types/**/*.ts"
+    "src/lib/apolloClient.js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

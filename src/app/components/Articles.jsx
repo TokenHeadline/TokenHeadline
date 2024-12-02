@@ -31,7 +31,6 @@ const Articles = () => {
     return <ArticlesSkeleton />
   }
 
-  // Show different articles based on screen width (optional)
   const articlesToShow =
     typeof window !== 'undefined' && window.innerWidth < 640
       ? news.slice(2, 7)

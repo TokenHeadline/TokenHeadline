@@ -31,7 +31,7 @@ export async function generateMetadata() {
 export default function Home() {
   return (
     <div>
-      <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:ml-16 lg:mr-16 '>
+      <section className='flex flex-col m-4 lg:flex-row lg:space-x-4 lg:ml-16 lg:mr-16 mt-0 '>
         <Today />
         <Articles />
         <Banner />

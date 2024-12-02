@@ -2,6 +2,7 @@ import { Inria_Sans } from 'next/font/google'
 import './globals.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inriaSans = Inria_Sans({
   subsets: ['latin'],
@@ -10,9 +11,9 @@ const inriaSans = Inria_Sans({
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang='en'>
       <body
@@ -22,6 +23,7 @@ export default function RootLayout({
         <Navbar />
         <main className='flex-grow'>{children}</main>
         <Footer />
+        <GoogleAnalytics gaId='G-K9TVGS9B90' />
       </body>
     </html>
   )
