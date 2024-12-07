@@ -21,7 +21,7 @@ export async function GET() {
     const articleSitemapEntries = data.posts.nodes.map((article) => ({
       url: `${baseUrl}/article/${article.slug}`,
       lastModified: new Date(article.dateGmt).toISOString().split('T')[0],
-      changeFrequency: 'always',
+      changeFrequency: 'daily',
       priority: 1,
     }))
 
@@ -29,38 +29,38 @@ export async function GET() {
       {
         url: baseUrl,
         lastModified: new Date().toISOString().split('T')[0],
-        changeFrequency: 'yearly',
-        priority: 1,
+        changeFrequency: 'daily',
+        priority: 0.8,
       },
       {
         url: `${baseUrl}/articles`,
         lastModified: new Date().toISOString().split('T')[0],
         changeFrequency: 'daily',
-        priority: 1,
+        priority: 0.8,
       },
       {
         url: `${baseUrl}/opinion`,
         lastModified: new Date().toISOString().split('T')[0],
         changeFrequency: 'daily',
-        priority: 1,
+        priority: 0.8,
       },
       {
         url: `${baseUrl}/press-release`,
         lastModified: new Date().toISOString().split('T')[0],
         changeFrequency: 'daily',
-        priority: 1,
+        priority: 0.8,
       },
       {
         url: `${baseUrl}/interview`,
         lastModified: new Date().toISOString().split('T')[0],
         changeFrequency: 'daily',
-        priority: 1,
+        priority: 0.8,
       },
       {
         url: `${baseUrl}/learn`,
         lastModified: new Date().toISOString().split('T')[0],
         changeFrequency: 'daily',
-        priority: 1,
+        priority: 0.8,
       },
     ]
 
