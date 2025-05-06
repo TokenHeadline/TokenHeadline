@@ -5,12 +5,14 @@ import ArticleContent from './ArticleContent'
 const GET_ARTICLE_META = gql`
   query MyQuery($slug: ID!) {
     post(id: $slug, idType: SLUG) {
-      excerpt
-      title
       slug
-      featuredImage {
-        node {
-          sourceUrl
+      seo {
+        title
+        description
+        openGraph {
+          image {
+            url
+          }
         }
       }
     }
@@ -26,19 +28,16 @@ export async function generateMetadata({ params }) {
   })
 
   const article = data?.post
-  const title = article?.title || 'Default Title'
-  const excerpt =
-    article?.excerpt?.replace(/<[^>]+>/g, '') || 'Default description.'
-  const imageUrl =
-    article?.featuredImage?.node?.sourceUrl || 'default-image.jpg'
+  const title = article?.seo?.title || 'Default Title'
+  const description = article?.seo?.description || 'Default description.'
+  const imageUrl = article?.seo?.openGraph?.image?.url || 'default-image.jpg'
 
   return {
     title,
-
-    description: excerpt,
+    description,
     openGraph: {
       title,
-      description: excerpt,
+      description,
       url: `https://tokenheadline.com/article/${slug}`,
       type: 'article',
       images: [
@@ -52,7 +51,7 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: 'summary_large_image',
       title,
-      description: excerpt,
+      description,
       images: [imageUrl],
     },
   }
