@@ -56,7 +56,7 @@ const ArticlesGrid = () => {
 
     fetchArticles()
   }, [])
-  console.log(articles)
+  // console.log(articles)
 
   return (
     <div className='m-4 pt-5 md:pl-16 md:pr-16 xl:pl-16'>
